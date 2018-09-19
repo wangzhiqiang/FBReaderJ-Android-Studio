@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 27
+//    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "org.geometerplus.zlibrary.ui.android"
-        minSdkVersion 11
-        targetSdkVersion 23
+        minSdkVersion 19
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -25,21 +25,23 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile files('libs/httpmime-4.2.5.jar')
-    compile files('libs/json-simple-1.1.1.jar')
-    compile files('libs/LingvoIntegration_2.5.2.12.jar')
-    compile files('libs/nanohttpd-2.0.5.jar')
-    compile files('libs/open-dictionary-api-1.2.1.jar')
-    compile files('libs/pdfparse.jar')
-    compile project(':ambilWarna')
-    compile project(':code')
-    compile project(':dragsortlistview')
-    compile project(':SuperToasts')
-    compile files('libs/httpcore-4.4.4.jar')
-    compile files('libs/httpclient-4.5.2.jar')
-    compile files('libs/commons-codec-1.9.jar')
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api files('libs/httpmime-4.2.5.jar')
+    api files('libs/json-simple-1.1.1.jar')
+    api files('libs/LingvoIntegration_2.5.2.12.jar')
+    api files('libs/nanohttpd-2.0.5.jar')
+    api files('libs/open-dictionary-api-1.2.1.jar')
+    api files('libs/pdfparse.jar')
+    api project(':ambilWarna')
+    api project(':code')
+    api project(':dragsortlistview')
+    api project(':superToasts')
+    api files('libs/httpcore-4.4.4.jar')
+    api files('libs/httpclient-4.5.2.jar')
+//    api files('libs/commons-codec-1.9.jar')
+//    api 'org.apache.httpcomponents:httpclient:4.5.6'
+    api 'commons-codec:commons-codec:1.11'
 }
 
