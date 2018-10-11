@@ -599,17 +599,10 @@ Compile By Tandong  2016.3.24
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="org.geometerplus.android.fbreader.tips.TipsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FBReader.Dialog" />
 
 
-        <service
-            android:name="org.geometerplus.android.fbreader.httpd.DataService"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:process=":dataService" />
+
+
         <service
             android:name="group.pals.android.lib.ui.filechooser.services.LocalFileProvider"
             android:exported="false" />
