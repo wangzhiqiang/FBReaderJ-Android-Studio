@@ -14,10 +14,7 @@ Compile By Tandong  2016.3.24
     android:versionCode="2051010"
     android:versionName="2.5.10">
 
-    <uses-sdk
-        android:maxSdkVersion="10"
-        android:minSdkVersion="5"
-        android:targetSdkVersion="9" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
