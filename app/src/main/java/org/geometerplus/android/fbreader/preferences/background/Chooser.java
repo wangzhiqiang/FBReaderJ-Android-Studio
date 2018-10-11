@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import yuku.ambilwarna.AmbilWarnaDialog;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 import org.geometerplus.zlibrary.ui.android.R;
@@ -55,35 +54,13 @@ public class Chooser extends ListActivity implements AdapterView.OnItemClickList
 		getListView().setOnItemClickListener(this);
 	}
 
-	private final AmbilWarnaDialog.OnAmbilWarnaListener myColorChooserListener =
-		new AmbilWarnaDialog.OnAmbilWarnaListener() {
-			@Override
-			public void onOk(AmbilWarnaDialog dialog, int color) {
-				final Intent result = new Intent()
-					.putExtra(BackgroundPreference.VALUE_KEY, "")
-					.putExtra(BackgroundPreference.COLOR_KEY, color);
-				setResult(RESULT_OK, result);
-				finish();
-			}
 
-			@Override
-			public void onCancel(AmbilWarnaDialog dialog) {
-			}
-		};
 
 	public final void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		switch (position) {
 			case 0:
 			{
-				final ZLResource buttonResource =
-					ZLResource.resource("dialog").getResource("button");
-				new AmbilWarnaDialog(
-					this,
-					getIntent().getIntExtra(BackgroundPreference.COLOR_KEY, 0),
-					myColorChooserListener,
-					buttonResource.getResource("ok").getValue(),
-					buttonResource.getResource("cancel").getValue()
-				).show();
+				//颜色选择，移除
 				break;
 			}
 			case 1:

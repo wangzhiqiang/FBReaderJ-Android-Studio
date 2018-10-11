@@ -34,7 +34,7 @@ dependencies {
     api files('libs/nanohttpd-2.0.5.jar')
     api files('libs/open-dictionary-api-1.2.1.jar')
     api files('libs/pdfparse.jar')
-    api project(':ambilWarna')
+//    api project(':ambilWarna')
     api project(':code')
     api project(':dragsortlistview')
     api project(':superToasts')
