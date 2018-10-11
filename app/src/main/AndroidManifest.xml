@@ -11,8 +11,7 @@ Compile By Tandong  2016.3.24
     xmlns:tools="http://schemas.android.com/tools"
     package="org.geometerplus.zlibrary.ui.android"
     android:installLocation="auto"
-    android:versionCode="2051010"
-    android:versionName="2.5.10">
+     >
 
 
     <supports-screens
@@ -42,7 +41,8 @@ Compile By Tandong  2016.3.24
             <intent-filter>
                 <action android:name="android.fbreader.action.ERROR" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="BookReadingException" />
+                <data android:scheme="BookReadingException"
+                    tools:ignore="AppLinkUrlError" />
             </intent-filter>
         </activity>
         <activity
@@ -61,7 +61,8 @@ Compile By Tandong  2016.3.24
             <intent-filter>
                 <action android:name="android.fbreader.action.CRASH" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="CachedCharStorageException" />
+                <data android:scheme="CachedCharStorageException"
+                    tools:ignore="AppLinkUrlError" />
             </intent-filter>
         </activity>
         <activity
@@ -73,12 +74,14 @@ Compile By Tandong  2016.3.24
             <intent-filter>
                 <action android:name="android.fbreader.action.CRASH" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="ExceptionInInitializerError" />
+                <data android:scheme="ExceptionInInitializerError"
+                    tools:ignore="AppLinkUrlError" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.fbreader.action.CRASH" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="UnsatisfiedLinkError" />
+                <data android:scheme="UnsatisfiedLinkError"
+                    tools:ignore="AppLinkUrlError" />
             </intent-filter>
         </activity>
 
@@ -203,11 +206,6 @@ Compile By Tandong  2016.3.24
 
 
         <activity
-            android:name="org.geometerplus.android.fbreader.dict.DictionaryNotInstalledActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:theme="@style/FBReader.Dialog" />
-        <activity
             android:name="org.geometerplus.android.fbreader.CancelActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FBReader.Dialog">
@@ -256,12 +254,6 @@ Compile By Tandong  2016.3.24
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="org.geometerplus.android.fbreader.image.ImageViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:process=":imageView"
-            android:theme="@style/FBReader.Activity" />
 
         <service
             android:name="org.geometerplus.android.fbreader.libraryService.LibraryService"
