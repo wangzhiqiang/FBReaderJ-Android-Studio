@@ -27,7 +27,7 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import com.mobeta.android.dslv.DragSortListView;
+//import com.mobeta.android.dslv.DragSortListView;
 
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.fbreader.network.*;
@@ -36,6 +36,7 @@ import org.geometerplus.android.fbreader.covers.CoverManager;
 
 import org.geometerplus.android.util.ViewUtil;
 import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
+
 
 public class CatalogManagerActivity extends ListActivity {
 	private final AndroidImageSynchronizer myImageSynchronizer = new AndroidImageSynchronizer(this);
@@ -46,7 +47,7 @@ public class CatalogManagerActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		setContentView(R.layout.catalog_manager_view);
+//		setContentView(R.layout.catalog_manager_view);
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class CatalogManagerActivity extends ListActivity {
 			myAllItems.addAll(cItems);
 		}
 
-		setListAdapter(new CatalogsListAdapter());
+//		setListAdapter(new CatalogsListAdapter());
 	}
 
 	@Override
@@ -97,8 +98,9 @@ public class CatalogManagerActivity extends ListActivity {
 	}
 
 	@Override
-	public DragSortListView getListView() {
-		return (DragSortListView)super.getListView();
+	public ListView getListView() {
+		return  super.getListView();
+//		return (DragSortListView)super.getListView();
 	}
 
 	private static interface Item {
@@ -137,112 +139,112 @@ public class CatalogManagerActivity extends ListActivity {
 		}
 	}
 
-	private class CatalogsListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
-		private CoverManager myCoverManager;
-
-		public CatalogsListAdapter() {
-			super(CatalogManagerActivity.this, R.layout.catalog_manager_item, myAllItems);
-		}
-
-		private int indexOfDisabledSectionItem() {
-			for (int i = 1; i < getCount(); i++) {
-				if (getItem(i) instanceof SectionItem) {
-					return i;
-				}
-			}
-			// should be impossible
-			return 0;
-		}
-
-		private void setResultIds() {
-			final ArrayList<String> ids = new ArrayList<String>();
-			for (int i = 1; i < getCount(); ++i) {
-				final Item item = getItem(i);
-				if (item instanceof SectionItem) {
-					continue;
-				}
-				final CatalogItem catalogItem = (CatalogItem)item;
-				if (catalogItem.IsChecked) {
-					ids.add(catalogItem.Id);
-				}
-			}
-			setResult(RESULT_OK, new Intent().putStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY, ids));
-		}
-
-		@Override
-		public View getView(int position, View convertView, final ViewGroup parent) {
-			final Item item = getItem(position);
-
-			final View view;
-			if (convertView != null && item.getClass().equals(convertView.getTag())) {
-				view = convertView;
-			} else {
-				view = getLayoutInflater().inflate(
-					item instanceof SectionItem
-						? R.layout.catalog_manager_section_head : R.layout.catalog_manager_item,
-					null
-				);
-				view.setTag(item.getClass());
-			}
-
-			if (item instanceof SectionItem) {
-				ViewUtil.setSubviewText(
-					view, R.id.catalog_manager_section_head_title, ((SectionItem)item).Title
-				);
-			} else /* if (item instanceof CatalogItem) */ {
-				final CatalogItem catalogItem = (CatalogItem)item;
-
-				if (myCoverManager == null) {
-					view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-					final int coverHeight = view.getMeasuredHeight();
-					myCoverManager = new CoverManager(CatalogManagerActivity.this, myImageSynchronizer, coverHeight * 15 / 22, coverHeight);
-					view.requestLayout();
-				}
-
-				final INetworkLink link = catalogItem.Tree.getLink();
-				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_title, link.getTitle());
-				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_subtitle, link.getSummary());
-
-				final ImageView coverView = ViewUtil.findImageView(view, R.id.catalog_manager_item_icon);
-				if (!myCoverManager.trySetCoverImage(coverView, catalogItem.Tree)) {
-					coverView.setImageResource(R.drawable.ic_list_library_books);
-				}
-
-				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.catalog_manager_item_checkbox);
-				checkBox.setChecked(catalogItem.IsChecked);
-				checkBox.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						catalogItem.IsChecked = checkBox.isChecked();
-						setResultIds();
-					}
-				});
-			}
-			return view;
-		}
-
-		// method from DragSortListView.DropListener
-		public void drop(int from, int to) {
-			to = Math.max(to, 1);
-			if (from == to) {
-				return;
-			}
-			final Item item = getItem(from);
-			if (item instanceof CatalogItem) {
-				remove(item);
-				insert(item, to);
-				((CatalogItem)item).IsChecked = to < indexOfDisabledSectionItem();
-				getListView().moveCheckState(from, to);
-				setResultIds();
-			}
-		}
-
-		// method from DragSortListView.RemoveListener
-		public void remove(int which) {
-			final Item item = getItem(which);
-			if (item instanceof CatalogItem) {
-				remove(item);
-				getListView().removeCheckState(which);
-			}
-		}
-	}
+//	private class CatalogsListAdapter extends ArrayAdapter<Item> implements DragSortListView.DropListener, DragSortListView.RemoveListener {
+//		private CoverManager myCoverManager;
+//
+//		public CatalogsListAdapter() {
+//			super(CatalogManagerActivity.this, R.layout.catalog_manager_item, myAllItems);
+//		}
+//
+//		private int indexOfDisabledSectionItem() {
+//			for (int i = 1; i < getCount(); i++) {
+//				if (getItem(i) instanceof SectionItem) {
+//					return i;
+//				}
+//			}
+//			// should be impossible
+//			return 0;
+//		}
+//
+//		private void setResultIds() {
+//			final ArrayList<String> ids = new ArrayList<String>();
+//			for (int i = 1; i < getCount(); ++i) {
+//				final Item item = getItem(i);
+//				if (item instanceof SectionItem) {
+//					continue;
+//				}
+//				final CatalogItem catalogItem = (CatalogItem)item;
+//				if (catalogItem.IsChecked) {
+//					ids.add(catalogItem.Id);
+//				}
+//			}
+//			setResult(RESULT_OK, new Intent().putStringArrayListExtra(NetworkLibraryActivity.ENABLED_CATALOG_IDS_KEY, ids));
+//		}
+//
+//		@Override
+//		public View getView(int position, View convertView, final ViewGroup parent) {
+//			final Item item = getItem(position);
+//
+//			final View view;
+//			if (convertView != null && item.getClass().equals(convertView.getTag())) {
+//				view = convertView;
+//			} else {
+//				view = getLayoutInflater().inflate(
+//					item instanceof SectionItem
+//						? R.layout.catalog_manager_section_head : R.layout.catalog_manager_item,
+//					null
+//				);
+//				view.setTag(item.getClass());
+//			}
+//
+//			if (item instanceof SectionItem) {
+//				ViewUtil.setSubviewText(
+//					view, R.id.catalog_manager_section_head_title, ((SectionItem)item).Title
+//				);
+//			} else /* if (item instanceof CatalogItem) */ {
+//				final CatalogItem catalogItem = (CatalogItem)item;
+//
+//				if (myCoverManager == null) {
+//					view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//					final int coverHeight = view.getMeasuredHeight();
+//					myCoverManager = new CoverManager(CatalogManagerActivity.this, myImageSynchronizer, coverHeight * 15 / 22, coverHeight);
+//					view.requestLayout();
+//				}
+//
+//				final INetworkLink link = catalogItem.Tree.getLink();
+//				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_title, link.getTitle());
+//				ViewUtil.setSubviewText(view, R.id.catalog_manager_item_subtitle, link.getSummary());
+//
+//				final ImageView coverView = ViewUtil.findImageView(view, R.id.catalog_manager_item_icon);
+//				if (!myCoverManager.trySetCoverImage(coverView, catalogItem.Tree)) {
+//					coverView.setImageResource(R.drawable.ic_list_library_books);
+//				}
+//
+//				final CheckBox checkBox = (CheckBox)ViewUtil.findView(view, R.id.catalog_manager_item_checkbox);
+//				checkBox.setChecked(catalogItem.IsChecked);
+//				checkBox.setOnClickListener(new View.OnClickListener() {
+//					public void onClick(View v) {
+//						catalogItem.IsChecked = checkBox.isChecked();
+//						setResultIds();
+//					}
+//				});
+//			}
+//			return view;
+//		}
+//
+//		// method from DragSortListView.DropListener
+//		public void drop(int from, int to) {
+//			to = Math.max(to, 1);
+//			if (from == to) {
+//				return;
+//			}
+//			final Item item = getItem(from);
+//			if (item instanceof CatalogItem) {
+//				remove(item);
+//				insert(item, to);
+//				((CatalogItem)item).IsChecked = to < indexOfDisabledSectionItem();
+//				getListView().moveCheckState(from, to);
+//				setResultIds();
+//			}
+//		}
+//
+//		// method from DragSortListView.RemoveListener
+//		public void remove(int which) {
+//			final Item item = getItem(which);
+//			if (item instanceof CatalogItem) {
+//				remove(item);
+//				getListView().removeCheckState(which);
+//			}
+//		}
+//	}
 }

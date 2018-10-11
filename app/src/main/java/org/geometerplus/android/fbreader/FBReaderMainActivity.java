@@ -24,7 +24,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
+//import com.github.johnpersano.supertoasts.SuperActivityToast;
 
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.ui.android.library.*;
@@ -36,7 +36,7 @@ public abstract class FBReaderMainActivity extends Activity {
 	public static final int REQUEST_CANCEL_MENU = 2;
 	public static final int REQUEST_DICTIONARY = 3;
 
-	private volatile SuperActivityToast myToast;
+//	private volatile SuperActivityToast myToast;
 
 	@Override
 	protected void onCreate(Bundle saved) {
@@ -80,45 +80,46 @@ public abstract class FBReaderMainActivity extends Activity {
 	/* ------ SCREEN BRIGHTNESS ------ */
 
 	/* ++++++ SUPER TOAST ++++++ */
-	public boolean isToastShown() {
-		final SuperActivityToast toast = myToast;
-		return toast != null && toast.isShowing();
-	}
+//	public boolean isToastShown() {
+//		final SuperActivityToast toast = myToast;
+//		return toast != null && toast.isShowing();
+//		return true;
+//	}
 
-	public void hideToast() {
-		final SuperActivityToast toast = myToast;
-		if (toast != null && toast.isShowing()) {
-			myToast = null;
-			runOnUiThread(new Runnable() {
-				public void run() {
-					toast.dismiss();
-				}
-			});
-		}
-	}
+//	public void hideToast() {
+//		final SuperActivityToast toast = myToast;
+//		if (toast != null && toast.isShowing()) {
+//			myToast = null;
+//			runOnUiThread(new Runnable() {
+//				public void run() {
+//					toast.dismiss();
+//				}
+//			});
+//		}
+//	}
 
-	public void showToast(final SuperActivityToast toast) {
-		hideToast();
-		myToast = toast;
-		// TODO: avoid this hack (accessing text style via option)
-		final int dpi = getZLibrary().getDisplayDPI();
-		final int defaultFontSize = dpi * 18 / 160;
-		final int fontSize = new ZLIntegerOption("Style", "Base:fontSize", defaultFontSize).getValue();
-		final int percent = new ZLIntegerRangeOption("Options", "ToastFontSizePercent", 25, 100, 90).getValue();
-		final int dpFontSize = fontSize * 160 * percent / dpi / 100;
-		toast.setTextSize(dpFontSize);
-		toast.setButtonTextSize(dpFontSize * 7 / 8);
-
-		final String fontFamily =
-			new ZLStringOption("Style", "Base:fontFamily", "sans-serif").getValue();
-		toast.setTypeface(AndroidFontUtil.systemTypeface(fontFamily, false, false));
-
-		runOnUiThread(new Runnable() {
-			public void run() {
-				toast.show();
-			}
-		});
-	}
+//	public void showToast(final SuperActivityToast toast) {
+//		hideToast();
+//		myToast = toast;
+//		// TODO: avoid this hack (accessing text style via option)
+//		final int dpi = getZLibrary().getDisplayDPI();
+//		final int defaultFontSize = dpi * 18 / 160;
+//		final int fontSize = new ZLIntegerOption("Style", "Base:fontSize", defaultFontSize).getValue();
+//		final int percent = new ZLIntegerRangeOption("Options", "ToastFontSizePercent", 25, 100, 90).getValue();
+//		final int dpFontSize = fontSize * 160 * percent / dpi / 100;
+//		toast.setTextSize(dpFontSize);
+//		toast.setButtonTextSize(dpFontSize * 7 / 8);
+//
+//		final String fontFamily =
+//			new ZLStringOption("Style", "Base:fontFamily", "sans-serif").getValue();
+//		toast.setTypeface(AndroidFontUtil.systemTypeface(fontFamily, false, false));
+//
+//		runOnUiThread(new Runnable() {
+//			public void run() {
+//				toast.show();
+//			}
+//		});
+//	}
 	/* ------ SUPER TOAST ------ */
 
 	public abstract void hideDictionarySelection();
