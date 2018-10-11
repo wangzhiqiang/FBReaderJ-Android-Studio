@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.ui.android.library.*;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 
-import org.geometerplus.android.fbreader.dict.DictionaryUtil;
 
 public abstract class FBReaderMainActivity extends Activity {
 	public static final int REQUEST_PREFERENCES = 1;

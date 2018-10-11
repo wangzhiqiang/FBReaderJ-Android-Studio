@@ -125,7 +125,7 @@ Compile By Tandong  2016.3.24
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host=""
+                    android:host="*"
                     android:scheme="file" />
                 <data android:pathPattern=".*\\.epub" />
                 <data android:pathPattern=".*\\.oeb" />
@@ -145,7 +145,7 @@ Compile By Tandong  2016.3.24
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host=""
+                    android:host="*"
                     android:mimeType="text/plain"
                     android:scheme="file" />
                 <data android:pathPattern=".*\\.epub" />
@@ -173,7 +173,7 @@ Compile By Tandong  2016.3.24
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host=""
+                    android:host="*"
                     android:scheme="file" />
                 <data android:mimeType="application/epub+zip" />
                 <data android:mimeType="application/x-pilot-prc" />
@@ -207,6 +207,8 @@ Compile By Tandong  2016.3.24
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name="org.geometerplus.android.fbreader.dict.DictionaryNotInstalledActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -601,10 +603,7 @@ Compile By Tandong  2016.3.24
             android:name="org.geometerplus.android.fbreader.tips.TipsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FBReader.Dialog" />
-        <activity
-            android:name="com.paragon.dictionary.fbreader.OpenDictionaryActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FBReader.Transparent" />
+
 
         <service
             android:name="org.geometerplus.android.fbreader.httpd.DataService"
