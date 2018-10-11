@@ -88,7 +88,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	protected void onDraw(final Canvas canvas) {
 		final Context context = getContext();
 		if (context instanceof FBReader) {
-			((FBReader)context).createWakeLock();
+//			((FBReader)context).createWakeLock();
 		} else {
 			System.err.println("A surprise: view's context is not an FBReader");
 		}

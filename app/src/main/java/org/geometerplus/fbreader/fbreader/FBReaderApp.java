@@ -105,26 +105,6 @@ public final class FBReaderApp extends ZLApplication {
 			}
 		});
 
-		addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
-		addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
-
-		addAction(ActionCode.FIND_NEXT, new FindNextAction(this));
-		addAction(ActionCode.FIND_PREVIOUS, new FindPreviousAction(this));
-		addAction(ActionCode.CLEAR_FIND_RESULTS, new ClearFindResultsAction(this));
-
-		addAction(ActionCode.SELECTION_CLEAR, new SelectionClearAction(this));
-
-		addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
-		addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
-
-		addAction(ActionCode.MOVE_CURSOR_UP, new MoveCursorAction(this, FBView.Direction.up));
-		addAction(ActionCode.MOVE_CURSOR_DOWN, new MoveCursorAction(this, FBView.Direction.down));
-		addAction(ActionCode.MOVE_CURSOR_LEFT, new MoveCursorAction(this, FBView.Direction.rightToLeft));
-		addAction(ActionCode.MOVE_CURSOR_RIGHT, new MoveCursorAction(this, FBView.Direction.leftToRight));
-
-		addAction(ActionCode.VOLUME_KEY_SCROLL_FORWARD, new VolumeKeyTurnPageAction(this, true));
-		addAction(ActionCode.VOLUME_KEY_SCROLL_BACK, new VolumeKeyTurnPageAction(this, false));
-
 		addAction(ActionCode.EXIT, new ExitAction(this));
 
 		BookTextView = new FBView(this);
@@ -139,7 +119,7 @@ public final class FBReaderApp extends ZLApplication {
 	}
 
 	public void openHelpBook() {
-		openBook(Collection.getBookByFile(BookUtil.getHelpFile().getPath()), null, null, null);
+//		openBook(Collection.getBookByFile(BookUtil.getHelpFile().getPath()), null, null, null);
 	}
 
 	public Book getCurrentServerBook(Notifier notifier) {

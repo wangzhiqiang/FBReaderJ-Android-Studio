@@ -51,9 +51,9 @@ public abstract class FBReaderMainActivity extends Activity {
 			default:
 				super.onActivityResult(requestCode, resultCode, data);
 				break;
-			case REQUEST_DICTIONARY:
-				DictionaryUtil.onActivityResult(this, resultCode, data);
-				break;
+//			case REQUEST_DICTIONARY:
+//				DictionaryUtil.onActivityResult(this, resultCode, data);
+//				break;
 		}
 	}
 

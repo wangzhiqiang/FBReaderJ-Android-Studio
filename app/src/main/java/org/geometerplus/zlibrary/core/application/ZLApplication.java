@@ -278,16 +278,7 @@ public abstract class ZLApplication {
 	}
 
 	private final Object myTimerLock = new Object();
-	public final void startTimer() {
-		synchronized (myTimerLock) {
-			if (myTimer == null) {
-				myTimer = new Timer();
-				for (Map.Entry<Runnable,Long> entry : myTimerTaskPeriods.entrySet()) {
-					addTimerTaskInternal(entry.getKey(), entry.getValue());
-				}
-			}
-		}
-	}
+
 
 	public final void stopTimer() {
 		synchronized (myTimerLock) {

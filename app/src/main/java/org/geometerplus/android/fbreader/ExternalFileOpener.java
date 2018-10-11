@@ -74,44 +74,44 @@ class ExternalFileOpener implements FBReaderApp.ExternalFileOpener {
 	}
 
 	private void showErrorDialog(final ExternalFormatPlugin plugin, final Book book) {
-		final ZLResource rootResource = ZLResource.resource("dialog");
-		final ZLResource buttonResource = rootResource.getResource("button");
-		final ZLResource dialogResource = rootResource.getResource("missingPlugin");
-		final AlertDialog.Builder builder = new AlertDialog.Builder(myReader)
-			.setTitle(dialogResource.getValue())
-			.setMessage(dialogResource.getResource("message").getValue().replace("%s", plugin.supportedFileType()))
-			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					PackageUtil.installFromMarket(myReader, plugin.packageName());
-					myDialog = null;
-				}
-			})
-			.setNegativeButton(buttonResource.getResource("no").getValue(), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					myReader.onPluginNotFound(book);
-					myDialog = null;
-				}
-			})
-			.setOnCancelListener(new DialogInterface.OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					myReader.onPluginNotFound(book);
-					myDialog = null;
-				}
-			});
-
-		final Runnable showDialog = new Runnable() {
-			public void run() {
-				myDialog = builder.create();
-				myDialog.show();
-			}
-		};
-		if (!myReader.IsPaused) {
-			myReader.runOnUiThread(showDialog);
-		} else {
-			myReader.OnResumeAction = showDialog;
-		}
+//		final ZLResource rootResource = ZLResource.resource("dialog");
+//		final ZLResource buttonResource = rootResource.getResource("button");
+//		final ZLResource dialogResource = rootResource.getResource("missingPlugin");
+//		final AlertDialog.Builder builder = new AlertDialog.Builder(myReader)
+//			.setTitle(dialogResource.getValue())
+//			.setMessage(dialogResource.getResource("message").getValue().replace("%s", plugin.supportedFileType()))
+//			.setPositiveButton(buttonResource.getResource("yes").getValue(), new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					PackageUtil.installFromMarket(myReader, plugin.packageName());
+//					myDialog = null;
+//				}
+//			})
+//			.setNegativeButton(buttonResource.getResource("no").getValue(), new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					myReader.onPluginNotFound(book);
+//					myDialog = null;
+//				}
+//			})
+//			.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//				@Override
+//				public void onCancel(DialogInterface dialog) {
+//					myReader.onPluginNotFound(book);
+//					myDialog = null;
+//				}
+//			});
+//
+//		final Runnable showDialog = new Runnable() {
+//			public void run() {
+//				myDialog = builder.create();
+//				myDialog.show();
+//			}
+//		};
+//		if (!myReader.IsPaused) {
+//			myReader.runOnUiThread(showDialog);
+//		} else {
+//			myReader.OnResumeAction = showDialog;
+//		}
 	}
 }
