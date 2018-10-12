@@ -279,7 +279,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     }
 
     public void navigate() {
-        ((NavigationPopup) myFBReaderApp.getPopupById(NavigationPopup.ID)).runNavigation();
+//        ((NavigationPopup) myFBReaderApp.getPopupById(NavigationPopup.ID)).runNavigation();
     }
 
     @Override

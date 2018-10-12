@@ -82,6 +82,7 @@ public final class FBReaderApp extends ZLApplication {
 		Collection = collection;
 
 		collection.addListener(new IBookCollection.Listener<Book>() {
+			@Override
 			public void onBookEvent(BookEvent event, Book book) {
 				switch (event) {
 					case BookmarkStyleChanged:
@@ -101,6 +102,7 @@ public final class FBReaderApp extends ZLApplication {
 				}
 			}
 
+			@Override
 			public void onBuildEvent(IBookCollection.Status status) {
 			}
 		});
