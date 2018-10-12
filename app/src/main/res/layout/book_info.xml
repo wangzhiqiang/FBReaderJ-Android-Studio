@@ -29,6 +29,7 @@
 			android:layout_height="wrap_content"
 		/>
 		<Button
+			android:visibility="gone"
 			android:id="@+id/book_info_button_edit"
 			android:layout_width="0dip"
 			android:layout_weight="1"
@@ -36,6 +37,7 @@
 			android:layout_height="wrap_content"
 		/>
 		<Button
+			android:visibility="gone"
 			android:id="@+id/book_info_button_reload"
 			android:layout_width="0dip"
 			android:layout_weight="1"

@@ -280,11 +280,11 @@ public class BookmarksActivity extends Activity implements IBookCollection.Liste
 			case OPEN_ITEM_ID:
 				gotoBookmark(bookmark);
 				return true;
-			case EDIT_ITEM_ID:
-				final Intent intent = new Intent(this, EditBookmarkActivity.class);
-				FBReaderIntents.putBookmarkExtra(intent, bookmark);
-				OrientationUtil.startActivity(this, intent);
-				return true;
+//			case EDIT_ITEM_ID:
+//				final Intent intent = new Intent(this, EditBookmarkActivity.class);
+//				FBReaderIntents.putBookmarkExtra(intent, bookmark);
+//				OrientationUtil.startActivity(this, intent);
+//				return true;
 			case DELETE_ITEM_ID:
 				myCollection.deleteBookmark(bookmark);
 				return true;

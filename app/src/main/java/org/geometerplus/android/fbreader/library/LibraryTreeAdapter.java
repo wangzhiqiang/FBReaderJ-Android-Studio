@@ -67,6 +67,7 @@ class LibraryTreeAdapter extends TreeAdapter {
 		return view;
 	}
 
+	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		final LibraryTree tree = (LibraryTree)getItem(position);
 		final View view = createView(convertView, parent, tree);
