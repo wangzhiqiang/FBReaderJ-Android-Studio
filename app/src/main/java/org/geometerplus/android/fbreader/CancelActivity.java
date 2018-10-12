@@ -38,6 +38,8 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 
 import org.geometerplus.android.util.ViewUtil;
 
+
+//返回键的弹出层
 public class CancelActivity extends ListActivity {
 	private BookCollectionShadow myCollection;
 

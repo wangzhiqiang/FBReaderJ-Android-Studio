@@ -1,18 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-Compile By Tandong  2016.3.24 
- * www.whatjay.com
- * 
- * 谭东基于FBReader官方github最新版原始编译，可以放心使用。
- *这里的so库是用ADT编译导入的，如果你需要修改包名，则需要重新编译so库，替换这里的so库即可。
- * QQ 852041173
- * Android开发者QQ群 271410559
- -->
+<?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.geometerplus.zlibrary.ui.android"
      >
-
-
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -26,18 +17,7 @@ Compile By Tandong  2016.3.24
         android:label="@string/app_name"
         tools:replace="android:icon"
         android:logo="@drawable/fbreader_bw">
-        <activity
-            android:name="org.geometerplus.android.fbreader.error.BookReadingErrorActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:process=":error"
-            android:theme="@style/FBReader.Dialog">
-            <intent-filter>
-                <action android:name="android.fbreader.action.ERROR" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="BookReadingException"
-                    tools:ignore="AppLinkUrlError" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".error.BugReportActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -45,38 +25,7 @@ Compile By Tandong  2016.3.24
             android:label="FBReader crash"
             android:process=":crash"
             android:theme="@style/FBReader.Activity" />
-        <activity
-            android:name="org.geometerplus.android.fbreader.crash.FixBooksDirectoryActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:process=":crash"
-            android:theme="@style/FBReader.Dialog">
-            <intent-filter>
-                <action android:name="android.fbreader.action.CRASH" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="CachedCharStorageException"
-                    tools:ignore="AppLinkUrlError" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="org.geometerplus.android.fbreader.crash.MissingNativeLibraryActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:process=":crash"
-            android:theme="@style/FBReader.Dialog">
-            <intent-filter>
-                <action android:name="android.fbreader.action.CRASH" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="ExceptionInInitializerError"
-                    tools:ignore="AppLinkUrlError" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.fbreader.action.CRASH" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="UnsatisfiedLinkError"
-                    tools:ignore="AppLinkUrlError" />
-            </intent-filter>
-        </activity>
+
 
 
 
@@ -130,12 +79,7 @@ Compile By Tandong  2016.3.24
                 <data android:pathPattern=".*\\.epub" />
 
             </intent-filter>
-            <!--intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="content" android:pathPattern=".*\\.fb2"/>
-            </intent-filter-->
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -176,10 +120,6 @@ Compile By Tandong  2016.3.24
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="org.geometerplus.android.fbreader.PluginListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FBReader.Dialog" />
 
 
 
@@ -211,17 +151,7 @@ Compile By Tandong  2016.3.24
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="org.geometerplus.android.fbreader.library.LibrarySearchActivity"
-            android:process=":library"
-            android:theme="@android:style/Theme.NoDisplay">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
+
         <activity
             android:name="org.geometerplus.android.fbreader.library.LibraryActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -248,20 +178,7 @@ Compile By Tandong  2016.3.24
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:exported="false"
             android:theme="@style/FBReader.Dialog" />
-        <!--<activity-->
-            <!--android:name="org.geometerplus.android.fbreader.preferences.background.Chooser"-->
-            <!--android:configChanges="orientation|screenSize|keyboard|keyboardHidden"-->
-            <!--android:exported="false"-->
-            <!--android:theme="@style/FBReader.Dialog" />-->
-        <!--<activity-->
-            <!--android:name="org.geometerplus.android.fbreader.preferences.background.PredefinedImages"-->
-            <!--android:configChanges="orientation|screenSize|keyboard|keyboardHidden"-->
-            <!--android:exported="false"-->
-            <!--android:theme="@style/FBReader.Dialog" />-->
-        <activity
-            android:name="org.geometerplus.android.util.FolderListDialogActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:exported="false"
-            android:theme="@style/FBReader.Dialog" />
+
+
     </application>
 </manifest>
