@@ -37,7 +37,7 @@ import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 //import org.geometerplus.android.fbreader.network.BookDownloaderService;
-import org.geometerplus.android.fbreader.sync.MissingBookActivity;
+//import org.geometerplus.android.fbreader.sync.MissingBookActivity;
 
 class AppNotifier implements FBReaderApp.Notifier {
 	private final Activity myActivity;
@@ -67,38 +67,38 @@ class AppNotifier implements FBReaderApp.Notifier {
 	}
 
 	private void showMissingBookNotificationInternal(SyncData.ServerBookInfo info) {
-		final String errorTitle = MissingBookActivity.errorTitle();
+//		final String errorTitle = MissingBookActivity.errorTitle();
 
-		final NotificationManager notificationManager =
-			(NotificationManager)myActivity.getSystemService(Activity.NOTIFICATION_SERVICE);
-		final NotificationCompat.Builder builder = new NotificationCompat.Builder(myActivity)
-			.setSmallIcon(R.drawable.fbreader)
-			.setTicker(errorTitle)
-			.setContentTitle(errorTitle)
-			.setContentText(info.Title);
+//		final NotificationManager notificationManager =
+//			(NotificationManager)myActivity.getSystemService(Activity.NOTIFICATION_SERVICE);
+//		final NotificationCompat.Builder builder = new NotificationCompat.Builder(myActivity)
+//			.setSmallIcon(R.drawable.fbreader)
+//			.setTicker(errorTitle)
+//			.setContentTitle(errorTitle)
+//			.setContentText(info.Title);
 
-		if (info.ThumbnailUrl != null) {
-			SQLiteCookieDatabase.init(myActivity);
-			final NetworkImage thumbnail = new NetworkImage(info.ThumbnailUrl, Paths.systemInfo(myActivity));
-			thumbnail.synchronize();
-			try {
-				builder.setLargeIcon(
-					BitmapFactory.decodeStream(thumbnail.getRealImage().inputStream())
-				);
-			} catch (Throwable t) {
-				// ignore
-			}
-		}
-
-		final int notificationId = info.Hashes.size() > 0
-			? info.Hashes.get(0).hashCode() : NotificationUtil.MISSING_BOOK_ID;
-
-		Uri uri = null;
-		try {
-			uri = Uri.parse(info.DownloadUrl);
-		} catch (Exception e) {
-		}
-		builder.setAutoCancel(uri == null);
+//		if (info.ThumbnailUrl != null) {
+//			SQLiteCookieDatabase.init(myActivity);
+//			final NetworkImage thumbnail = new NetworkImage(info.ThumbnailUrl, Paths.systemInfo(myActivity));
+//			thumbnail.synchronize();
+//			try {
+//				builder.setLargeIcon(
+//					BitmapFactory.decodeStream(thumbnail.getRealImage().inputStream())
+//				);
+//			} catch (Throwable t) {
+//				// ignore
+//			}
+//		}
+//
+//		final int notificationId = info.Hashes.size() > 0
+//			? info.Hashes.get(0).hashCode() : NotificationUtil.MISSING_BOOK_ID;
+//
+//		Uri uri = null;
+//		try {
+//			uri = Uri.parse(info.DownloadUrl);
+//		} catch (Exception e) {
+//		}
+//		builder.setAutoCancel(uri == null);
 //		if (uri != null) {
 //			final Intent downloadIntent = new Intent(myActivity, MissingBookActivity.class);
 //			downloadIntent

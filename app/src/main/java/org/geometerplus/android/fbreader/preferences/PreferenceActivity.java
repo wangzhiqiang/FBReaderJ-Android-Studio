@@ -51,7 +51,7 @@ import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
 //import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
-import org.geometerplus.android.fbreader.sync.SyncOperations;
+//import org.geometerplus.android.fbreader.sync.SyncOperations;
 
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
@@ -168,7 +168,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			}
 
 			private void enableSynchronisation() {
-				SyncOperations.enableSync(PreferenceActivity.this, syncOptions);
+//				Sync Operations.enableSync(PreferenceActivity.this, syncOptions);
 			}
 
 			@Override
