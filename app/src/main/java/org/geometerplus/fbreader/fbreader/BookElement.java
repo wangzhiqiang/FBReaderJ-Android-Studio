@@ -27,49 +27,50 @@ import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.view.*;
 
-import org.geometerplus.fbreader.network.NetworkImage;
-import org.geometerplus.fbreader.network.opds.OPDSBookItem;
-import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
+//import org.geometerplus.fbreader.network.NetworkImage;
+//import org.geometerplus.fbreader.network.opds.OPDSBookItem;
+//import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
 public final class BookElement extends ExtensionElement {
 	private final FBView myView;
 
-	private OPDSBookItem myItem;
-	private NetworkImage myCover;
+//	private OPDSBookItem myItem;
+//	private NetworkImage myCover;
 
 	BookElement(FBView view) {
 		myView = view;
 	}
 
-	public void setData(OPDSBookItem item) {
-		final String bookUrl = item.getUrl(UrlInfo.Type.Book);
-		String coverUrl = item.getUrl(UrlInfo.Type.Image);
-		if (coverUrl == null) {
-			coverUrl = item.getUrl(UrlInfo.Type.Thumbnail);
-		}
-		if (bookUrl == null || coverUrl == null) {
-			myItem = null;
-			myCover = null;
-		} else {
-			myItem = item;
-			myCover = new NetworkImage(coverUrl, myView.Application.SystemInfo);
-			myCover.synchronize();
-		}
-	}
+//	public void setData(OPDSBookItem item) {
+//		final String bookUrl = item.getUrl(UrlInfo.Type.Book);
+//		String coverUrl = item.getUrl(UrlInfo.Type.Image);
+//		if (coverUrl == null) {
+//			coverUrl = item.getUrl(UrlInfo.Type.Thumbnail);
+//		}
+//		if (bookUrl == null || coverUrl == null) {
+//			myItem = null;
+//			myCover = null;
+//		} else {
+//			myItem = item;
+//			myCover = new NetworkImage(coverUrl, myView.Application.SystemInfo);
+//			myCover.synchronize();
+//		}
+//	}
 
-	public boolean isInitialized() {
-		return myItem != null && myCover != null;
-	}
-
-	public OPDSBookItem getItem() {
-		return myItem;
-	}
+//	public boolean isInitialized() {
+//		return myItem != null && myCover != null;
+//	}
+//
+//	public OPDSBookItem getItem() {
+//		return myItem;
+//	}
 
 	public ZLImageData getImageData() {
-		if (myCover == null) {
-			return null;
-		}
-		return ZLImageManager.Instance().getImageData(myCover);
+//		if (myCover == null) {
+//			return null;
+//		}
+//		return ZLImageManager.Instance().getImageData(myCover);
+		return null;
 	}
 
 	@Override

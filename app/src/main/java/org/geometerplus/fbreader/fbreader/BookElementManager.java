@@ -26,8 +26,8 @@ import java.util.*;
 import org.geometerplus.zlibrary.core.network.*;
 import org.geometerplus.zlibrary.text.view.ExtensionElementManager;
 
-import org.geometerplus.fbreader.network.NetworkLibrary;
-import org.geometerplus.fbreader.network.opds.*;
+//import org.geometerplus.fbreader.network.NetworkLibrary;
+//import org.geometerplus.fbreader.network.opds.*;
 
 class BookElementManager extends ExtensionElementManager {
 	private final FBView myView;
@@ -70,42 +70,42 @@ class BookElementManager extends ExtensionElementManager {
 	}
 
 	private void startLoading(final String url, final List<BookElement> elements) {
-		final NetworkLibrary library = NetworkLibrary.Instance(myView.Application.SystemInfo);
+//		final NetworkLibrary library = NetworkLibrary.Instance(myView.Application.SystemInfo);
 
-		new Thread() {
-			public void run() {
-				final SimpleOPDSFeedHandler handler = new SimpleOPDSFeedHandler(library, url);
-				try {
-					new QuietNetworkContext().perform(new ZLNetworkRequest.Get(url, true) {
-						@Override
-						public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
-							new OPDSXMLReader(library, handler, false).read(inputStream);
-						}
-					});
-					if (handler.books().isEmpty()) {
-						throw new RuntimeException();
-					}
-					myTimer = null;
-					final List<OPDSBookItem> items = handler.books();
-					int index = 0;
-					for (BookElement book : elements) {
-						book.setData(items.get(index));
-						index = (index + 1) % items.size();
-						myScreenRefresher.run();
-					}
-				} catch (Exception e) {
-					if (myTimer == null) {
-						myTimer = new Timer();
-					}
-					myTimer.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							startLoading(url, elements);
-						}
-					}, 10000);
-					e.printStackTrace();
-				}
-			}
-		}.start();
+//		new Thread() {
+//			public void run() {
+//				final SimpleOPDSFeedHandler handler = new SimpleOPDSFeedHandler(library, url);
+//				try {
+//					new QuietNetworkContext().perform(new ZLNetworkRequest.Get(url, true) {
+//						@Override
+//						public void handleStream(InputStream inputStream, int length) throws IOException, ZLNetworkException {
+//							new OPDSXMLReader(library, handler, false).read(inputStream);
+//						}
+//					});
+//					if (handler.books().isEmpty()) {
+//						throw new RuntimeException();
+//					}
+//					myTimer = null;
+//					final List<OPDSBookItem> items = handler.books();
+//					int index = 0;
+//					for (BookElement book : elements) {
+//						book.setData(items.get(index));
+//						index = (index + 1) % items.size();
+//						myScreenRefresher.run();
+//					}
+//				} catch (Exception e) {
+//					if (myTimer == null) {
+//						myTimer = new Timer();
+//					}
+//					myTimer.schedule(new TimerTask() {
+//						@Override
+//						public void run() {
+//							startLoading(url, elements);
+//						}
+//					}, 10000);
+//					e.printStackTrace();
+//				}
+//			}
+//		}.start();
 	}
 }
