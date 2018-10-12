@@ -146,7 +146,7 @@ Compile By Tandong  2016.3.24
                     android:host="*"
                     android:scheme="file" />
                 <data android:mimeType="application/epub+zip" />
-                 
+
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
