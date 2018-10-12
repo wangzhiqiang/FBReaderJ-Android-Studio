@@ -10,16 +10,9 @@ Compile By Tandong  2016.3.24
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.geometerplus.zlibrary.ui.android"
-    android:installLocation="auto"
      >
 
 
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true"
-        android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -124,17 +117,7 @@ Compile By Tandong  2016.3.24
                     android:host="*"
                     android:scheme="file" />
                 <data android:pathPattern=".*\\.epub" />
-                <data android:pathPattern=".*\\.oeb" />
-                <data android:pathPattern=".*\\.fb2" />
-                <data android:pathPattern=".*\\.fb2\\.zip" />
-                <data android:pathPattern=".*\\.mobi" />
-                <data android:pathPattern=".*\\.prc" />
-                <data android:pathPattern=".*\\.txt" />
-                <data android:pathPattern=".*\\.rtf" />
-                <data android:pathPattern=".*\\.pdf" />
-                <data android:pathPattern=".*\\.djvu" />
-                <data android:pathPattern=".*\\.cbr" />
-                <data android:pathPattern=".*\\.cbz" />
+
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -145,16 +128,7 @@ Compile By Tandong  2016.3.24
                     android:mimeType="text/plain"
                     android:scheme="file" />
                 <data android:pathPattern=".*\\.epub" />
-                <data android:pathPattern=".*\\.oeb" />
-                <data android:pathPattern=".*\\.fb2" />
-                <data android:pathPattern=".*\\.mobi" />
-                <data android:pathPattern=".*\\.prc" />
-                <data android:pathPattern=".*\\.txt" />
-                <data android:pathPattern=".*\\.rtf" />
-                <data android:pathPattern=".*\\.pdf" />
-                <data android:pathPattern=".*\\.djvu" />
-                <data android:pathPattern=".*\\.cbr" />
-                <data android:pathPattern=".*\\.cbz" />
+
             </intent-filter>
             <!--intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -172,19 +146,7 @@ Compile By Tandong  2016.3.24
                     android:host="*"
                     android:scheme="file" />
                 <data android:mimeType="application/epub+zip" />
-                <data android:mimeType="application/x-pilot-prc" />
-                <data android:mimeType="application/x-mobipocket-ebook" />
-                <data android:mimeType="application/x-fictionbook+xml" />
-                <data android:mimeType="application/x-fictionbook" />
-                <data android:mimeType="application/pdf" />
-                <data android:mimeType="application/x-pdf" />
-                <data android:mimeType="application/djvu" />
-                <data android:mimeType="application/x-djvu" />
-                <data android:mimeType="application/x-cbr" />
-                <data android:mimeType="application/x-cbz" />
-                <data android:mimeType="image/vnd.djvu" />
-                <data android:mimeType="image/x-djvu" />
-                <data android:mimeType="text/plain" />
+                 
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -219,41 +181,7 @@ Compile By Tandong  2016.3.24
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FBReader.Dialog" />
 
-        <activity
-            android:name="org.geometerplus.android.fbreader.bookmark.BookmarksActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
-            android:process=":bookmarks"
-            android:theme="@style/FBReader.Activity.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-            <intent-filter>
-                <action android:name="android.fbreader.action.BOOKMARKS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <!--<activity-->
-            <!--android:name="org.geometerplus.android.fbreader.bookmark.EditBookmarkActivity"-->
-            <!--android:configChanges="orientation|keyboardHidden|screenSize"-->
-            <!--android:theme="@style/FBReader.Dialog">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.fbreader.action.EDIT_BOOKMARK" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
-        <activity
-            android:name="org.geometerplus.android.fbreader.bookmark.EditStyleActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FBReader.Dialog">
-            <intent-filter>
-                <action android:name="android.fbreader.action.EDIT_STYLES" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+
 
         <service
             android:name="org.geometerplus.android.fbreader.libraryService.LibraryService"
@@ -271,17 +199,7 @@ Compile By Tandong  2016.3.24
                 <action android:name="android.fbreader.action.CONFIG_SERVICE" />
             </intent-filter>
         </service>
-        <service
-            android:name="org.geometerplus.android.fbreader.sync.SyncService"
-            android:launchMode="singleTask"
-            android:process=":synchroniser">
-            <intent-filter>
-                <action android:name="android.fbreader.action.sync.START" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.fbreader.action.sync.QUICK_SYNC" />
-            </intent-filter>
-        </service>
+
 
         <activity
             android:name="org.geometerplus.android.fbreader.library.BookInfoActivity"
