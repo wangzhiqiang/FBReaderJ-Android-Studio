@@ -74,7 +74,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
 
     private Intent myOpenBookIntent = null;
 
-    private final FBReaderApp.Notifier myNotifier = new AppNotifier(this);
+//    private final FBReaderApp.Notifier myNotifier = new AppNotifier(this);
 
 
     private synchronized void openBook(Intent intent, final Runnable action, boolean force) {
@@ -103,8 +103,9 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             }
         }
         Config.Instance().runOnConnect(new Runnable() {
+            @Override
             public void run() {
-                myFBReaderApp.openBook(myBook, bookmark, action, myNotifier);
+                myFBReaderApp.openBook(myBook, bookmark, action, null);
                 AndroidFontUtil.clearFontCache();
             }
         });
@@ -208,6 +209,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             final Intent intent = myOpenBookIntent;
             myOpenBookIntent = null;
             getCollection().bindToService(this, new Runnable() {
+                @Override
                 public void run() {
                     openBook(intent, null, true);
                 }
@@ -286,19 +288,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         return true;
     }
 
-    protected void onPluginNotFound(final Book book) {
-        final BookCollectionShadow collection = getCollection();
-        collection.bindToService(this, new Runnable() {
-            public void run() {
-                final Book recent = collection.getRecentBook(0);
-                if (recent != null && !collection.sameBook(recent, book)) {
-                    myFBReaderApp.openBook(recent, null, null, null);
-                } else {
-                    myFBReaderApp.openHelpBook();
-                }
-            }
-        });
-    }
+
 
 
     @Override
@@ -361,6 +351,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     @Override
     public void refresh() {
         runOnUiThread(new Runnable() {
+            @Override
             public void run() {
                 for (Map.Entry<MenuItem, String> entry : myMenuItemMap.entrySet()) {
                     final String actionId = entry.getValue();
@@ -410,6 +401,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     @Override
     public void setWindowTitle(final String title) {
         runOnUiThread(new Runnable() {
+            @Override
             public void run() {
                 setTitle(title);
             }
@@ -423,6 +415,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     }
 
 
+    @Override
     public void hideDictionarySelection() {
         myFBReaderApp.getTextView().hideOutline();
         myFBReaderApp.getTextView().removeHighlightings(DictionaryHighlighting.class);
