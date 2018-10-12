@@ -96,10 +96,12 @@ public abstract class ZLApplication {
 	}
 
 	private final SynchronousExecutor myDummyExecutor = new SynchronousExecutor() {
+		@Override
 		public void execute(Runnable action, Runnable uiPostAction) {
 			action.run();
 		}
 
+		@Override
 		public void executeAux(String key, Runnable action) {
 			action.run();
 		}
