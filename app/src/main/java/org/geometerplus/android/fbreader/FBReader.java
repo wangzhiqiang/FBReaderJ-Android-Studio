@@ -2,6 +2,7 @@
 
 package org.geometerplus.android.fbreader;
 
+import android.util.Log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.formatPlugin.PluginUtil;
 //import org.geometerplus.android.fbreader.httpd.DataService;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
@@ -30,7 +30,6 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.ui.android.R;
 import org.geometerplus.zlibrary.ui.android.error.ErrorKeys;
-import org.geometerplus.zlibrary.ui.android.library.ZLAndroidLibrary;
 import org.geometerplus.zlibrary.ui.android.view.AndroidFontUtil;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
@@ -42,11 +41,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
 
 public final class FBReader extends FBReaderMainActivity implements ZLApplicationWindow {
+
 
     public static final int RESULT_DO_NOTHING = RESULT_FIRST_USER;
     public static final int RESULT_REPAINT = RESULT_FIRST_USER + 1;
@@ -96,7 +93,8 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
                 if (file.getPhysicalFile() != null) {
                     file = file.getPhysicalFile();
                 }
-                UIMessageUtil.showErrorMessage(this, "fileNotFound", file.getPath());
+                Log.e(TAG, "openBook: fileNotFound"+file.getPath() );
+//                UIMessageUtil.showErrorMessage(this, "fileNotFound", file.getPath());
                 myBook = null;
             } else {
                 NotificationUtil.drop(this, myBook);
@@ -314,12 +312,14 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     // methods from ZLApplicationWindow interface
     @Override
     public void showErrorMessage(String key) {
-        UIMessageUtil.showErrorMessage(this, key);
+//        UIMessageUtil.showErrorMessage(this, key);
+        Log.e(TAG, "showErrorMessage: "+key);
     }
 
     @Override
     public void showErrorMessage(String key, String parameter) {
-        UIMessageUtil.showErrorMessage(this, key, parameter);
+//        UIMessageUtil.showErrorMessage(this, key, parameter);
+        Log.e(TAG, "showErrorMessage: "+key+" "+parameter);
     }
 
     @Override

@@ -45,6 +45,7 @@ public abstract class UIUtil {
 		}
 		try {
 			ourProgressHandler = new Handler() {
+				@Override
 				public void handleMessage(Message message) {
 					try {
 						synchronized (ourMonitor) {
@@ -120,6 +121,7 @@ public abstract class UIUtil {
 			private final String myMessage = myResource.getResource(key).getValue();
 			private volatile ProgressDialog myProgress;
 
+			@Override
 			public void execute(final Runnable action, final Runnable uiPostAction) {
 				activity.runOnUiThread(new Runnable() {
 					public void run() {
@@ -159,6 +161,7 @@ public abstract class UIUtil {
 				});
 			}
 
+			@Override
 			public void executeAux(String key, Runnable runnable) {
 				setMessage(myProgress, myResource.getResource(key).getValue());
 				runnable.run();

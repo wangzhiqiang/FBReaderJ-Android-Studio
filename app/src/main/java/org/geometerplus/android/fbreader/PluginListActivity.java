@@ -27,7 +27,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,7 +39,6 @@ import org.geometerplus.zlibrary.core.util.XmlUtil;
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.android.util.PackageUtil;
-import org.geometerplus.android.util.ViewUtil;
 
 public class PluginListActivity extends ListActivity {
 	private final ZLResource myResource = ZLResource.resource("plugins");
@@ -120,8 +118,8 @@ public class PluginListActivity extends ListActivity {
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.plugin_item, parent, false);
 			final ImageView iconView = (ImageView)view.findViewById(R.id.plugin_item_icon);
-			final TextView titleView = ViewUtil.findTextView(view, R.id.plugin_item_title);
-			final TextView summaryView = ViewUtil.findTextView(view, R.id.plugin_item_summary);
+			final TextView titleView = view.findViewById( R.id.plugin_item_title);
+			final TextView summaryView =view.findViewById( R.id.plugin_item_summary);
 			final Plugin plugin = getItem(position);
 			if (plugin != null) {
 				final ZLResource resource = myResource.getResource(plugin.Id);

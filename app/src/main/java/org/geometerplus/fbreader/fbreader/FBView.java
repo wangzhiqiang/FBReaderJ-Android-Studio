@@ -329,7 +329,8 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	public boolean onTrackballRotated(int diffX, int diffY) {
+	@Override
+    public boolean onTrackballRotated(int diffX, int diffY) {
 		if (diffX == 0 && diffY == 0) {
 			return true;
 		}

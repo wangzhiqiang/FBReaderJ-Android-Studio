@@ -27,16 +27,12 @@ import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
 
-import org.geometerplus.zlibrary.core.options.Config;
-
 import org.geometerplus.zlibrary.ui.android.R;
 
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-
-import org.geometerplus.android.util.ViewUtil;
 
 
 //返回键的弹出层
@@ -99,8 +95,8 @@ public class CancelActivity extends ListActivity {
 				? convertView
 				: LayoutInflater.from(parent.getContext()).inflate(R.layout.cancel_item, parent, false);
 			final CancelMenuHelper.ActionDescription item = getItem(position);
-			final TextView titleView = ViewUtil.findTextView(view, R.id.cancel_item_title);
-			final TextView summaryView = ViewUtil.findTextView(view, R.id.cancel_item_summary);
+			final TextView titleView = view.findViewById(R.id.cancel_item_title);
+			final TextView summaryView = view.findViewById( R.id.cancel_item_summary);
 			final String title = item.Title;
 			final String summary = item.Summary;
 			titleView.setText(title);

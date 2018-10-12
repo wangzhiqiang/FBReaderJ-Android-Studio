@@ -36,6 +36,8 @@ public abstract class FBReaderMainActivity extends Activity {
 	public static final int REQUEST_CANCEL_MENU = 2;
 	public static final int REQUEST_DICTIONARY = 3;
 
+	protected String TAG = getClass().getSimpleName();
+
 //	private volatile SuperActivityToast myToast;
 
 	@Override

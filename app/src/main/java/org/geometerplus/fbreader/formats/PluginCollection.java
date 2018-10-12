@@ -66,13 +66,14 @@ public class PluginCollection implements IFormatPluginCollection {
 	}
 
 	private PluginCollection(SystemInfo systemInfo) {
-		if (Build.VERSION.SDK_INT >= 8) {
-			myExternalPlugins.add(new DjVuPlugin(systemInfo));
-			myExternalPlugins.add(new PDFPlugin(systemInfo));
-			myExternalPlugins.add(new ComicBookPlugin(systemInfo));
-		}
+//		if (Build.VERSION.SDK_INT >= 8) {
+//			myExternalPlugins.add(new DjVuPlugin(systemInfo));
+//			myExternalPlugins.add(new PDFPlugin(systemInfo));
+//			myExternalPlugins.add(new ComicBookPlugin(systemInfo));
+//		}
 	}
 
+	@Override
 	public FormatPlugin getPlugin(ZLFile file) {
 		final FileType fileType = FileTypeCollection.Instance.typeForFile(file);
 		final FormatPlugin plugin = getPlugin(fileType);
@@ -119,6 +120,7 @@ public class PluginCollection implements IFormatPluginCollection {
 	private native NativeFormatPlugin[] nativePlugins(SystemInfo systemInfo);
 	private native void free();
 
+	@Override
 	protected void finalize() throws Throwable {
 		free();
 		super.finalize();

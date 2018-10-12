@@ -19,6 +19,7 @@
 
 package org.geometerplus.android.fbreader.tree;
 
+import android.util.Log;
 import java.util.*;
 
 import android.app.ListActivity;
@@ -28,7 +29,6 @@ import android.view.*;
 
 import org.fbreader.util.Pair;
 
-import org.geometerplus.android.util.UIMessageUtil;
 import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
@@ -42,6 +42,8 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	public static final String TREE_KEY_KEY = "TreeKey";
 	public static final String SELECTED_TREE_KEY_KEY = "SelectedTreeKey";
 	public static final String HISTORY_KEY = "HistoryKey";
+
+	protected String TAG = getClass().getSimpleName();
 
 	public final AndroidImageSynchronizer ImageSynchronizer = new AndroidImageSynchronizer(this);
 
@@ -85,6 +87,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		OrientationUtil.setOrientation(this, intent);
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					init(intent);
 				}
@@ -127,13 +130,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		openTree(tree, null, true);
 	}
 
-	public void clearHistory() {
-		runOnUiThread(new Runnable() {
-			public void run() {
-				myHistory.clear();
-			}
-		});
-	}
+
 
 	protected void onCurrentTreeChanged() {
 	}
@@ -146,11 +143,13 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 				if (messageKey != null) {
 					UIUtil.createExecutor(TreeActivity.this, messageKey).execute(
 						new Runnable() {
+							@Override
 							public void run() {
 								tree.waitForOpening();
 							}
 						},
 						new Runnable() {
+							@Override
 							public void run() {
 								openTreeInternal(tree, treeToSelect, storeInHistory);
 							}
@@ -191,6 +190,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 		if (index != -1) {
 			setSelection(index);
 			getListView().post(new Runnable() {
+				@Override
 				public void run() {
 					setSelection(index);
 				}
@@ -224,7 +224,8 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 				);
 				break;
 			case CANNOT_OPEN:
-				UIMessageUtil.showErrorMessage(TreeActivity.this, tree.getOpeningStatusMessage());
+				Log.e(TAG, "openTreeInternal: "+tree.getOpeningStatusMessage());
+//				UIMessageUtil.showErrorMessage(TreeActivity.this, tree.getOpeningStatusMessage());
 				break;
 		}
 	}
