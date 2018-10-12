@@ -32,16 +32,16 @@ import org.geometerplus.zlibrary.text.model.CachedCharStorageException;
 import org.geometerplus.fbreader.book.AbstractBook;
 import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.bookmodel.BookModel;
-import org.geometerplus.fbreader.formats.fb2.FB2NativePlugin;
 import org.geometerplus.fbreader.formats.oeb.OEBNativePlugin;
 
 public class NativeFormatPlugin extends BuiltinFormatPlugin {
 	private static final Object ourNativeLock = new Object();
 
 	public static NativeFormatPlugin create(SystemInfo systemInfo, String fileType) {
-		if ("fb2".equals(fileType)) {
-			return new FB2NativePlugin(systemInfo);
-		} else if ("ePub".equals(fileType)) {
+//		if ("fb2".equals(fileType)) {
+//			return new FB2NativePlugin(systemInfo);
+//		} else
+			if ("ePub".equals(fileType)) {
 			return new OEBNativePlugin(systemInfo);
 		} else {
 			return new NativeFormatPlugin(systemInfo, fileType);
