@@ -56,7 +56,7 @@ class BookmarkSyncUtil {
 						responseMap.putAll((Map<String,Object>)response);
 					}
 				};
-				context.perform(infoRequest);
+//				context.perform(infoRequest);
 				for (Map<String,Object> info : (List<Map<String,Object>>)responseMap.get("actual")) {
 					final Info bmk = new Info(info);
 					actualServerInfos.put(bmk.Uid, bmk);
@@ -210,21 +210,21 @@ class BookmarkSyncUtil {
 
 			// Step 3b: getting new bookmarks from the server,
 			//    creating new objects on the client side
-			if (!toGetFromServer.isEmpty()) {
-				context.perform(new JsonRequest2(
-					SyncOptions.BASE_URL + "sync/bookmarks", fullRequestData(toGetFromServer)
-				) {
-					@Override
-					public void processResponse(Object response) {
-						for (Map<String,Object> info : (List<Map<String,Object>>)response) {
-							final Bookmark bookmark = newBookmarkFromData(info, booksByHash);
-							if (bookmark != null) {
-								collection.saveBookmark(bookmark);
-							}
-						}
-					}
-				});
-			}
+//			if (!toGetFromServer.isEmpty()) {
+//				context.perform(new JsonRequest2(
+//					SyncOptions.BASE_URL + "sync/bookmarks", fullRequestData(toGetFromServer)
+//				) {
+//					@Override
+//					public void processResponse(Object response) {
+//						for (Map<String,Object> info : (List<Map<String,Object>>)response) {
+//							final Bookmark bookmark = newBookmarkFromData(info, booksByHash);
+//							if (bookmark != null) {
+//								collection.saveBookmark(bookmark);
+//							}
+//						}
+//					}
+//				});
+//			}
 
 			// Step 3c: getting updated bookmarks from the server,
 			//    updating objects on the client side
@@ -233,19 +233,19 @@ class BookmarkSyncUtil {
 				for (Bookmark b : toUpdateOnClient) {
 					bookmarksMap.put(b.Uid, b);
 				}
-				context.perform(new JsonRequest2(
-					SyncOptions.BASE_URL + "sync/bookmarks", fullRequestData(ids(toUpdateOnClient))
-				) {
-					@Override
-					public void processResponse(Object response) {
-						for (Map<String,Object> info : (List<Map<String,Object>>)response) {
-							final Bookmark bookmark = bookmarkToUpdate(info, bookmarksMap);
-							if (bookmark != null) {
-								collection.saveBookmark(bookmark);
-							}
-						}
-					}
-				});
+//				context.perform(new JsonRequest2(
+//					SyncOptions.BASE_URL + "sync/bookmarks", fullRequestData(ids(toUpdateOnClient))
+//				) {
+//					@Override
+//					public void processResponse(Object response) {
+//						for (Map<String,Object> info : (List<Map<String,Object>>)response) {
+//							final Bookmark bookmark = bookmarkToUpdate(info, bookmarksMap);
+//							if (bookmark != null) {
+//								collection.saveBookmark(bookmark);
+//							}
+//						}
+//					}
+//				});
 			}
 
 			// Step 3d: sending locally updated information to the server
@@ -295,10 +295,10 @@ class BookmarkSyncUtil {
 						System.err.println("BMK UPDATED: " + response);
 					}
 				};
-				final String csrfToken = context.getCookieValue(SyncOptions.DOMAIN, "csrftoken");
-				serverUpdateRequest.addHeader("Referer", infoRequest.getURL());
-				serverUpdateRequest.addHeader("X-CSRFToken", csrfToken);
-				context.perform(serverUpdateRequest);
+//				final String csrfToken = context.getCookieValue(SyncOptions.DOMAIN, "csrftoken");
+//				serverUpdateRequest.addHeader("Referer", infoRequest.getURL());
+//				serverUpdateRequest.addHeader("X-CSRFToken", csrfToken);
+//				context.perform(serverUpdateRequest);
 			}
 		} catch (Throwable t) {
 			t.printStackTrace();

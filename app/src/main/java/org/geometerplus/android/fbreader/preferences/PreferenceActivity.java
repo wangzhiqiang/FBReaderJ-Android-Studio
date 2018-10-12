@@ -48,7 +48,7 @@ import org.geometerplus.fbreader.tips.TipsManager;
 
 import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
+//import org.geometerplus.android.fbreader.network.auth.ActivityNetworkContext;
 import org.geometerplus.android.fbreader.preferences.fileChooser.FileChooserCollection;
 import org.geometerplus.android.fbreader.preferences.background.BackgroundPreference;
 import org.geometerplus.android.fbreader.sync.SyncOperations;
@@ -57,7 +57,7 @@ import org.geometerplus.android.util.UIUtil;
 import org.geometerplus.android.util.DeviceType;
 
 public class PreferenceActivity extends ZLPreferenceActivity {
-	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
+//	private final ActivityNetworkContext myNetworkContext = new ActivityNetworkContext(this);
 	private final FileChooserCollection myChooserCollection = new FileChooserCollection(this, 2000);
 	private static final int BACKGROUND_REQUEST_CODE = 3000;
 	private BackgroundPreference myBackgroundPreference;
@@ -69,14 +69,14 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		myNetworkContext.onResume();
+//		myNetworkContext.onResume();
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (myNetworkContext.onActivityResult(requestCode, resultCode, data)) {
-			return;
-		}
+//		if (myNetworkContext.onActivityResult(requestCode, resultCode, data)) {
+//			return;
+//		}
 
 		if (resultCode != RESULT_OK) {
 			return;
@@ -161,7 +161,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 			{
 				if (syncOptions.Enabled.getValue()) {
 					setChecked(true);
-					setOnSummary(SyncUtil.getAccountName(myNetworkContext));
+//					setOnSummary(SyncUtil.getAccountName(myNetworkContext));
 				} else {
 					setChecked(false);
 				}
@@ -177,7 +177,7 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 				syncPreferences.run();
 
 				if (!isChecked()) {
-					SyncUtil.logout(myNetworkContext);
+//					SyncUtil.logout(myNetworkContext);
 					syncOptions.Enabled.setValue(false);
 					enableSynchronisation();
 					syncPreferences.run();
@@ -187,31 +187,31 @@ public class PreferenceActivity extends ZLPreferenceActivity {
 
 				UIUtil.createExecutor(PreferenceActivity.this, "tryConnect").execute(new Runnable() {
 					public void run() {
-						try {
-							myNetworkContext.perform(
-								new JsonRequest(SyncOptions.BASE_URL + "login/test") {
-									@Override
-									public void processResponse(Object response) {
-										final String account = (String)((Map)response).get("user");
-										syncOptions.Enabled.setValue(account != null);
-										enableSynchronisation();
-										runOnUiThread(new Runnable() {
-											public void run() {
-												setOnSummary(account);
-												syncPreferences.run();
-											}
-										});
-									}
-								}
-							);
-						} catch (ZLNetworkException e) {
-							e.printStackTrace();
+//						try {
+//							myNetworkContext.perform(
+//								new JsonRequest(SyncOptions.BASE_URL + "login/test") {
+//									@Override
+//									public void processResponse(Object response) {
+//										final String account = (String)((Map)response).get("user");
+//										syncOptions.Enabled.setValue(account != null);
+//										enableSynchronisation();
+//										runOnUiThread(new Runnable() {
+//											public void run() {
+//												setOnSummary(account);
+//												syncPreferences.run();
+//											}
+//										});
+//									}
+//								}
+//							);
+//						} catch (ZLNetworkException e) {
+//							e.printStackTrace();
 							runOnUiThread(new Runnable() {
 								public void run() {
 									setChecked(false);
 								}
 							});
-						}
+//						}
 					}
 				}, null);
 			}

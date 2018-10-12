@@ -25,7 +25,7 @@ import android.view.View;
 
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
-import org.geometerplus.android.fbreader.network.BookDownloaderService;
+//import org.geometerplus.android.fbreader.network.BookDownloaderService;
 import org.geometerplus.android.fbreader.util.SimpleDialogActivity;
 
 public class MissingBookActivity extends SimpleDialogActivity {
@@ -42,18 +42,18 @@ public class MissingBookActivity extends SimpleDialogActivity {
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 
-		final Intent intent = getIntent();
-		final String title = intent.getStringExtra(BookDownloaderService.Key.BOOK_TITLE);
-		setTitle(errorTitle());
-		textView().setText(errorMessage(title));
-		intent.setClass(this, BookDownloaderService.class);
+//		final Intent intent = getIntent();
+//		final String title = intent.getStringExtra(BookDownloaderService.Key.BOOK_TITLE);
+//		setTitle(errorTitle());
+//		textView().setText(errorMessage(title));
+//		intent.setClass(this, BookDownloaderService.class);
 
-		okButton().setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				startService(intent);
-				finish();
-			}
-		});
-		setButtonTexts("download", null);
+//		okButton().setOnClickListener(new View.OnClickListener() {
+//			public void onClick(View v) {
+//				startService(intent);
+//				finish();
+//			}
+//		});
+//		setButtonTexts("download", null);
 	}
 }

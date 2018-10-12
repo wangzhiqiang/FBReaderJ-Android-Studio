@@ -36,7 +36,7 @@ import org.geometerplus.fbreader.network.NetworkImage;
 import org.geometerplus.fbreader.network.sync.SyncData;
 import org.geometerplus.fbreader.network.urlInfo.UrlInfo;
 
-import org.geometerplus.android.fbreader.network.BookDownloaderService;
+//import org.geometerplus.android.fbreader.network.BookDownloaderService;
 import org.geometerplus.android.fbreader.sync.MissingBookActivity;
 
 class AppNotifier implements FBReaderApp.Notifier {
@@ -99,19 +99,19 @@ class AppNotifier implements FBReaderApp.Notifier {
 		} catch (Exception e) {
 		}
 		builder.setAutoCancel(uri == null);
-		if (uri != null) {
-			final Intent downloadIntent = new Intent(myActivity, MissingBookActivity.class);
-			downloadIntent
-				.setData(uri)
-				.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
-				.putExtra(BookDownloaderService.Key.BOOK_MIME, info.Mimetype)
-				.putExtra(BookDownloaderService.Key.BOOK_KIND, UrlInfo.Type.Book)
-				.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title)
-				.putExtra(BookDownloaderService.Key.NOTIFICATION_TO_DISMISS_ID, notificationId);
-			builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, downloadIntent, 0));
-		} else {
-			builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, new Intent(), 0));
-		}
-		notificationManager.notify(notificationId, builder.build());
+//		if (uri != null) {
+//			final Intent downloadIntent = new Intent(myActivity, MissingBookActivity.class);
+//			downloadIntent
+//				.setData(uri)
+//				.putExtra(BookDownloaderService.Key.FROM_SYNC, true)
+//				.putExtra(BookDownloaderService.Key.BOOK_MIME, info.Mimetype)
+//				.putExtra(BookDownloaderService.Key.BOOK_KIND, UrlInfo.Type.Book)
+//				.putExtra(BookDownloaderService.Key.BOOK_TITLE, info.Title)
+//				.putExtra(BookDownloaderService.Key.NOTIFICATION_TO_DISMISS_ID, notificationId);
+//			builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, downloadIntent, 0));
+//		} else {
+//			builder.setContentIntent(PendingIntent.getActivity(myActivity, 0, new Intent(), 0));
+//		}
+//		notificationManager.notify(notificationId, builder.build());
 	}
 }
