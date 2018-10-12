@@ -32,12 +32,12 @@ import org.geometerplus.fbreader.book.Book;
 
 import org.geometerplus.android.fbreader.tree.TreeActivity;
 import org.geometerplus.android.fbreader.tree.TreeAdapter;
-import org.geometerplus.android.fbreader.covers.CoverManager;
+//import org.geometerplus.android.fbreader.covers.CoverManager;
 
 import org.geometerplus.android.util.ViewUtil;
 
 class LibraryTreeAdapter extends TreeAdapter {
-	private CoverManager myCoverManager;
+//	private CoverManager myCoverManager;
 
 	LibraryTreeAdapter(LibraryActivity activity) {
 		super(activity);
@@ -76,18 +76,18 @@ class LibraryTreeAdapter extends TreeAdapter {
 			view.setBackgroundColor(0);
 		}
 
-		if (myCoverManager == null) {
-			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			final int coverHeight = view.getMeasuredHeight();
-			final TreeActivity activity = getActivity();
-			myCoverManager = new CoverManager(activity, activity.ImageSynchronizer, coverHeight * 15 / 32, coverHeight);
-			view.requestLayout();
-		}
-
+//		if (myCoverManager == null) {
+//			view.measure(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//			final int coverHeight = view.getMeasuredHeight();
+//			final TreeActivity activity = getActivity();
+//			myCoverManager = new CoverManager(activity, activity.ImageSynchronizer, coverHeight * 15 / 32, coverHeight);
+//			view.requestLayout();
+//		}
+//
 		final ImageView coverView = ViewUtil.findImageView(view, R.id.library_tree_item_icon);
-		if (!myCoverManager.trySetCoverImage(coverView, tree)) {
+//		if (!myCoverManager.trySetCoverImage(coverView, tree)) {
 			coverView.setImageResource(getCoverResourceId(tree));
-		}
+//		}
 
 		return view;
 	}
