@@ -33,7 +33,6 @@ import org.geometerplus.android.util.UIUtil;
 
 import org.geometerplus.fbreader.tree.FBTree;
 
-import org.geometerplus.android.fbreader.util.AndroidImageSynchronizer;
 import org.geometerplus.android.util.OrientationUtil;
 
 public abstract class TreeActivity<T extends FBTree> extends ListActivity {
@@ -45,7 +44,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 
 	protected String TAG = getClass().getSimpleName();
 
-	public final AndroidImageSynchronizer ImageSynchronizer = new AndroidImageSynchronizer(this);
+//	public final AndroidImageSynchronizer ImageSynchronizer = new AndroidImageSynchronizer(this);
 
 	private T myCurrentTree;
 	// we store the key separately because
@@ -69,7 +68,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 
 	@Override
 	protected void onDestroy() {
-		ImageSynchronizer.clear();
+//		ImageSynchronizer.clear();
 
 		super.onDestroy();
 	}

@@ -35,12 +35,13 @@ public abstract class ZLAndroidApplication extends Application {
 
 		// this is a workaround for strange issue on some devices:
 		//    NoClassDefFoundError for android.os.AsyncTask
-		try {
-			Class.forName("android.os.AsyncTask");
-		} catch (Throwable t) {
-		}
+//		try {
+//			Class.forName("android.os.AsyncTask");
+//		} catch (Throwable t) {
+//		}
 
 		myConfig = new ConfigShadow(this);
+		//喵喵的。内部做了一些操作。先留着，图片显示的时候还需要
 		new ZLAndroidImageManager();
 		myLibrary = new ZLAndroidLibrary(this);
 	}

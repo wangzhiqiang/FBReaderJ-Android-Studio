@@ -21,27 +21,29 @@ package org.geometerplus.zlibrary.ui.android.image;
 
 import org.geometerplus.zlibrary.core.image.*;
 
+
 public final class ZLAndroidImageManager extends ZLImageManager {
 	@Override
 	public ZLAndroidImageData getImageData(ZLImage image) {
+		ZLAndroidImageData res= null;
 		if (image instanceof ZLImageProxy) {
-			return getImageData(((ZLImageProxy)image).getRealImage());
+			res= getImageData(((ZLImageProxy)image).getRealImage());
 		} else if (image instanceof ZLStreamImage) {
-			return new InputStreamImageData((ZLStreamImage)image);
+			//这里是书籍中图片显示获取数据的位置
+			res = new InputStreamImageData((ZLStreamImage)image);
 		} else if (image instanceof ZLBitmapImage) {
-			return BitmapImageData.get((ZLBitmapImage)image);
-		} else {
-			// unknown image type or null
-			return null;
+			res=  BitmapImageData.get((ZLBitmapImage) image);
 		}
+
+		return  res;
 	}
 
 	private ZLAndroidImageLoader myLoader;
 
-	public void startImageLoading(ZLImageProxy.Synchronizer syncronizer, ZLImageProxy image, Runnable postLoadingRunnable) {
-		if (myLoader == null) {
-			myLoader = new ZLAndroidImageLoader();
-		}
-		myLoader.startImageLoading(syncronizer, image, postLoadingRunnable);
-	}
+//	public void startImageLoading(ZLImageProxy.Synchronizer syncronizer, ZLImageProxy image, Runnable postLoadingRunnable) {
+//		if (myLoader == null) {
+//			myLoader = new ZLAndroidImageLoader();
+//		}
+//		myLoader.startImageLoading(syncronizer, image, postLoadingRunnable);
+//	}
 }
