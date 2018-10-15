@@ -366,22 +366,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         exception.printStackTrace();
 
 
-//        final Intent intent = new Intent(
-//            FBReaderIntents.Action.ERROR,
-//            new Uri.Builder().scheme(exception.getClass().getSimpleName()).build()
-//        );
-//        intent.setPackage(FBReaderIntents.DEFAULT_PACKAGE);
-//        intent.putExtra(ErrorKeys.MESSAGE, exception.getMessage());
-//        final StringWriter stackTrace = new StringWriter();
-//        exception.printStackTrace(new PrintWriter(stackTrace));
-//        intent.putExtra(ErrorKeys.STACKTRACE, stackTrace.toString());
-//
-//        try {
-//            startActivity(intent);
-//        } catch (ActivityNotFoundException e) {
-//            // ignore
-//            e.printStackTrace();
-//        }
     }
 
     @Override

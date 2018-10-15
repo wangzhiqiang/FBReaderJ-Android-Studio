@@ -42,49 +42,6 @@ public class LibraryService extends Service {
 	private static SQLiteBooksDatabase ourDatabase;
 	private static final Object ourDatabaseLock = new Object();
 
-//	final DataService.Connection DataConnection = new DataService.Connection();
-
-	private static final class Observer extends FileObserver {
-		private static final int MASK =
-			MOVE_SELF | MOVED_TO | MOVED_FROM | DELETE_SELF | DELETE | CLOSE_WRITE | ATTRIB;
-
-		private final String myPrefix;
-		private final BookCollection myCollection;
-
-		public Observer(String path, BookCollection collection) {
-			super(path, MASK);
-			myPrefix = path + '/';
-			myCollection = collection;
-		}
-
-		@Override
-		public void onEvent(int event, String path) {
-			event = event & ALL_EVENTS;
-			System.err.println("Event " + event + " on " + path);
-			switch (event) {
-				case MOVE_SELF:
-					// TODO: File(path) removed; stop watching (?)
-					break;
-				case MOVED_TO:
-					myCollection.rescan(myPrefix + path);
-					break;
-				case MOVED_FROM:
-				case DELETE:
-					myCollection.rescan(myPrefix + path);
-					break;
-				case DELETE_SELF:
-					// TODO: File(path) removed; watching is stopped automatically (?)
-					break;
-				case CLOSE_WRITE:
-				case ATTRIB:
-					myCollection.rescan(myPrefix + path);
-					break;
-				default:
-					System.err.println("Unexpected event " + event + " on " + myPrefix + path);
-					break;
-			}
-		}
-	}
 
 	public final class LibraryImplementation extends LibraryInterface.Stub {
 		private final BooksDatabase myDatabase;
@@ -99,8 +56,10 @@ public class LibraryService extends Service {
 			reset(true);
 		}
 
+		@Override
 		public void reset(final boolean force) {
 			Config.Instance().runOnConnect(new Runnable() {
+				@Override
 				public void run() {
 					resetInternal(force);
 				}
@@ -122,13 +81,11 @@ public class LibraryService extends Service {
 			myCollection = new BookCollection(
 				Paths.systemInfo(LibraryService.this), myDatabase, bookDirectories
 			);
-			for (String dir : bookDirectories) {
-				final Observer observer = new Observer(dir, myCollection);
-				observer.startWatching();
-				myFileObservers.add(observer);
-			}
+//
+
 
 			myCollection.addListener(new BookCollection.Listener<DbBook>() {
+				@Override
 				public void onBookEvent(BookEvent event, DbBook book) {
 					final Intent intent = new Intent(FBReaderIntents.Event.LIBRARY_BOOK);
 					intent.putExtra("type", event.toString());
@@ -136,6 +93,7 @@ public class LibraryService extends Service {
 					sendBroadcast(intent);
 				}
 
+				@Override
 				public void onBuildEvent(BookCollection.Status status) {
 					final Intent intent = new Intent(FBReaderIntents.Event.LIBRARY_BUILD);
 					intent.putExtra("type", status.toString());
@@ -151,56 +109,69 @@ public class LibraryService extends Service {
 			}
 		}
 
+		@Override
 		public String status() {
 			return myCollection.status().toString();
 		}
 
+		@Override
 		public int size() {
 			return myCollection.size();
 		}
 
+		@Override
 		public List<String> books(String query) {
 			return SerializerUtil.serializeBookList(
 				myCollection.books(SerializerUtil.deserializeBookQuery(query))
 			);
 		}
 
+		@Override
 		public boolean hasBooks(String query) {
 			return myCollection.hasBooks(SerializerUtil.deserializeBookQuery(query).Filter);
 		}
 
+		@Override
 		public List<String> recentBooks() {
 			return recentlyOpenedBooks(12);
 		}
 
+		@Override
 		public List<String> recentlyOpenedBooks(int count) {
 			return SerializerUtil.serializeBookList(myCollection.recentlyOpenedBooks(count));
 		}
 
+		@Override
 		public List<String> recentlyAddedBooks(int count) {
 			return SerializerUtil.serializeBookList(myCollection.recentlyAddedBooks(count));
 		}
 
+		@Override
 		public String getRecentBook(int index) {
 			return SerializerUtil.serialize(myCollection.getRecentBook(index));
 		}
 
+		@Override
 		public String getBookByFile(String path) {
 			return SerializerUtil.serialize(myCollection.getBookByFile(path));
 		}
 
+		@Override
 		public String getBookById(long id) {
 			return SerializerUtil.serialize(myCollection.getBookById(id));
 		}
 
+		@Override
 		public String getBookByUid(String type, String id) {
 			return SerializerUtil.serialize(myCollection.getBookByUid(new UID(type, id)));
 		}
 
+		@Override
 		public String getBookByHash(String hash) {
 			return SerializerUtil.serialize(myCollection.getBookByHash(hash));
 		}
 
+		@Override
 		public List<String> authors() {
 			final List<Author> authors = myCollection.authors();
 			final List<String> strings = new ArrayList<String>(authors.size());
@@ -210,14 +181,17 @@ public class LibraryService extends Service {
 			return strings;
 		}
 
+		@Override
 		public boolean hasSeries() {
 			return myCollection.hasSeries();
 		}
 
+		@Override
 		public List<String> series() {
 			return myCollection.series();
 		}
 
+		@Override
 		public List<String> tags() {
 			final List<Tag> tags = myCollection.tags();
 			final List<String> strings = new ArrayList<String>(tags.size());
@@ -227,43 +201,53 @@ public class LibraryService extends Service {
 			return strings;
 		}
 
+		@Override
 		public List<String> titles(String query) {
 			return myCollection.titles(SerializerUtil.deserializeBookQuery(query));
 		}
 
+		@Override
 		public List<String> firstTitleLetters() {
 			return myCollection.firstTitleLetters();
 		}
 
+		@Override
 		public boolean saveBook(String book) {
 			return myCollection.saveBook(SerializerUtil.deserializeBook(book, myCollection));
 		}
 
+		@Override
 		public boolean canRemoveBook(String book, boolean deleteFromDisk) {
 			return myCollection.canRemoveBook(SerializerUtil.deserializeBook(book, myCollection), deleteFromDisk);
 		}
 
+		@Override
 		public void removeBook(String book, boolean deleteFromDisk) {
 			myCollection.removeBook(SerializerUtil.deserializeBook(book, myCollection), deleteFromDisk);
 		}
 
+		@Override
 		public void addToRecentlyOpened(String book) {
 			myCollection.addToRecentlyOpened(SerializerUtil.deserializeBook(book, myCollection));
 		}
 
+		@Override
 		public void removeFromRecentlyOpened(String book) {
 			myCollection.removeFromRecentlyOpened(SerializerUtil.deserializeBook(book, myCollection));
 		}
 
+		@Override
 		public List<String> labels() {
 			return myCollection.labels();
 		}
 
+		@Override
 		public PositionWithTimestamp getStoredPosition(long bookId) {
 			final ZLTextPosition position = myCollection.getStoredPosition(bookId);
 			return position != null ? new PositionWithTimestamp(position) : null;
 		}
 
+		@Override
 		public void storePosition(long bookId, PositionWithTimestamp pos) {
 			if (pos == null) {
 				return;
@@ -326,62 +310,76 @@ public class LibraryService extends Service {
 			return Bitmap.createScaledBitmap(bitmap, w, h, false);
 		}
 
+		@Override
 		public List<String> bookmarks(String query) {
 			return SerializerUtil.serializeBookmarkList(myCollection.bookmarks(
 				SerializerUtil.deserializeBookmarkQuery(query, myCollection)
 			));
 		}
 
+		@Override
 		public String saveBookmark(String serialized) {
 			final Bookmark bookmark = SerializerUtil.deserializeBookmark(serialized);
 			myCollection.saveBookmark(bookmark);
 			return SerializerUtil.serialize(bookmark);
 		}
 
+		@Override
 		public void deleteBookmark(String serialized) {
 			myCollection.deleteBookmark(SerializerUtil.deserializeBookmark(serialized));
 		}
 
+		@Override
 		public List<String> deletedBookmarkUids() {
 			return myCollection.deletedBookmarkUids();
 		}
 
+		@Override
 		public void purgeBookmarks(List<String> uids) {
 			myCollection.purgeBookmarks(uids);
 		}
 
+		@Override
 		public String getHighlightingStyle(int styleId) {
 			return SerializerUtil.serialize(myCollection.getHighlightingStyle(styleId));
 		}
 
+		@Override
 		public List<String> highlightingStyles() {
 			return SerializerUtil.serializeStyleList(myCollection.highlightingStyles());
 		}
 
+		@Override
 		public void saveHighlightingStyle(String style) {
 			myCollection.saveHighlightingStyle(SerializerUtil.deserializeStyle(style));
 		}
 
+		@Override
 		public int getDefaultHighlightingStyleId() {
 			return myCollection.getDefaultHighlightingStyleId();
 		}
 
+		@Override
 		public void setDefaultHighlightingStyleId(int styleId) {
 			myCollection.setDefaultHighlightingStyleId(styleId);
 		}
 
+		@Override
 		public void rescan(String path) {
 			myCollection.rescan(path);
 		}
 
+		@Override
 		public String getHash(String book, boolean force) {
 			return myCollection.getHash(SerializerUtil.deserializeBook(book, myCollection), force);
 		}
 
+		@Override
 		public void setHash(String book, String hash) {
 			myCollection.setHash(SerializerUtil.deserializeBook(book, myCollection), hash);
 		}
 
+		@Override
 		public List<String> formats() {
 			final List<IBookCollection.FormatDescriptor> descriptors = myCollection.formats();
 			final List<String> serialized = new ArrayList<String>(descriptors.size());
@@ -391,6 +389,7 @@ public class LibraryService extends Service {
 			return serialized;
 		}
 
+		@Override
 		public boolean setActiveFormats(List<String> formatIds) {
 			if (myCollection.setActiveFormats(formatIds)) {
 				reset(true);

@@ -112,23 +112,24 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 		final ZLView.Animation type = ZLApplication.Instance().getCurrentView().getAnimationType();
 		if (myAnimationProvider == null || myAnimationType != type) {
 			myAnimationType = type;
-			switch (type) {
-				case none:
-					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
-					break;
-				case curl:
-					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
-					break;
-				case slide:
+			//这里是切换翻页动画的地方
+//			switch (type) {
+//				case none:
+//					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
+//					break;
+//				case curl:
+//					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
+//					break;
+//				case slide:
 					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
-					break;
-				case slideOldStyle:
-					myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
-					break;
-				case shift:
-					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
-					break;
-			}
+//					break;
+//				case slideOldStyle:
+//					myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
+//					break;
+//				case shift:
+//					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
+//					break;
+//			}
 		}
 		return myAnimationProvider;
 	}
@@ -158,6 +159,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 				case AnimatedScrollingBackward:
 					view.onScrollingFinished(ZLView.PageIndex.current);
 					break;
+					default:break;
 			}
 			onDrawStatic(canvas);
 		}
