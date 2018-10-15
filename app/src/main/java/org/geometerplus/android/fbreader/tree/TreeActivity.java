@@ -57,7 +57,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
+//		Thread.setDefaultUncaughtExceptionHandler(new org.geometerplus.zlibrary.ui.android.library.UncaughtExceptionHandler(this));
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 	}
 
@@ -84,7 +84,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 
 	@Override
 	protected void onNewIntent(final Intent intent) {
-		OrientationUtil.setOrientation(this, intent);
+//		OrientationUtil.setOrientation(this, intent);
 		if (OPEN_TREE_ACTION.equals(intent.getAction())) {
 			runOnUiThread(new Runnable() {
 				@Override

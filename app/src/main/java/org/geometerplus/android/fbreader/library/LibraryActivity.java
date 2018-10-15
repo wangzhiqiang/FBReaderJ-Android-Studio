@@ -26,6 +26,7 @@ import android.view.*;
 import android.widget.ListView;
 
 
+import org.geometerplus.android.fbreader.FBReader;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.formats.PluginCollection;
@@ -109,20 +110,14 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements
 		} else {
 			final Book book = tree.getBook();
 			if (book != null) {
-				showBookInfo(book);
+//				showBookInfo(book);
+
+				//由原来的跳转详情页面直接打开
+				FBReader.openBookActivity(this, book, null);
 			} else {
 				openTree(tree);
 			}
 		}
-	}
-
-	//
-	// show BookInfoActivity
-	//
-	private void showBookInfo(Book book) {
-		final Intent intent = new Intent(getApplicationContext(), BookInfoActivity.class);
-		FBReaderIntents.putBookExtra(intent, book);
-		OrientationUtil.startActivity(this, intent);
 	}
 
 

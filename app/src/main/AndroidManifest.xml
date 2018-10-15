@@ -18,16 +18,6 @@
         tools:replace="android:icon"
         android:logo="@drawable/fbreader_bw">
 
-        <activity
-            android:name=".error.BugReportActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:label="FBReader crash"
-            android:process=":crash"
-            android:theme="@style/FBReader.Activity" />
-
-
-
 
         <activity
             android:name="org.geometerplus.android.fbreader.FBReader"
@@ -96,17 +86,6 @@
             </intent-filter>
         </service>
 
-
-        <activity
-            android:name="org.geometerplus.android.fbreader.library.BookInfoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:process=":library"
-            android:theme="@style/FBReader.Activity">
-            <intent-filter>
-                <action android:name="android.fbreader.action.BOOK_INFO" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name="org.geometerplus.android.fbreader.library.LibraryActivity"

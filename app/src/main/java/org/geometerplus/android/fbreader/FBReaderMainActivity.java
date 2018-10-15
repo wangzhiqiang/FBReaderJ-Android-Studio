@@ -43,7 +43,7 @@ public abstract class FBReaderMainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle saved) {
 		super.onCreate(saved);
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
+//		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler(this));
 	}
 
 
@@ -64,5 +64,4 @@ public abstract class FBReaderMainActivity extends Activity {
 	}
 
 
-	public abstract void hideDictionarySelection();
 }

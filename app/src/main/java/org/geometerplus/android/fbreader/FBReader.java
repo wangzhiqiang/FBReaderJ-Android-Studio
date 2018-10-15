@@ -403,17 +403,6 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
     }
 
 
-    public void outlineRegion(ZLTextRegion.Soul soul) {
-        myFBReaderApp.getTextView().outlineRegion(soul);
-        myFBReaderApp.getViewWidget().repaint();
-    }
 
 
-    @Override
-    public void hideDictionarySelection() {
-        myFBReaderApp.getTextView().hideOutline();
-        myFBReaderApp.getTextView().removeHighlightings(DictionaryHighlighting.class);
-        myFBReaderApp.getViewWidget().reset();
-        myFBReaderApp.getViewWidget().repaint();
-    }
 }
