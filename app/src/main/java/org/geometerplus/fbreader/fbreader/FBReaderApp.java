@@ -237,21 +237,21 @@ public final class FBReaderApp extends ZLApplication {
             return;
         }
 
-        if (plugin instanceof ExternalFormatPlugin) {
-            ExternalBook = book;
-            final Bookmark bm;
-            if (bookmark != null) {
-                bm = bookmark;
-            } else {
-                ZLTextPosition pos = getStoredPosition(book);
-                if (pos == null) {
-                    pos = new ZLTextFixedPosition(0, 0, 0);
-                }
-                bm = new Bookmark(Collection, book, "", new EmptyTextSnippet(pos), false);
-            }
-            myExternalFileOpener.openFile((ExternalFormatPlugin) plugin, book, bm);
-            return;
-        }
+//        if (plugin instanceof ExternalFormatPlugin) {
+//            ExternalBook = book;
+//            final Bookmark bm;
+//            if (bookmark != null) {
+//                bm = bookmark;
+//            } else {
+//                ZLTextPosition pos = getStoredPosition(book);
+//                if (pos == null) {
+//                    pos = new ZLTextFixedPosition(0, 0, 0);
+//                }
+//                bm = new Bookmark(Collection, book, "", new EmptyTextSnippet(pos), false);
+//            }
+//            myExternalFileOpener.openFile((ExternalFormatPlugin) plugin, book, bm);
+//            return;
+//        }
 
         try {
             Model = BookModel.createModel(book, plugin);

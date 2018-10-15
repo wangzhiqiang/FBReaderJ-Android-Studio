@@ -38,7 +38,7 @@ public class ViewOptions {
 
 	private ColorProfile myColorProfile;
 	private ZLTextStyleCollection myTextStyleCollection;
-	private FooterOptions myFooterOptions;
+//	private FooterOptions myFooterOptions;
 
 	public ViewOptions() {
 		final ZLibrary zlibrary = ZLibrary.Instance();
@@ -84,10 +84,10 @@ public class ViewOptions {
 		return myTextStyleCollection;
 	}
 
-	public FooterOptions getFooterOptions() {
-		if (myFooterOptions == null) {
-			myFooterOptions = new FooterOptions();
-		}
-		return myFooterOptions;
-	}
+//	public FooterOptions getFooterOptions() {
+//		if (myFooterOptions == null) {
+//			myFooterOptions = new FooterOptions();
+//		}
+//		return myFooterOptions;
+//	}
 }
