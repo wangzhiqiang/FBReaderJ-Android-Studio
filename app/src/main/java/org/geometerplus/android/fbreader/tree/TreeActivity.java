@@ -224,6 +224,7 @@ public abstract class TreeActivity<T extends FBTree> extends ListActivity {
 				Log.e(TAG, "openTreeInternal: "+tree.getOpeningStatusMessage());
 //				UIMessageUtil.showErrorMessage(TreeActivity.this, tree.getOpeningStatusMessage());
 				break;
+				default:break;
 		}
 	}
 }

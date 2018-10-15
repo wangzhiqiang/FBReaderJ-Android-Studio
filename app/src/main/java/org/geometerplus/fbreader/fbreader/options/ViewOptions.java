@@ -84,10 +84,5 @@ public class ViewOptions {
 		return myTextStyleCollection;
 	}
 
-//	public FooterOptions getFooterOptions() {
-//		if (myFooterOptions == null) {
-//			myFooterOptions = new FooterOptions();
-//		}
-//		return myFooterOptions;
-//	}
+//
 }

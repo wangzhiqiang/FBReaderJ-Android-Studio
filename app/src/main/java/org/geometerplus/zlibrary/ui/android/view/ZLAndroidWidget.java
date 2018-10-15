@@ -44,7 +44,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	private final Paint myPaint = new Paint();
 
 	private final BitmapManagerImpl myBitmapManager = new BitmapManagerImpl(this);
-	private Bitmap myFooterBitmap;
+//	private Bitmap myFooterBitmap;
 	private final SystemInfo mySystemInfo;
 
 	public ZLAndroidWidget(Context context, AttributeSet attrs, int defStyle) {
@@ -252,44 +252,6 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 		view.paint(context, index);
 	}
 
-//	private void drawFooter(Canvas canvas, AnimationProvider animator) {
-//		final ZLView view = ZLApplication.Instance().getCurrentView();
-////		final ZLView.FooterArea footer = view.getFooterArea();
-//
-//		if (footer == null) {
-//			myFooterBitmap = null;
-//			return;
-//		}
-//
-//		if (myFooterBitmap != null &&
-//			(myFooterBitmap.getWidth() != getWidth() ||
-//			 myFooterBitmap.getHeight() != footer.getHeight())) {
-//			myFooterBitmap = null;
-//		}
-//		if (myFooterBitmap == null) {
-//			myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
-//		}
-//		final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-//			mySystemInfo,
-//			new Canvas(myFooterBitmap),
-//			new ZLAndroidPaintContext.Geometry(
-//				getWidth(),
-//				getHeight(),
-//				getWidth(),
-//				footer.getHeight(),
-//				0,
-//				getMainAreaHeight()
-//			),
-//			view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
-//		);
-//		footer.paint(context);
-//		final int voffset = getHeight() - footer.getHeight();
-//		if (animator != null) {
-//			animator.drawFooterBitmap(canvas, myFooterBitmap, voffset);
-//		} else {
-//			canvas.drawBitmap(myFooterBitmap, 0, voffset, myPaint);
-//		}
-//	}
 
 	private void onDrawStatic(final Canvas canvas) {
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
@@ -457,7 +419,8 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 					}
 				}
 				break;
-			}
+
+			}default:break;
 		}
 
 		return true;

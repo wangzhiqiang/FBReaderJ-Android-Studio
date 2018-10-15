@@ -18,7 +18,6 @@ import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.book.BookUtil;
 import org.geometerplus.fbreader.book.Bookmark;
 import org.geometerplus.fbreader.fbreader.ActionCode;
-import org.geometerplus.fbreader.fbreader.DictionaryHighlighting;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.CancelMenuHelper;
 import org.geometerplus.fbreader.formats.ExternalFormatPlugin;
@@ -146,7 +145,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         myFBReaderApp.setWindow(this);
         myFBReaderApp.initWindow();
 
-        myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
+//        myFBReaderApp.setExternalFileOpener(new ExternalFileOpener(this));
 
 
         //打开书库

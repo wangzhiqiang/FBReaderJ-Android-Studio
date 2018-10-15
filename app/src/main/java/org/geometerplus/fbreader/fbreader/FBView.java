@@ -43,21 +43,15 @@ import org.geometerplus.fbreader.util.TextSnippet;
 public final class FBView extends ZLTextView {
 	private final FBReaderApp myReader;
 	private final ViewOptions myViewOptions;
-	private final BookElementManager myBookElementManager;
+//	private final BookElementManager myBookElementManager;
 
 	FBView(FBReaderApp reader) {
 		super(reader);
 		myReader = reader;
 		myViewOptions = reader.ViewOptions;
-		myBookElementManager = new BookElementManager(this);
+//		myBookElementManager = new BookElementManager(this);
 	}
 
-	public void setModel(ZLTextModel model) {
-		super.setModel(model);
-//		if (myFooter != null) {
-//			myFooter.resetTOCMarks();
-//		}
-	}
 
 	private int myStartY;
 	private boolean myIsBrightnessAdjustmentInProgress;
@@ -111,13 +105,13 @@ public final class FBView extends ZLTextView {
 		}
 
 		final ZLTextHighlighting highlighting = findHighlighting(x, y, maxSelectionDistance());
-		if (highlighting instanceof BookmarkHighlighting) {
-			myReader.runAction(
-				ActionCode.SELECTION_BOOKMARK,
-				((BookmarkHighlighting)highlighting).Bookmark
-			);
-			return;
-		}
+//		if (highlighting instanceof BookmarkHighlighting) {
+//			myReader.runAction(
+//				ActionCode.SELECTION_BOOKMARK,
+//				((BookmarkHighlighting)highlighting).Bookmark
+//			);
+//			return;
+//		}
 
 		if (myReader.isActionEnabled(ActionCode.HIDE_TOAST)) {
 			myReader.runAction(ActionCode.HIDE_TOAST);
@@ -455,16 +449,7 @@ public final class FBView extends ZLTextView {
 		}
 	}
 
-	public TextSnippet getSelectedSnippet() {
-		final ZLTextPosition start = getSelectionStartPosition();
-		final ZLTextPosition end = getSelectionEndPosition();
-		if (start == null || end == null) {
-			return null;
-		}
-		final TextBuildTraverser traverser = new TextBuildTraverser(this);
-		traverser.traverse(start, end);
-		return new FixedTextSnippet(start, end, traverser.getText());
-	}
+
 
 	public int getCountOfSelectedWords() {
 		final WordCountTraverser traverser = new WordCountTraverser(this);
@@ -475,7 +460,6 @@ public final class FBView extends ZLTextView {
 	}
 
 	public static final int SCROLLBAR_SHOW_AS_FOOTER = 3;
-	public static final int SCROLLBAR_SHOW_AS_FOOTER_OLD_STYLE = 4;
 
 	@Override
 	public int scrollbarType() {
@@ -515,6 +499,7 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	protected ExtensionElementManager getExtensionManager() {
-		return myBookElementManager;
+//		return myBookElementManager;
+		return null;
 	}
 }
