@@ -35,19 +35,20 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	private volatile ConfigInterface myInterface;
 	private final List<Runnable> myDeferredActions = new LinkedList<Runnable>();
 
-	private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
-		public void onReceive(Context context, Intent intent) {
-			try {
-				setToCache(
-					intent.getStringExtra("group"),
-					intent.getStringExtra("name"),
-					intent.getStringExtra("value")
-				);
-			} catch (Exception e) {
-				// ignore
-			}
-		}
-	};
+//	private final BroadcastReceiver myReceiver = new BroadcastReceiver() {
+//		@Override
+//		public void onReceive(Context context, Intent intent) {
+//			try {
+//				setToCache(
+//					intent.getStringExtra("group"),
+//					intent.getStringExtra("name"),
+//					intent.getStringExtra("value")
+//				);
+//			} catch (Exception e) {
+//				// ignore
+//			}
+//		}
+//	};
 
 	public ConfigShadow(Context context) {
 		myContext = context;
@@ -76,53 +77,57 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 
 	@Override
 	public List<String> listGroups() {
-		if (myInterface == null) {
+//		if (myInterface == null) {
+//			return Collections.emptyList();
+//		}
+//		try {
+//			return myInterface.listGroups();
+//		} catch (RemoteException e) {
 			return Collections.emptyList();
-		}
-		try {
-			return myInterface.listGroups();
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+//		}
 	}
 
 	@Override
 	public List<String> listNames(String group) {
-		if (myInterface == null) {
+//		if (myInterface == null) {
+//			return Collections.emptyList();
+//		}
+//		try {
+//			return myInterface.listNames(group);
+//		} catch (RemoteException e) {
 			return Collections.emptyList();
-		}
-		try {
-			return myInterface.listNames(group);
-		} catch (RemoteException e) {
-			return Collections.emptyList();
-		}
+//		}
 	}
 
 	@Override
 	public void removeGroup(String name) {
-		if (myInterface != null) {
-			try {
-				myInterface.removeGroup(name);
-			} catch (RemoteException e) {
-			}
-		}
+//		if (myInterface != null) {
+//			try {
+//				myInterface.removeGroup(name);
+//			} catch (RemoteException e) {
+//			}
+//		}
 	}
 
+	@Override
 	public boolean getSpecialBooleanValue(String name, boolean defaultValue) {
 		return myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE)
 			.getBoolean(name, defaultValue);
 	}
 
+	@Override
 	public void setSpecialBooleanValue(String name, boolean value) {
 		myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE).edit()
 			.putBoolean(name, value).commit();
 	}
 
+	@Override
 	public String getSpecialStringValue(String name, String defaultValue) {
 		return myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE)
 			.getString(name, defaultValue);
 	}
 
+	@Override
 	public void setSpecialStringValue(String name, String value) {
 		myContext.getSharedPreferences("fbreader.ui", Context.MODE_PRIVATE).edit()
 			.putString(name, value).commit();
@@ -185,12 +190,13 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	// method from ServiceConnection interface
+	@Override
 	public void onServiceConnected(ComponentName name, IBinder service) {
 		synchronized (this) {
 			myInterface = ConfigInterface.Stub.asInterface(service);
-			myContext.registerReceiver(
-				myReceiver, new IntentFilter(FBReaderIntents.Event.CONFIG_OPTION_CHANGE)
-			);
+//			myContext.registerReceiver(
+//				myReceiver, new IntentFilter(FBReaderIntents.Event.CONFIG_OPTION_CHANGE)
+//			);
 		}
 
 		final List<Runnable> actions;
@@ -204,7 +210,8 @@ public final class ConfigShadow extends Config implements ServiceConnection {
 	}
 
 	// method from ServiceConnection interface
+	@Override
 	public synchronized void onServiceDisconnected(ComponentName name) {
-		myContext.unregisterReceiver(myReceiver);
+//		myContext.unregisterReceiver(myReceiver);
 	}
 }

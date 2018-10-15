@@ -70,6 +70,7 @@ final class SQLiteConfig extends ConfigInterface.Stub {
 				myDatabase.endTransaction();
 				myDatabase.execSQL("VACUUM");
 				break;
+				default:break;
 		}
 		myDatabase.setVersion(2);
 		myGetValueStatement = myDatabase.compileStatement("SELECT value FROM config WHERE groupName = ? AND name = ?");
