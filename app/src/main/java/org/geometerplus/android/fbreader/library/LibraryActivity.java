@@ -124,14 +124,15 @@ public class LibraryActivity extends TreeActivity<LibraryTree> implements
 
 
 	private void runOrInstallExternalView(boolean install) {
-		try {
-			startActivity(new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY));
-			finish();
-		} catch (ActivityNotFoundException e) {
-			if (install) {
-				PackageUtil.installFromMarket(this, "org.fbreader.plugin.library");
-			}
-		}
+
+//		try {
+//			startActivity(new Intent(FBReaderIntents.Action.EXTERNAL_LIBRARY));
+//			finish();
+//		} catch (ActivityNotFoundException e) {
+//			if (install) {
+//				PackageUtil.installFromMarket(this, "org.fbreader.plugin.library");
+//			}
+//		}
 	}
 
 

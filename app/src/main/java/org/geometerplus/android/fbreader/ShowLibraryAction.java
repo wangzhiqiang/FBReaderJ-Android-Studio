@@ -26,7 +26,6 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 
 import org.geometerplus.android.fbreader.api.FBReaderIntents;
 import org.geometerplus.android.fbreader.library.LibraryActivity;
-import org.geometerplus.android.util.OrientationUtil;
 import org.geometerplus.android.util.PackageUtil;
 
 class ShowLibraryAction extends FBAndroidAction {
@@ -55,6 +54,7 @@ class ShowLibraryAction extends FBAndroidAction {
 		if (Reader.Model != null) {
 			FBReaderIntents.putBookExtra(intent, Reader.getCurrentBook());
 		}
-		OrientationUtil.startActivity(BaseActivity, intent);
+//		OrientationUtil.startActivity(BaseActivity, intent);
+		BaseActivity.startActivity(intent);
 	}
 }
