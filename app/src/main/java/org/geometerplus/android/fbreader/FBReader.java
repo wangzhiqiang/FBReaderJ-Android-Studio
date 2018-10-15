@@ -103,7 +103,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
         Config.Instance().runOnConnect(new Runnable() {
             @Override
             public void run() {
-                myFBReaderApp.openBook(myBook, bookmark, action, null);
+                myFBReaderApp.openBook(myBook, bookmark, action);
                 AndroidFontUtil.clearFontCache();
             }
         });
@@ -266,14 +266,8 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             // invalid (or null) type value
             return;
         }
-        Bookmark bookmark = null;
-        if (type == CancelMenuHelper.ActionType.returnTo) {
-            bookmark = FBReaderIntents.getBookmarkExtra(intent);
-            if (bookmark == null) {
-                return;
-            }
-        }
-        myFBReaderApp.runCancelAction(type, bookmark);
+
+        myFBReaderApp.runCancelAction(type);
     }
 
     public void navigate() {

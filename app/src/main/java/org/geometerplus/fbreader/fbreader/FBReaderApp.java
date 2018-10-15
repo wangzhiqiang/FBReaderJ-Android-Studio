@@ -44,9 +44,9 @@ public final class FBReaderApp extends ZLApplication {
 		public void openFile(ExternalFormatPlugin plugin, Book book, Bookmark bookmark);
 	}
 
-	public static interface Notifier {
-//		void showMissingBookNotification(SyncData.ServerBookInfo info);
-	}
+//	public static interface Notifier {
+////		void showMissingBookNotification(SyncData.ServerBookInfo info);
+//	}
 
 	private ExternalFileOpener myExternalFileOpener;
 
@@ -120,37 +120,14 @@ public final class FBReaderApp extends ZLApplication {
 		return m != null ? m.Book : ExternalBook;
 	}
 
-	public void openHelpBook() {
-//		openBook(Collection.getBookByFile(BookUtil.getHelpFile().getPath()), null, null, null);
-	}
 
-	public Book getCurrentServerBook(Notifier notifier) {
-//		final SyncData.ServerBookInfo info = mySyncData.getServerBookInfo();
-//		if (info == null) {
-//			return null;
-//		}
-//
-//		for (String hash : info.Hashes) {
-//			final Book book = Collection.getBookByHash(hash);
-//			if (book != null) {
-//				return book;
-//			}
-//		}
-//		if (notifier != null) {
-//			notifier.showMissingBookNotification(info);
-//		}
-		return null;
-	}
-
-	public void openBook(Book book, final Bookmark bookmark, Runnable postAction, Notifier notifier) {
+	public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
 		if (Model != null) {
 			if (book == null || bookmark == null && Collection.sameBook(book, Model.Book)) {
 				return;
 			}
 		}
 
-		if (book == null) {
-			book = getCurrentServerBook(notifier);
 			if (book == null) {
 				book = Collection.getRecentBook(0);
 			}
@@ -160,7 +137,6 @@ public final class FBReaderApp extends ZLApplication {
 			if (book == null) {
 				return;
 			}
-		}
 		final Book bookToOpen = book;
 		bookToOpen.addNewLabel(Book.READ_LABEL);
 		Collection.saveBook(bookToOpen);
@@ -196,32 +172,7 @@ public final class FBReaderApp extends ZLApplication {
 		return (FBView)getCurrentView();
 	}
 
-	public AutoTextSnippet getFootnoteData(String id) {
-		if (Model == null) {
-			return null;
-		}
-		final BookModel.Label label = Model.getLabel(id);
-		if (label == null) {
-			return null;
-		}
-		final ZLTextModel model;
-		if (label.ModelId != null) {
-			model = Model.getFootnoteModel(label.ModelId);
-		} else {
-			model = Model.getTextModel();
-		}
-		if (model == null) {
-			return null;
-		}
-		final ZLTextWordCursor cursor =
-			new ZLTextWordCursor(new ZLTextParagraphCursor(model, label.ParagraphIndex));
-		final AutoTextSnippet longSnippet = new AutoTextSnippet(cursor, 140);
-		if (longSnippet.IsEndOfText) {
-			return longSnippet;
-		} else {
-			return new AutoTextSnippet(cursor, 100);
-		}
-	}
+
 
 
 
@@ -449,6 +400,7 @@ public final class FBReaderApp extends ZLApplication {
 			myTasks.add(task);
 		}
 
+		@Override
 		public void run() {
 			while (true) {
 				synchronized (myTasks) {
@@ -464,21 +416,6 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-//	public void useSyncInfo(boolean openOtherBook, Notifier notifier) {
-//		if (openOtherBook && SyncOptions.ChangeCurrentBook.getValue()) {
-//			final Book fromServer = getCurrentServerBook(notifier);
-//			if (fromServer != null && !Collection.sameBook(fromServer, Collection.getRecentBook(0))) {
-//				openBook(fromServer, null, null, notifier);
-//				return;
-//			}
-//		}
-//
-//		if (myStoredPositionBook != null &&
-//			mySyncData.hasPosition(Collection.getHash(myStoredPositionBook, true))) {
-//			gotoStoredPosition();
-//			storePosition();
-//		}
-//	}
 
 	private final SaverThread mySaverThread = new SaverThread();
 	private volatile ZLTextPosition myStoredPosition;
@@ -535,21 +472,13 @@ public final class FBReaderApp extends ZLApplication {
 		return new CancelMenuHelper().getActionsList(Collection).size() > 1;
 	}
 
-	public void runCancelAction(CancelMenuHelper.ActionType type, Bookmark bookmark) {
+	public void runCancelAction(CancelMenuHelper.ActionType type) {
 		switch (type) {
 			case library:
 				runAction(ActionCode.SHOW_LIBRARY);
 				break;
-			case networkLibrary:
-				runAction(ActionCode.SHOW_NETWORK_LIBRARY);
-				break;
-			case previousBook:
-				openBook(Collection.getRecentBook(1), null, null, null);
-				break;
-			case returnTo:
-				Collection.deleteBookmark(bookmark);
-				gotoBookmark(bookmark, true);
-				break;
+
+
 			case close:
 				closeWindow();
 				break;
@@ -571,35 +500,7 @@ public final class FBReaderApp extends ZLApplication {
 		}
 	}
 
-	public void addInvisibleBookmark(ZLTextWordCursor cursor) {
-		if (cursor == null) {
-			return;
-		}
 
-		cursor = new ZLTextWordCursor(cursor);
-		if (cursor.isNull()) {
-			return;
-		}
-
-		final ZLTextView textView = getTextView();
-		final ZLTextModel textModel;
-		final Book book;
-		final AutoTextSnippet snippet;
-		// textView.model will not be changed inside synchronised block
-		synchronized (textView) {
-			textModel = textView.getModel();
-			final BookModel model = Model;
-			book = model != null ? model.Book : null;
-			if (book == null || textView != BookTextView || textModel == null) {
-				return;
-			}
-			snippet = new AutoTextSnippet(cursor, 30);
-		}
-
-		updateInvisibleBookmarksList(new Bookmark(
-			Collection, book, textModel.getId(), snippet, false
-		));
-	}
 
 	public void addInvisibleBookmark() {
 		if (Model.Book != null && getTextView() == BookTextView) {
@@ -624,29 +525,7 @@ public final class FBReaderApp extends ZLApplication {
 		);
 	}
 
-	public TOCTree getCurrentTOCElement() {
-		final ZLTextWordCursor cursor = BookTextView.getStartCursor();
-		if (Model == null || cursor == null) {
-			return null;
-		}
 
-		int index = cursor.getParagraphIndex();
-		if (cursor.isEndOfParagraph()) {
-			++index;
-		}
-		TOCTree treeToSelect = null;
-		for (TOCTree tree : Model.TOCTree) {
-			final TOCTree.Reference reference = tree.getReference();
-			if (reference == null) {
-				continue;
-			}
-			if (reference.ParagraphIndex > index) {
-				break;
-			}
-			treeToSelect = tree;
-		}
-		return treeToSelect;
-	}
 
 	public void onBookUpdated(Book book) {
 		if (Model == null || Model.Book == null || !Collection.sameBook(Model.Book, book)) {
