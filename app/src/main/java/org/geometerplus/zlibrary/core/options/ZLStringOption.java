@@ -25,26 +25,26 @@ public final class ZLStringOption extends ZLOption {
 	}
 
 	public String getValue() {
-		if (mySpecialName != null && !Config.Instance().isInitialized()) {
-			return Config.Instance().getSpecialStringValue(mySpecialName, myDefaultStringValue);
-		} else {
+//		if (mySpecialName != null && !Config.Instance().isInitialized()) {
+//			return Config.Instance().getSpecialStringValue(mySpecialName, myDefaultStringValue);
+//		} else {
 			return getConfigValue();
-		}
+//		}
 	}
 
 	public void setValue(String value) {
-		if (value == null) {
-			return;
-		}
-		if (mySpecialName != null) {
-			Config.Instance().setSpecialStringValue(mySpecialName, value);
-		}
+//		if (value == null) {
+//			return;
+//		}
+//		if (mySpecialName != null) {
+//			Config.Instance().setSpecialStringValue(mySpecialName, value);
+//		}
 		setConfigValue(value);
 	}
 
 	public void saveSpecialValue() {
-		if (mySpecialName != null && Config.Instance().isInitialized()) {
-			Config.Instance().setSpecialStringValue(mySpecialName, getValue());
-		}
+//		if (mySpecialName != null && Config.Instance().isInitialized()) {
+//			Config.Instance().setSpecialStringValue(mySpecialName, getValue());
+//		}
 	}
 }

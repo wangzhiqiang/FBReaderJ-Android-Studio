@@ -28,23 +28,23 @@ public final class ZLBooleanOption extends ZLOption {
 	}
 
 	public boolean getValue() {
-		if (mySpecialName != null && !Config.Instance().isInitialized()) {
-			return Config.Instance().getSpecialBooleanValue(mySpecialName, myDefaultValue);
-		} else {
+//		if (mySpecialName != null && !Config.Instance().isInitialized()) {
+//			return Config.Instance().getSpecialBooleanValue(mySpecialName, myDefaultValue);
+//		} else {
 			return "true".equals(getConfigValue());
-		}
+//		}
 	}
 
 	public void setValue(boolean value) {
-		if (mySpecialName != null) {
-			Config.Instance().setSpecialBooleanValue(mySpecialName, value);
-		}
+//		if (mySpecialName != null) {
+//			Config.Instance().setSpecialBooleanValue(mySpecialName, value);
+//		}
 		setConfigValue(value ? "true" : "false");
 	}
 
 	public void saveSpecialValue() {
-		if (mySpecialName != null && Config.Instance().isInitialized()) {
-			Config.Instance().setSpecialBooleanValue(mySpecialName, getValue());
-		}
+//		if (mySpecialName != null && Config.Instance().isInitialized()) {
+//			Config.Instance().setSpecialBooleanValue(mySpecialName, getValue());
+//		}
 	}
 }

@@ -77,43 +77,11 @@ public abstract class FBReaderIntents {
 		String TYPE                             = "fbreader.type";
 	}
 
-	public static Intent defaultInternalIntent(String action) {
-		return internalIntent(action).addCategory(Intent.CATEGORY_DEFAULT);
-	}
 
 	public static Intent internalIntent(String action) {
 		return new Intent(action).setPackage(DEFAULT_PACKAGE);
 	}
 
-	public static void putBookExtra(Intent intent, String key, Book book) {
-		intent.putExtra(key, SerializerUtil.serialize(book));
-	}
 
-	public static void putBookExtra(Intent intent, Book book) {
-		putBookExtra(intent, Key.BOOK, book);
-	}
 
-	public static <B extends AbstractBook> B getBookExtra(Intent intent, String key, AbstractSerializer.BookCreator<B> creator) {
-		return SerializerUtil.deserializeBook(intent.getStringExtra(key), creator);
-	}
-
-	public static <B extends AbstractBook> B getBookExtra(Intent intent, AbstractSerializer.BookCreator<B> creator) {
-		return getBookExtra(intent, Key.BOOK, creator);
-	}
-
-	public static void putBookmarkExtra(Intent intent, String key, Bookmark bookmark) {
-		intent.putExtra(key, SerializerUtil.serialize(bookmark));
-	}
-
-	public static void putBookmarkExtra(Intent intent, Bookmark bookmark) {
-		putBookmarkExtra(intent, Key.BOOKMARK, bookmark);
-	}
-
-	public static Bookmark getBookmarkExtra(Intent intent, String key) {
-		return SerializerUtil.deserializeBookmark(intent.getStringExtra(key));
-	}
-
-	public static Bookmark getBookmarkExtra(Intent intent) {
-		return getBookmarkExtra(intent, Key.BOOKMARK);
-	}
 }

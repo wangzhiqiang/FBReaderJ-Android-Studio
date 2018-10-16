@@ -37,18 +37,19 @@ public abstract class ZLOption {
 	}
 
 	protected final String getConfigValue() {
-		final Config config = Config.Instance();
-		return config != null ? config.getValue(myId, myDefaultStringValue) : myDefaultStringValue;
+//		final Config config = Config.Instance();
+//		return config != null ? config.getValue(myId, myDefaultStringValue) : myDefaultStringValue;
+		return  myDefaultStringValue;
 	}
 
 	protected final void setConfigValue(String value) {
-		final Config config = Config.Instance();
-		if (config != null) {
-			if (!myDefaultStringValue.equals(value)) {
-				config.setValue(myId, value);
-			} else {
-				config.unsetValue(myId);
-			}
-		}
+//		final Config config = Config.Instance();
+//		if (config != null) {
+//			if (!myDefaultStringValue.equals(value)) {
+//				config.setValue(myId, value);
+//			} else {
+//				config.unsetValue(myId);
+//			}
+//		}
 	}
 }
