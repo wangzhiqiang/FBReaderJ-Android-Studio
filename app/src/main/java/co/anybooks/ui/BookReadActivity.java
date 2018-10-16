@@ -135,26 +135,10 @@ public class BookReadActivity extends AppCompatActivity {
 
         String bookPath = intent.getStringExtra(KEY_BOOK_PATH);
 
-        if (null == bookPath) {
-            //return;
+//        bookPath = intent.getExtras().getString(KEY_BOOK_PATH);
 
-            bookPath = "/sdcard/aaa/b.epub";
-        }
-
-
-        final String finalBookPath = bookPath;
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                book = mCollection.getBookByFile(finalBookPath);
-
-        book = new Book(0,bookPath,"xx","utf-8","en");
-                myFBReaderApp.openBook(book, null, null);
-//
-//                setTitle("BookReader");
-//            }
-//        },1000);
-
+        book = new Book(0, bookPath, "xx", "utf-8", "en");
+        myFBReaderApp.openBook(book, null, null);
 
     }
 

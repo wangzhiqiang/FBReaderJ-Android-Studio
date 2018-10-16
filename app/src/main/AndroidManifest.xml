@@ -69,14 +69,16 @@
             </intent-filter>
         </service>
 
-        <activity android:name="co.anybooks.ui.FileListActivity" />
-        <activity android:name="co.anybooks.ui.BookReadActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name="co.anybooks.ui.FileListActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
+        <activity android:name="co.anybooks.ui.BookReadActivity">
+
         </activity>
     </application>
 

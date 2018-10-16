@@ -1,5 +1,6 @@
 package co.anybooks.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +11,6 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
-import org.geometerplus.android.fbreader.FBReader;
-import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.zlibrary.ui.android.R;
 
 public class FileListActivity extends AppCompatActivity {
@@ -23,7 +21,6 @@ public class FileListActivity extends AppCompatActivity {
 
     FileListAdapter adapter = new FileListAdapter();
 
-    private final BookCollectionShadow myCollection = new BookCollectionShadow();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +32,16 @@ public class FileListActivity extends AppCompatActivity {
 
         mList.setAdapter(adapter);
 
-        myCollection.bindToService(this, new Runnable() {
-            @Override
-            public void run() {
-
-
-
-            }
-        });
 
         mList.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 FileListAdapter adapter = (FileListAdapter) parent.getAdapter();
-
                 File file = adapter.getItem(position);
-
-                final Book book = myCollection.getBookByFile(file.getAbsolutePath());
-
-                    FBReader.openBookActivity(FileListActivity.this, book, null);
+                Intent intent = new Intent(FileListActivity.this,BookReadActivity.class);
+                intent.putExtra(BookReadActivity.KEY_BOOK_PATH,file.getAbsolutePath());
+                startActivity(intent);
 
             }
         });
@@ -74,7 +61,6 @@ public class FileListActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        myCollection.unbind();
         super.onDestroy();
 
     }
