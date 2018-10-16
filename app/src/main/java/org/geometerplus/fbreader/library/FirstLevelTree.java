@@ -21,20 +21,22 @@ package org.geometerplus.fbreader.library;
 
 import org.fbreader.util.Pair;
 
+import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 abstract class FirstLevelTree extends LibraryTree {
 	private final String myId;
 	private final ZLResource myResource;
 
-	FirstLevelTree(RootTree root, int position, String id) {
-		super(root, position);
-		myId = id;
-		myResource = resource().getResource(myId);
-	}
+//	FirstLevelTree(RootTree root, int position, String id) {
+//		super(root, position);
+//		myId = id;
+//		myResource = resource().getResource(myId);
+//	}
 
-	FirstLevelTree(RootTree root, String id) {
-		super(root);
+	FirstLevelTree(IBookCollection collection,  PluginCollection pluginCollection,String id) {
+		super(collection,pluginCollection);
 		myId = id;
 		myResource = resource().getResource(myId);
 	}

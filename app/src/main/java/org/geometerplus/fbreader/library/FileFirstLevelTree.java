@@ -23,15 +23,18 @@ import java.util.List;
 
 import org.fbreader.util.Pair;
 
+import org.geometerplus.fbreader.book.IBookCollection;
+import org.geometerplus.fbreader.formats.PluginCollection;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.resources.ZLResource;
 
 import org.geometerplus.fbreader.Paths;
 
 public class FileFirstLevelTree extends FirstLevelTree {
-	FileFirstLevelTree(RootTree root) {
-		super(root, ROOT_FILE);
+	public  FileFirstLevelTree(IBookCollection collection,  org.geometerplus.fbreader.formats.PluginCollection pluginCollection) {
+		super(collection,pluginCollection, ROOT_FILE);
 	}
+
 
 	@Override
 	public Pair<String,String> getTreeTitle() {
@@ -75,4 +78,9 @@ public class FileFirstLevelTree extends FirstLevelTree {
 		final ZLResource resource = resource().getResource(resourceKey);
 		addChild(path, resource.getValue(), resource.getResource("summary").getValue());
 	}
+
+//	@Override
+//	protected String getStringId() {
+//		return "@FBReaderLibraryRoot::"+ROOT_FILE ;
+//	}
 }

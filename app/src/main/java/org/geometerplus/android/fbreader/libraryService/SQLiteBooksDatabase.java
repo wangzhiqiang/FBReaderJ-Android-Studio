@@ -54,6 +54,7 @@ final class SQLiteBooksDatabase extends BooksDatabase {
 		myDatabase.close();
 	}
 
+	@Override
 	protected void executeAsTransaction(Runnable actions) {
 		boolean transactionStarted = false;
 		try {

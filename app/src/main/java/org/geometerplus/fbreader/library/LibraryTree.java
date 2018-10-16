@@ -35,15 +35,7 @@ public abstract class LibraryTree extends FBTree {
 	public final IBookCollection<Book> Collection;
 	public final PluginCollection PluginCollection;
 
-	static final String ROOT_EXTERNAL_VIEW = "bookshelfView";
-	static final String ROOT_FOUND = "found";
-	static final String ROOT_FAVORITES = "favorites";
-	static final String ROOT_RECENT = "recent";
-	static final String ROOT_BY_AUTHOR = "byAuthor";
-	static final String ROOT_BY_TITLE = "byTitle";
-	static final String ROOT_BY_SERIES = "bySeries";
-	static final String ROOT_BY_TAG = "byTag";
-	static final String ROOT_SYNC = "sync";
+
 	static final String ROOT_FILE = "fileTree";
 
 	protected LibraryTree(IBookCollection collection, PluginCollection pluginCollection) {
@@ -64,6 +56,17 @@ public abstract class LibraryTree extends FBTree {
 		PluginCollection = parent.PluginCollection;
 	}
 
+	public LibraryTree getLibraryTree(LibraryTree.Key key) {
+		if (key == null) {
+			return null;
+		}
+		if (key.Parent == null) {
+			return key.Id.equals(getUniqueKey().Id) ? this : null;
+		}
+		final LibraryTree parentTree = getLibraryTree(key.Parent);
+		return parentTree != null ? (LibraryTree)parentTree.getSubtree(key.Id) : null;
+	}
+
 	public Book getBook() {
 		return null;
 	}
@@ -76,63 +79,33 @@ public abstract class LibraryTree extends FBTree {
 		return true;
 	}
 
-	boolean createTagSubtree(Tag tag) {
-		final TagTree temp = new TagTree(Collection, PluginCollection, tag);
-		int position = Collections.binarySearch(subtrees(), temp);
-		if (position >= 0) {
-			return false;
-		} else {
-			new TagTree(this, tag, - position - 1);
-			return true;
-		}
-	}
 
-	boolean createBookWithAuthorsSubtree(Book book) {
-		final BookWithAuthorsTree temp = new BookWithAuthorsTree(Collection, PluginCollection, book);
-		int position = Collections.binarySearch(subtrees(), temp);
-		if (position >= 0) {
-			return false;
-		} else {
-			new BookWithAuthorsTree(this, book, - position - 1);
-			return true;
-		}
-	}
-
-	public boolean removeBook(Book book) {
-		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
-		for (FBTree tree : this) {
-			if (tree instanceof BookTree && ((BookTree)tree).Book.equals(book)) {
-				toRemove.add(tree);
-			}
-		}
-		for (FBTree tree : toRemove) {
-			tree.removeSelf();
-		}
-		return !toRemove.isEmpty();
-	}
+//	public boolean removeBook(Book book) {
+////		final LinkedList<FBTree> toRemove = new LinkedList<FBTree>();
+////
+////		for (FBTree tree : toRemove) {
+////			tree.removeSelf();
+////		}
+////		return !toRemove.isEmpty();
+//		return true;
+//	}
 
 	public boolean onBookEvent(BookEvent event, Book book) {
-		switch (event) {
-			default:
-			case Added:
-				return false;
-			case Removed:
-				return removeBook(book);
-			case Updated:
-			{
-				boolean changed = false;
-				for (FBTree tree : this) {
-					if (tree instanceof BookTree) {
-						final Book b = ((BookTree)tree).Book;
-						if (b.equals(book)) {
-							b.updateFrom(book);
-							changed = true;
-						}
-					}
-				}
-				return changed;
-			}
-		}
+//		switch (event) {
+//			default:
+//			case Added:
+//				return false;
+//			case Removed:
+//				return removeBook(book);
+//			case Updated:
+//			{
+//				boolean changed = false;
+//
+//				return changed;
+//			}
+//		}
+
+		return true;
 	}
 
 	@Override

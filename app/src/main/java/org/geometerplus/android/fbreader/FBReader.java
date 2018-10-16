@@ -48,7 +48,7 @@ public final class FBReader extends FBReaderMainActivity implements ZLApplicatio
             .setAction(FBReaderIntents.Action.VIEW)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         FBReaderIntents.putBookExtra(intent, book);
-        FBReaderIntents.putBookmarkExtra(intent, bookmark);
+//        FBReaderIntents.putBookmarkExtra(intent, bookmark);
         context.startActivity(intent);
     }
 

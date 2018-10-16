@@ -64,7 +64,7 @@ public abstract class MainView extends View {
 		}
 
 		final FBReaderMainActivity activity = (FBReaderMainActivity)context;
-		activity.getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
+//		activity.getZLibrary().ScreenBrightnessLevelOption.setValue(percent);
 		activity.setScreenBrightnessSystem(level);
 		if (oldColorLevel != myColorLevel) {
 			updateColorLevel();

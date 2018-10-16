@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.geometerplus.zlibrary.ui.android"
-     >
+    package="org.geometerplus.zlibrary.ui.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -12,29 +10,25 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="org.geometerplus.android.fbreader.FBReaderApplication"
+        android:theme="@style/AppTheme"
         android:icon="@drawable/fbreader"
         android:label="@string/app_name"
-        tools:replace="android:icon"
-        android:logo="@drawable/fbreader_bw">
-
-
+        android:logo="@drawable/fbreader_bw"
+        android:name="org.geometerplus.android.fbreader.FBReaderApplication"
+        tools:replace="android:icon">
         <activity
-            android:name="org.geometerplus.android.fbreader.FBReader"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:icon="@drawable/fbreader"
             android:label="@string/app_name"
             android:launchMode="singleTask"
+            android:name="org.geometerplus.android.fbreader.FBReader"
             android:theme="@style/FBReader.Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -45,67 +39,42 @@
                     android:host="*"
                     android:scheme="file" />
                 <data android:mimeType="application/epub+zip" />
-
             </intent-filter>
-
-
             <intent-filter>
                 <action android:name="android.fbreader.action.CLOSE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-
-
         <activity
-            android:name="org.geometerplus.android.fbreader.CancelActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:name="org.geometerplus.android.fbreader.CancelActivity"
             android:theme="@style/FBReader.Dialog">
             <intent-filter>
                 <action android:name="android.fbreader.action.CANCEL_MENU" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-
-
         <service
-            android:name="org.geometerplus.android.fbreader.libraryService.LibraryService"
             android:launchMode="singleTask"
+            android:name="org.geometerplus.android.fbreader.libraryService.LibraryService"
             android:process=":libraryService">
             <intent-filter>
                 <action android:name="android.fbreader.action.LIBRARY_SERVICE" />
             </intent-filter>
         </service>
         <service
-            android:name="org.geometerplus.android.fbreader.config.ConfigService"
             android:launchMode="singleTask"
+            android:name="org.geometerplus.android.fbreader.config.ConfigService"
             android:process=":configService">
             <intent-filter>
                 <action android:name="android.fbreader.action.CONFIG_SERVICE" />
             </intent-filter>
         </service>
 
-
-        <activity
-            android:name="org.geometerplus.android.fbreader.library.LibraryActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
-            android:process=":library"
-            android:theme="@style/FBReader.Activity">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="org.geometerplus.android.fbreader.library.LibrarySearchActivity" />
-            <intent-filter>
-                <action android:name="android.fbreader.action.LIBRARY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-
-
-
-
-
+        <activity android:name="co.anybooks.ui.FileListActivity"></activity>
     </application>
+
 </manifest>
