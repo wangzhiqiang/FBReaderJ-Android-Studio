@@ -19,6 +19,8 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import android.util.Log;
+import java.util.Arrays;
 import org.geometerplus.zlibrary.text.view.ZLTextRegion;
 import org.geometerplus.zlibrary.text.view.ZLTextWordRegionSoul;
 
@@ -32,6 +34,8 @@ class MoveCursorAction extends FBAction {
 
 	@Override
 	protected void run(Object ... params) {
+
+		Log.i(TAG, "run: "+Arrays.toString(params));
 		final FBView fbView = Reader.getTextView();
 		ZLTextRegion region = fbView.getOutlinedRegion();
 		final ZLTextRegion.Filter filter =

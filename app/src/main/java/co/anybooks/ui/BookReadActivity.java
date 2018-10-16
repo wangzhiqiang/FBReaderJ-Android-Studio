@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import org.geometerplus.android.fbreader.SelectionShowPanelAction;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication.SynchronousExecutor;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
@@ -91,6 +93,7 @@ public class BookReadActivity extends AppCompatActivity {
 
         myFBReaderApp.initWindow();
 
+        myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL,new SelectionShowPanelAction(this,myFBReaderApp));
 //        mCollection.bindToService(this, new Runnable() {
 //            @Override
 //            public void run() {
@@ -127,6 +130,8 @@ public class BookReadActivity extends AppCompatActivity {
 //        bookPath = intent.getExtras().getString(KEY_BOOK_PATH);
 
         book = new Book(0, bookPath, "xx", "utf-8", "en");
+
+
         myFBReaderApp.openBook(book, null, null);
 
     }

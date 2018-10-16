@@ -22,6 +22,7 @@ package org.geometerplus.fbreader.fbreader;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 
 public abstract class FBAction extends ZLApplication.ZLAction {
+	protected String TAG = getClass().getSimpleName();
 	protected final FBReaderApp Reader;
 
 	public FBAction(FBReaderApp fbreader) {

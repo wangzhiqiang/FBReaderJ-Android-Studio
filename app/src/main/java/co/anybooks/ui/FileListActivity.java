@@ -70,7 +70,7 @@ public class FileListActivity extends AppCompatActivity {
         @Override
         public boolean accept(File pathname) {
 
-            return pathname.getName().endsWith(".epub")|| pathname.isDirectory();
+            return pathname.getName().endsWith(".txt")|| pathname.getName().endsWith(".epub")|| pathname.isDirectory();
         }
     }
 }

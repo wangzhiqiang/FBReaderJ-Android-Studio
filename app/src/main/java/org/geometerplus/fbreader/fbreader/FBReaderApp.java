@@ -20,11 +20,14 @@
 package org.geometerplus.fbreader.fbreader;
 
 
+import android.util.Log;
+import org.geometerplus.android.fbreader.api.FBReaderIntents.Action;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.util.*;
 
+import org.geometerplus.zlibrary.core.view.ZLViewEnums.Direction;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
@@ -34,6 +37,7 @@ import org.geometerplus.fbreader.formats.*;
 
 public final class FBReaderApp extends ZLApplication {
 
+    private String TAG = getClass().getSimpleName();
 
     public final MiscOptions MiscOptions = new MiscOptions();
     public final ImageOptions ImageOptions = new ImageOptions();
@@ -45,10 +49,19 @@ public final class FBReaderApp extends ZLApplication {
 
     public final FBView BookTextView;
     public volatile BookModel Model;
-    public volatile Book ExternalBook;
 
     public FBReaderApp(SystemInfo systemInfo) {
         super(systemInfo);
+
+        addAction(ActionCode.MOVE_CURSOR_UP, new MoveCursorAction(this, FBView.Direction.up));
+        addAction(ActionCode.MOVE_CURSOR_DOWN, new MoveCursorAction(this, FBView.Direction.down));
+        addAction(ActionCode.MOVE_CURSOR_LEFT, new MoveCursorAction(this, FBView.Direction.rightToLeft));
+        addAction(ActionCode.MOVE_CURSOR_RIGHT, new MoveCursorAction(this, FBView.Direction.leftToRight));
+
+
+//        addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
+//        addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
+
 
         BookTextView = new FBView(this);
         setView(BookTextView);
@@ -56,6 +69,13 @@ public final class FBReaderApp extends ZLApplication {
 
 
     public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
+
+
+        if(null != Model && Model.Book.equals(book)){
+
+            Log.i(TAG, "not open Current Book: "+book);
+            return;
+        }
 
         final Book bookToOpen = book;
         bookToOpen.addNewLabel(Book.READ_LABEL);
@@ -91,7 +111,6 @@ public final class FBReaderApp extends ZLApplication {
         BookTextView.setModel(null);
         clearTextCaches();
         Model = null;
-        ExternalBook = null;
         System.gc();
 
         final PluginCollection pluginCollection = PluginCollection.Instance(SystemInfo);
