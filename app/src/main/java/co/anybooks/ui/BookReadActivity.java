@@ -9,14 +9,8 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import org.geometerplus.android.fbreader.api.FBReaderIntents;
-import org.geometerplus.android.fbreader.api.FBReaderIntents.Action;
-import org.geometerplus.android.fbreader.libraryService.BookCollectionShadow;
-import org.geometerplus.android.fbreader.libraryService.LibraryInterface;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
-import org.geometerplus.fbreader.book.IBookCollection;
-import org.geometerplus.fbreader.book.SerializerUtil;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication.SynchronousExecutor;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
@@ -30,7 +24,7 @@ public class BookReadActivity extends AppCompatActivity {
 
     public static String KEY_BOOK_PATH = "BOOK_PATH";
 
-    private BookCollectionShadow mCollection;
+//    private BookCollectionShadow mCollection;
 
 
     private FBReaderApp myFBReaderApp;
@@ -44,13 +38,13 @@ public class BookReadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_read);
 
-        mCollection = new BookCollectionShadow();
+//        mCollection = new BookCollectionShadow();
 
         mContentView = findViewById(R.id.book_read_content);
 
         myFBReaderApp = (FBReaderApp) FBReaderApp.Instance();
         if (myFBReaderApp == null) {
-            myFBReaderApp = new FBReaderApp(Paths.systemInfo(this), mCollection);
+            myFBReaderApp = new FBReaderApp(Paths.systemInfo(this));
         }
 
         myFBReaderApp.setWindow(new ZLApplicationWindow() {
@@ -102,18 +96,18 @@ public class BookReadActivity extends AppCompatActivity {
 
         myFBReaderApp.initWindow();
 
-        mCollection.bindToService(this, new Runnable() {
-            @Override
-            public void run() {
-
-                Log.i(TAG, "Collection.bindToService");
-            }
-        });
+//        mCollection.bindToService(this, new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                Log.i(TAG, "Collection.bindToService");
+//            }
+//        });
     }
 
     @Override
     protected void onDestroy() {
-        mCollection.unbind();
+//        mCollection.unbind();
         super.onDestroy();
     }
 
