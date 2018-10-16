@@ -118,15 +118,15 @@ public final class FBReaderApp extends ZLApplication {
             }
         }
 
-        if (book == null) {
-            book = Collection.getRecentBook(0);
-        }
-        if (book == null || !BookUtil.fileByBook(book).exists()) {
-            book = Collection.getBookByFile(BookUtil.getHelpFile().getPath());
-        }
-        if (book == null) {
-            return;
-        }
+//        if (book == null) {
+//            book = Collection.getRecentBook(0);
+//        }
+//        if (book == null || !BookUtil.fileByBook(book).exists()) {
+//            book = Collection.getBookByFile(BookUtil.getHelpFile().getPath());
+//        }
+//        if (book == null) {
+//            return;
+//        }
         final Book bookToOpen = book;
         bookToOpen.addNewLabel(Book.READ_LABEL);
         Collection.saveBook(bookToOpen);
@@ -169,15 +169,15 @@ public final class FBReaderApp extends ZLApplication {
     }
 
     private synchronized void openBookInternal(final Book book, Bookmark bookmark, boolean force) {
-        if (!force && Model != null && Collection.sameBook(book, Model.Book)) {
-            if (bookmark != null) {
-                gotoBookmark(bookmark, false);
-            }
-            return;
-        }
-
-        hideActivePopup();
-        storePosition();
+//        if (!force && Model != null && Collection.sameBook(book, Model.Book)) {
+//            if (bookmark != null) {
+//                gotoBookmark(bookmark, false);
+//            }
+//            return;
+//        }
+//
+//        hideActivePopup();
+//        storePosition();
 
         BookTextView.setModel(null);
         FootnoteView.setModel(null);
@@ -210,17 +210,17 @@ public final class FBReaderApp extends ZLApplication {
                 gotoBookmark(bookmark, false);
             }
             Collection.addToRecentlyOpened(book);
-            final StringBuilder title = new StringBuilder(book.getTitle());
-            if (!book.authors().isEmpty()) {
-                boolean first = true;
-                for (Author a : book.authors()) {
-                    title.append(first ? " (" : ", ");
-                    title.append(a.DisplayName);
-                    first = false;
-                }
-                title.append(")");
-            }
-            setTitle(title.toString());
+//            final StringBuilder title = new StringBuilder(book.getTitle());
+//            if (!book.authors().isEmpty()) {
+//                boolean first = true;
+//                for (Author a : book.authors()) {
+//                    title.append(first ? " (" : ", ");
+//                    title.append(a.DisplayName);
+//                    first = false;
+//                }
+//                title.append(")");
+//            }
+//            setTitle(title.toString());
         } catch (BookReadingException e) {
             processException(e);
         }

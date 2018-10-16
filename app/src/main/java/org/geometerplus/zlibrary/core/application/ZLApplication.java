@@ -108,11 +108,11 @@ public abstract class ZLApplication {
 	};
 
 	protected SynchronousExecutor createExecutor(String key) {
-		if (myWindow != null) {
-			return myWindow.createExecutor(key);
-		} else {
+//		if (myWindow != null) {
+//			return myWindow.createExecutor(key);
+//		} else {
 			return myDummyExecutor;
-		}
+//		}
 	}
 
 	protected void processException(Exception e) {
