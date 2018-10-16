@@ -33,7 +33,6 @@ import org.geometerplus.zlibrary.core.util.XmlUtil;
 
 import org.geometerplus.fbreader.Paths;
 
-import org.geometerplus.android.util.DeviceType;
 
 public final class ZLKeyBindings {
 	private static final String ACTION = "Action";
