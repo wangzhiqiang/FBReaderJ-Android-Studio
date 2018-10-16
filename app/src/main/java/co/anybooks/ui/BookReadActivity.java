@@ -1,14 +1,9 @@
 package co.anybooks.ui;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Handler;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;

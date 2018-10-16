@@ -19,25 +19,18 @@
 
 package org.geometerplus.fbreader.fbreader;
 
-import java.util.*;
-
-import org.fbreader.util.ComparisonUtil;
 
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
 import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.text.hyphenation.ZLTextHyphenator;
-import org.geometerplus.zlibrary.text.model.ZLTextModel;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.*;
-//import org.geometerplus.fbreader.network.sync.SyncData;
-import org.geometerplus.fbreader.util.*;
 
 public final class FBReaderApp extends ZLApplication {
 
@@ -113,7 +106,14 @@ public final class FBReaderApp extends ZLApplication {
         try {
             Model = BookModel.createModel(book, plugin);
             BookTextView.setModel(Model.getTextModel());
+
+            //TODO 跳书签
+            if(null == bookmark) {
+                BookTextView.gotoPosition(new ZLTextFixedPosition(3,0,0));
+
+            }
             setView(BookTextView);
+
         } catch (BookReadingException e) {
             processException(e);
         }
@@ -121,12 +121,12 @@ public final class FBReaderApp extends ZLApplication {
         getViewWidget().reset();
         getViewWidget().repaint();
 
-        for (FileEncryptionInfo info : plugin.readEncryptionInfos(book)) {
-            if (info != null && !EncryptionMethod.isSupported(info.Method)) {
-                showErrorMessage("unsupportedEncryptionMethod", book.getPath());
-                break;
-            }
-        }
+//        for (FileEncryptionInfo info : plugin.readEncryptionInfos(book)) {
+//            if (info != null && !EncryptionMethod.isSupported(info.Method)) {
+//                showErrorMessage("unsupportedEncryptionMethod", book.getPath());
+//                break;
+//            }
+//        }
     }
 
     public void showBookTextView() {
@@ -137,6 +137,7 @@ public final class FBReaderApp extends ZLApplication {
     public void onWindowClosing() {
 //        storePosition();
     }
+
 
 
 }

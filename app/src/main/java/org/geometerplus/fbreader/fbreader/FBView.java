@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader;
 
+import android.util.Log;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -35,6 +36,8 @@ import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 import org.geometerplus.fbreader.fbreader.options.*;
 
 public final class FBView extends ZLTextView {
+
+	private String TAG  =getClass().getSimpleName();
 	private final FBReaderApp myReader;
 	private final ViewOptions myViewOptions;
 //	private final BookElementManager myBookElementManager;
@@ -167,6 +170,9 @@ public final class FBView extends ZLTextView {
 		final boolean horizontal = myReader.PageTurningOptions.Horizontal.getValue();
 		final Direction direction = horizontal ? Direction.rightToLeft : Direction.up;
 		myReader.getViewWidget().startManualScrolling(x, y, direction);
+
+		//这里可以记录上次打开的位置
+		Log.w(TAG, "startManualScrolling: X:"+x+" Y:"+y+"   POS:  "+ getStartCursor());
 	}
 
 	@Override
