@@ -105,31 +105,13 @@ public final class FBReaderApp extends ZLApplication {
         setView(BookTextView);
     }
 
-    public Book getCurrentBook() {
-        final BookModel m = Model;
-        return m != null ? m.Book : ExternalBook;
-    }
+
 
 
     public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
-//        if (Model != null) {
-//            if (book == null || bookmark == null && Collection.sameBook(book, Model.Book)) {
-//                return;
-//            }
-//        }
 
-//        if (book == null) {
-//            book = Collection.getRecentBook(0);
-//        }
-//        if (book == null || !BookUtil.fileByBook(book).exists()) {
-//            book = Collection.getBookByFile(BookUtil.getHelpFile().getPath());
-//        }
-//        if (book == null) {
-//            return;
-//        }
         final Book bookToOpen = book;
         bookToOpen.addNewLabel(Book.READ_LABEL);
-//        Collection.saveBook(bookToOpen);
 
         final SynchronousExecutor executor = createExecutor("loadingBook");
         executor.execute(new Runnable() {
@@ -209,18 +191,7 @@ public final class FBReaderApp extends ZLApplication {
             } else {
                 gotoBookmark(bookmark, false);
             }
-//            Collection.addToRecentlyOpened(book);
-//            final StringBuilder title = new StringBuilder(book.getTitle());
-//            if (!book.authors().isEmpty()) {
-//                boolean first = true;
-//                for (Author a : book.authors()) {
-//                    title.append(first ? " (" : ", ");
-//                    title.append(a.DisplayName);
-//                    first = false;
-//                }
-//                title.append(")");
-//            }
-//            setTitle(title.toString());
+//
         } catch (BookReadingException e) {
             processException(e);
         }
@@ -245,37 +216,7 @@ public final class FBReaderApp extends ZLApplication {
         return null;
     }
 
-    public boolean jumpBack() {
-        try {
-            if (getTextView() != BookTextView) {
-                showBookTextView();
-                return true;
-            }
 
-            if (myJumpEndPosition == null || myJumpTimeStamp == null) {
-                return false;
-            }
-            // more than 2 minutes ago
-            if (myJumpTimeStamp.getTime() + 2 * 60 * 1000 < System.currentTimeMillis()) {
-                return false;
-            }
-            if (!myJumpEndPosition.equals(BookTextView.getStartCursor())) {
-                return false;
-            }
-
-            final List<Bookmark> bookmarks = invisibleBookmarks();
-            if (bookmarks.isEmpty()) {
-                return false;
-            }
-            final Bookmark b = bookmarks.get(0);
-//            Collection.deleteBookmark(b);
-            gotoBookmark(b, true);
-            return true;
-        } finally {
-            myJumpEndPosition = null;
-            myJumpTimeStamp = null;
-        }
-    }
 
     private void gotoBookmark(Bookmark bookmark, boolean exactly) {
         final String modelId = bookmark.ModelId;
@@ -401,24 +342,5 @@ public final class FBReaderApp extends ZLApplication {
             mySaverThread.add(new PositionSaver(myStoredPositionBook, myStoredPosition, progress));
         }
     }
-
-    public boolean hasCancelActions() {
-        return  false;
-//        return new CancelMenuHelper().getActionsList(Collection).size() > 1;
-    }
-
-    public void runCancelAction(CancelMenuHelper.ActionType type) {
-        switch (type) {
-            case library:
-                runAction(ActionCode.SHOW_LIBRARY);
-                break;
-
-            case close:
-                closeWindow();
-                break;
-        }
-    }
-
-
 
 }
