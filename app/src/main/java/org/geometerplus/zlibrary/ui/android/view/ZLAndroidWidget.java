@@ -36,7 +36,6 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
 import org.geometerplus.fbreader.Paths;
-import org.geometerplus.android.fbreader.FBReader;
 
 public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLongClickListener {
 	public final ExecutorService PrepareService = Executors.newSingleThreadExecutor();
