@@ -17,31 +17,17 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
 
-        <service
-            android:launchMode="singleTask"
-            android:name="org.geometerplus.android.fbreader.libraryService.LibraryService"
-            android:process=":libraryService">
-            <intent-filter>
-                <action android:name="android.fbreader.action.LIBRARY_SERVICE" />
-            </intent-filter>
-        </service>
-        <service
-            android:launchMode="singleTask"
-            android:name="org.geometerplus.android.fbreader.config.ConfigService"
-            android:process=":configService">
-            <intent-filter>
-                <action android:name="android.fbreader.action.CONFIG_SERVICE" />
-            </intent-filter>
-        </service>
 
-        <activity android:name="co.anybooks.ui.FileListActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name="co.anybooks.ui.FileListActivity">
+            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+
         <activity android:name="co.anybooks.ui.BookReadActivity">
 
         </activity>

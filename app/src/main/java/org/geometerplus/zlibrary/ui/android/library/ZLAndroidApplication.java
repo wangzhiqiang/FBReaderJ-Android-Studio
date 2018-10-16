@@ -23,11 +23,11 @@ import android.app.Application;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageManager;
 
-import org.geometerplus.android.fbreader.config.ConfigShadow;
+//import org.geometerplus.android.fbreader.config.ConfigShadow;
 
 public abstract class ZLAndroidApplication extends Application {
 	private ZLAndroidLibrary myLibrary;
-	private ConfigShadow myConfig;
+//	private ConfigShadow myConfig;
 
 	@Override
 	public void onCreate() {
@@ -40,7 +40,7 @@ public abstract class ZLAndroidApplication extends Application {
 //		} catch (Throwable t) {
 //		}
 
-		myConfig = new ConfigShadow(this);
+//		myConfig = new ConfigShadow(this);
 		//喵喵的。内部做了一些操作。先留着，图片显示的时候还需要
 		new ZLAndroidImageManager();
 		myLibrary = new ZLAndroidLibrary(this);
