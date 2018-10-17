@@ -118,6 +118,8 @@ public final class FBView extends ZLTextView {
 			return;
 		}
 
+		myReader.runAction(ActionCode.SELECTION_CLEAR);
+
 		onFingerSingleTapLastResort(x, y);
 	}
 
@@ -155,6 +157,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		startManualScrolling(x, y);
+		myReader.runAction(ActionCode.SELECTION_CLEAR);
 
 	}
 
@@ -217,6 +220,7 @@ public final class FBView extends ZLTextView {
 				x, y, myReader.PageTurningOptions.AnimationSpeed.getValue()
 			);
 		}
+
 	}
 
 	@Override

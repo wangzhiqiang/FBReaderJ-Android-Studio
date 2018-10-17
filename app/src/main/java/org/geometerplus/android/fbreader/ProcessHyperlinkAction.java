@@ -20,6 +20,8 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import java.util.Arrays;
@@ -47,7 +49,6 @@ public class ProcessHyperlinkAction extends FBAction {
     @Override
     protected void run(Object... params) {
 
-        Log.i(TAG, "run: "+Arrays.toString(params));
         final ZLTextRegion region = Reader.getTextView().getOutlinedRegion();
         if (region == null) {
             return;
@@ -65,7 +66,7 @@ public class ProcessHyperlinkAction extends FBAction {
                 case FBHyperlinkType.INTERNAL:
                 case FBHyperlinkType.FOOTNOTE: {
                     Reader.tryOpenFootnote(hyperlink.Id);
-                    Log.i(TAG, "run: ");
+
                     break;
                 }
             }
@@ -80,8 +81,15 @@ public class ProcessHyperlinkAction extends FBAction {
         }
     }
 
-    private void openInBrowser(final String url) {
+    private void openInBrowser(  String url) {
 
-        Log.i(TAG, "openInBrowser: " + url);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            BaseActivity.startActivity(intent);
+        } catch (Exception e) {
+            Log.i(TAG, "openInBrowser: error" +url);
+        }
+
     }
 }

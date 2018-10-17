@@ -257,31 +257,23 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 	private void onDrawStatic(final Canvas canvas) {
 		canvas.drawBitmap(myBitmapManager.getBitmap(ZLView.PageIndex.current), 0, 0, myPaint);
 //		drawFooter(canvas, null);
-		post(new Runnable() {
-			@Override
-			public void run() {
-				PrepareService.execute(new Runnable() {
-					@Override
-					public void run() {
-						final ZLView view = ZLApplication.Instance().getCurrentView();
-						final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
-							mySystemInfo,
-							canvas,
-							new ZLAndroidPaintContext.Geometry(
-								getWidth(),
-								getHeight(),
-								getWidth(),
-								getMainAreaHeight(),
-								0,
-								0
-							),
-							view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
-						);
-						view.preparePage(context, ZLView.PageIndex.next);
-					}
-				});
-			}
-		});
+		post(() -> PrepareService.execute(() -> {
+			final ZLView view = ZLApplication.Instance().getCurrentView();
+			final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
+				mySystemInfo,
+				canvas,
+				new ZLAndroidPaintContext.Geometry(
+					getWidth(),
+					getHeight(),
+					getWidth(),
+					getMainAreaHeight(),
+					0,
+					0
+				),
+				view.isScrollbarShown() ? getVerticalScrollbarWidth() : 0
+			);
+			view.preparePage(context, ZLView.PageIndex.next);
+		}));
 	}
 
 	@Override
