@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 import java.util.Locale;
 import org.geometerplus.android.fbreader.*;
@@ -116,6 +118,12 @@ public class BookReadActivity extends AppCompatActivity {
         myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK,
             new ProcessHyperlinkAction(this, myFBReaderApp));
 
+
+        findViewById(R.id.font_to_small).setOnClickListener(
+            v -> myFBReaderApp.runAction(ActionCode.DECREASE_FONT));
+
+        findViewById(R.id.font_to_big).setOnClickListener(
+            v-> myFBReaderApp.runAction(ActionCode.INCREASE_FONT));
     }
 
     @Override

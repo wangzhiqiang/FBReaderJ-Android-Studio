@@ -63,6 +63,9 @@ public final class FBReaderApp extends ZLApplication {
 //        addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
 //        addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
 
+
+        addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
+        addAction(ActionCode.DECREASE_FONT, new ChangeFontSizeAction(this, -2));
         BookTextView = new FBView(this);
         setView(BookTextView);
     }

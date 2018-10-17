@@ -120,13 +120,13 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 //					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
 //					break;
 //				case slide:
-					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
+//					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
 //					break;
 //				case slideOldStyle:
 //					myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
 //					break;
 //				case shift:
-//					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
+					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
 //					break;
 //			}
 		}

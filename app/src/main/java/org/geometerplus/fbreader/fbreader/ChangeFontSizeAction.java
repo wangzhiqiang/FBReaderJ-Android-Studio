@@ -17,38 +17,24 @@
  * 02110-1301, USA.
  */
 
-package org.geometerplus.zlibrary.core.options;
+package org.geometerplus.fbreader.fbreader;
 
-final class StringPair {
-	final String Group;
-	final String Name;
+import org.geometerplus.zlibrary.core.options.ZLIntegerRangeOption;
 
-	StringPair(String group, String name) {
-		Group = group.intern();
-		Name = name.intern();
+class ChangeFontSizeAction extends FBAction {
+	private final int myDelta;
+
+	ChangeFontSizeAction(FBReaderApp fbreader, int delta) {
+		super(fbreader);
+		myDelta = delta;
 	}
 
 	@Override
-	public boolean equals(Object other) {
-		if (other == this) {
-			return true;
-		}
-		try {
-			final StringPair pair = (StringPair)other;
-			// yes, I'm sure Group & Name are not nulls
-			return Group.equals(pair.Group) && Name.equals(pair.Name);
-		} catch (ClassCastException e) {
-			return false;
-		}
-	}
-
-	@Override
-	public int hashCode() {
-		return Group.hashCode() + 37 * Name.hashCode();
-	}
-
-	@Override
-	public String toString() {
-		return Group+"-"+Name;
+	protected void run(Object ... params) {
+		final ZLIntegerRangeOption option =
+			Reader.ViewOptions.getTextStyleCollection().getBaseStyle().FontSizeOption;
+		option.setValue(option.getValue() + myDelta);
+		Reader.clearTextCaches();
+		Reader.getViewWidget().repaint();
 	}
 }

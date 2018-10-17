@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.core.options;
 
+import co.anybooks.ui.Config;
+
 public abstract class ZLOption {
 	private final StringPair myId;
 	protected String myDefaultStringValue;
@@ -39,11 +41,16 @@ public abstract class ZLOption {
 	protected final String getConfigValue() {
 //		final Config config = Config.Instance();
 //		return config != null ? config.getValue(myId, myDefaultStringValue) : myDefaultStringValue;
-		return  myDefaultStringValue;
+
+		Config config = Config.instance();
+
+		String val = config.getConfig(myId.toString());
+
+		return  null== val?myDefaultStringValue:val;
 	}
 
 	protected final void setConfigValue(String value) {
-//		final Config config = Config.Instance();
+		final Config config = Config.instance();
 //		if (config != null) {
 //			if (!myDefaultStringValue.equals(value)) {
 //				config.setValue(myId, value);
@@ -51,5 +58,7 @@ public abstract class ZLOption {
 //				config.unsetValue(myId);
 //			}
 //		}
+
+		config.setConfig(myId.toString(),value);
 	}
 }
