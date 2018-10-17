@@ -28,9 +28,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="co.anybooks.ui.BookReadActivity">
+        <activity
+            android:name="co.anybooks.ui.BookReadActivity"
+            android:theme="@style/AppTheme.FULL_SCREEN"
+            />
 
-        </activity>
+
     </application>
 
 </manifest>

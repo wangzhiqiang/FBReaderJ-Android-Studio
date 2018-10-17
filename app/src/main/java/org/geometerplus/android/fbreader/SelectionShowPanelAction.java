@@ -20,14 +20,19 @@
 package org.geometerplus.android.fbreader;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
-import co.anybooks.ui.BookReadActivity;
+import android.widget.Toast;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBView;
+import org.geometerplus.fbreader.util.TextSnippet;
 import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.R;
 
@@ -36,7 +41,7 @@ public class SelectionShowPanelAction extends FBAction {
 
     private Activity context;
 
-    public SelectionShowPanelAction(BookReadActivity baseActivity, FBReaderApp fbreader) {
+    public SelectionShowPanelAction(Activity baseActivity, FBReaderApp fbreader) {
         super(fbreader);
         context = baseActivity;
     }
@@ -53,26 +58,72 @@ public class SelectionShowPanelAction extends FBAction {
 
     private PopupWindow popupWindow;
 
-    public void showSelectionPanel() {
-        final ZLTextView view = Reader.getTextView();
-        int start = view.getSelectionStartY();
-        int end = view.getSelectionEndY();
+
+    private void showSelectionPanel() {
+        final FBView view = Reader.getTextView();
+        int x = view.getSelectionStartX();
+        int y = view.getSelectionStartY();
 
         if (null == popupWindow) {
+
             popupWindow = new PopupWindow(context);
-            View contentView = View.inflate(context, R.layout.selection_panel, null);
-            popupWindow.setContentView(contentView);
+            View pop = View.inflate(context, R.layout.selection_panel, null);
+            ColorDrawable dw = new ColorDrawable(0x00000000);
+            popupWindow.setBackgroundDrawable(dw);
+            popupWindow.setContentView(pop);
+            pop.findViewById(R.id.select_popup_copy)
+                .setOnClickListener(v -> {
+                        Reader.runAction(ActionCode.SELECTION_COPY_TO_CLIPBOARD);
+                        hide();
+
+
+                        TextSnippet snippet = view.getSelectedSnippet();
+
+                        ClipboardManager cmb = (ClipboardManager) context
+                            .getSystemService(Context.CLIPBOARD_SERVICE);
+                        cmb.setText(snippet.getText());
+
+                        Reader.runAction(ActionCode.SELECTION_CLEAR);
+
+
+                    }
+                );
+
+            pop.findViewById(R.id.select_popup_dict)
+                .setOnClickListener(v -> {
+                    Reader.runAction(ActionCode.SELECTION_TRANSLATE);
+                    hide();
+
+                    //TODO 跳转字典
+
+                    Reader.runAction(ActionCode.SELECTION_CLEAR);
+                });
+
         }
 
-        Log.i(TAG, "showSelectionPanel: x:" + start + " y:" + end);
+        Log.i(TAG, "showSelectionPanel: x:" + x + " y:" + y);
 
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
 
-        popupWindow
-            .showAtLocation(context.findViewById(android.R.id.content), Gravity.CENTER_HORIZONTAL
-                , start, end);
+        popupWindow.setOutsideTouchable(true);
+        View contentView = context.findViewById(android.R.id.content);
 
+        popupWindow.showAtLocation(contentView, Gravity.NO_GRAVITY, x, y - dip2px(context, 45));
+
+    }
+
+
+    private int dip2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+
+    }
+
+    private void hide() {
+        if (null != popupWindow && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
     }
 }

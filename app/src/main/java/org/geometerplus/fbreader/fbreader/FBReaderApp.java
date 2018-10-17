@@ -21,13 +21,9 @@ package org.geometerplus.fbreader.fbreader;
 
 
 import android.util.Log;
-import org.geometerplus.android.fbreader.api.FBReaderIntents.Action;
 import org.geometerplus.zlibrary.core.application.*;
-import org.geometerplus.zlibrary.core.drm.FileEncryptionInfo;
-import org.geometerplus.zlibrary.core.drm.EncryptionMethod;
 import org.geometerplus.zlibrary.core.util.*;
 
-import org.geometerplus.zlibrary.core.view.ZLViewEnums.Direction;
 import org.geometerplus.zlibrary.text.view.*;
 
 import org.geometerplus.fbreader.book.*;
@@ -58,6 +54,8 @@ public final class FBReaderApp extends ZLApplication {
         addAction(ActionCode.MOVE_CURSOR_LEFT, new MoveCursorAction(this, FBView.Direction.rightToLeft));
         addAction(ActionCode.MOVE_CURSOR_RIGHT, new MoveCursorAction(this, FBView.Direction.leftToRight));
 
+        //clean选择部分
+        addAction(ActionCode.SELECTION_CLEAR, new SelectionClearAction(this));
 
 //        addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
 //        addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
@@ -81,12 +79,7 @@ public final class FBReaderApp extends ZLApplication {
         bookToOpen.addNewLabel(Book.READ_LABEL);
 
         final SynchronousExecutor executor = createExecutor("loadingBook");
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                openBookInternal(bookToOpen, bookmark, false);
-            }
-        }, postAction);
+        executor.execute(() -> openBookInternal(bookToOpen, bookmark, false), postAction);
     }
 
 

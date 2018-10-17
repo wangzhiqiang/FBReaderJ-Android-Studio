@@ -1752,6 +1752,23 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	public int getSelectionStartX(){
+		if (mySelection.isEmpty()) {
+			return 0;
+		}
+		final ZLTextElementArea selectionStartArea = mySelection.getStartArea(myCurrentPage);
+		if (selectionStartArea != null) {
+			return selectionStartArea.XStart;
+		}
+		if (mySelection.hasPartBeforePage(myCurrentPage)) {
+			final ZLTextElementArea firstArea = myCurrentPage.TextElementMap.getFirstArea();
+			return firstArea != null ? firstArea.XStart : 0;
+		} else {
+			final ZLTextElementArea lastArea = myCurrentPage.TextElementMap.getLastArea();
+			return lastArea != null ? lastArea.XEnd : 0;
+		}
+	}
+
 	public int getSelectionEndY() {
 		if (mySelection.isEmpty()) {
 			return 0;

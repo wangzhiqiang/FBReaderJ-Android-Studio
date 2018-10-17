@@ -93,19 +93,13 @@ public class BookReadActivity extends AppCompatActivity {
 
         myFBReaderApp.initWindow();
 
-        myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL,new SelectionShowPanelAction(this,myFBReaderApp));
-//        mCollection.bindToService(this, new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                Log.i(TAG, "Collection.bindToService");
-//            }
-//        });
+        myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL,
+            new SelectionShowPanelAction(this, myFBReaderApp));
     }
 
     @Override
     protected void onDestroy() {
-//        mCollection.unbind();
+        myFBReaderApp.removeAction(ActionCode.SELECTION_SHOW_PANEL);
         super.onDestroy();
     }
 
@@ -114,23 +108,17 @@ public class BookReadActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        try {
-            openBook();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        openBook();
+
     }
 
-    private void openBook() throws RemoteException {
+    private void openBook() {
 
         Intent intent = getIntent();
 
         String bookPath = intent.getStringExtra(KEY_BOOK_PATH);
 
-//        bookPath = intent.getExtras().getString(KEY_BOOK_PATH);
-
         book = new Book(0, bookPath, "xx", "utf-8", "en");
-
 
         myFBReaderApp.openBook(book, null, null);
 

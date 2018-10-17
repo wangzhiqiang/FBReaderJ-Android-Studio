@@ -22,6 +22,9 @@ package org.geometerplus.fbreader.fbreader;
 import android.util.Log;
 import java.util.*;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents.Action;
+import org.geometerplus.fbreader.util.FixedTextSnippet;
+import org.geometerplus.fbreader.util.TextSnippet;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -152,6 +155,7 @@ public final class FBView extends ZLTextView {
 		}
 
 		startManualScrolling(x, y);
+
 	}
 
 	private boolean isFlickScrollingEnabled() {
@@ -447,6 +451,17 @@ public final class FBView extends ZLTextView {
 		if (getCountOfSelectedWords() > 0) {
 			myReader.runAction(ActionCode.SELECTION_SHOW_PANEL);
 		}
+	}
+
+	public TextSnippet getSelectedSnippet() {
+		final ZLTextPosition start = getSelectionStartPosition();
+		final ZLTextPosition end = getSelectionEndPosition();
+		if (start == null || end == null) {
+			return null;
+		}
+		final TextBuildTraverser traverser = new TextBuildTraverser(this);
+		traverser.traverse(start, end);
+		return new FixedTextSnippet(start, end, traverser.getText());
 	}
 
 
