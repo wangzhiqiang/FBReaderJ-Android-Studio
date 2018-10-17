@@ -22,7 +22,7 @@ package org.geometerplus.zlibrary.core.options;
 import co.anybooks.ui.Config;
 
 public abstract class ZLOption {
-	private final StringPair myId;
+	protected final StringPair myId;
 	protected String myDefaultStringValue;
 	protected String mySpecialName;
 

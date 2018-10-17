@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 import java.util.Locale;
 import org.geometerplus.android.fbreader.*;
+import org.geometerplus.android.fbreader.api.FBReaderIntents.Action;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.options.ColorProfile;
 import org.geometerplus.zlibrary.core.application.ZLApplication.SynchronousExecutor;
 import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
@@ -117,6 +120,8 @@ public class BookReadActivity extends AppCompatActivity {
 
         myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK,
             new ProcessHyperlinkAction(this, myFBReaderApp));
+        myFBReaderApp.addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(  myFBReaderApp, ColorProfile.DAY));
+        myFBReaderApp.addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction( myFBReaderApp, ColorProfile.NIGHT));
 
 
         findViewById(R.id.font_to_small).setOnClickListener(
@@ -124,6 +129,20 @@ public class BookReadActivity extends AppCompatActivity {
 
         findViewById(R.id.font_to_big).setOnClickListener(
             v-> myFBReaderApp.runAction(ActionCode.INCREASE_FONT));
+
+
+        findViewById(R.id.change_day_night).setOnClickListener(v->{
+
+            //  切换 白天/夜间 模式
+            String vla = myFBReaderApp.ViewOptions.ColorProfileName.getValue();
+            Log.i(TAG, "onCreate: "+vla);
+            if(ColorProfile.NIGHT.equals(vla)){
+                myFBReaderApp.runAction(ActionCode.SWITCH_TO_DAY_PROFILE);
+            }else {
+                myFBReaderApp.runAction(ActionCode.SWITCH_TO_NIGHT_PROFILE);
+            }
+
+        });
     }
 
     @Override
