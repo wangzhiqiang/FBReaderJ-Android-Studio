@@ -132,13 +132,14 @@ public class ColorProfile {
 				createOption(name, "FooterNGForegroundUnreadOption", 119, 119, 119);
 		} else {
 			WallpaperOption =
-				new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
+				new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/wood.jpg");
 			FillModeOption =
 				new ZLEnumOption<ZLPaintContext.FillMode>("Colors", name + ":FillMode", ZLPaintContext.FillMode.tile);
 			BackgroundOption =
 				createOption(name, "Background", 255, 255, 255);
 			SelectionBackgroundOption =
-				createOption(name, "SelectionBackground", 82, 131, 194);
+//				createOption(name, "SelectionBackground", 82, 131, 194);
+                createOption(name, "SelectionBackground", 72, 171, 148);
 			SelectionForegroundOption =
 				createNullOption(name, "SelectionForeground");
 			HighlightingBackgroundOption =

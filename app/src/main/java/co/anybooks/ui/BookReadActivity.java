@@ -1,10 +1,11 @@
 package co.anybooks.ui;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.RemoteException;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+import java.util.Locale;
 import org.geometerplus.android.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
@@ -30,11 +31,26 @@ public class BookReadActivity extends AppCompatActivity {
 
     private ZLAndroidWidget mContentView;
 
+    private TextToSpeech textToSpeech; // TTS对象
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_read);
+
+        textToSpeech = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                int result = textToSpeech.setLanguage(Locale.CHINA);
+                if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Toast.makeText(this, "数据丢失或不支持", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+
+
+
 
 //        mCollection = new BookCollectionShadow();
 
@@ -97,7 +113,8 @@ public class BookReadActivity extends AppCompatActivity {
         myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL,
             new SelectionShowPanelAction(this, myFBReaderApp));
 
-        myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, myFBReaderApp));
+        myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK,
+            new ProcessHyperlinkAction(this, myFBReaderApp));
 
     }
 
