@@ -1,10 +1,11 @@
 package co.anybooks.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import org.geometerplus.android.fbreader.SelectionShowPanelAction;
+import org.geometerplus.android.fbreader.*;
 import org.geometerplus.fbreader.Paths;
 import org.geometerplus.fbreader.book.Book;
 import org.geometerplus.fbreader.fbreader.ActionCode;
@@ -95,6 +96,9 @@ public class BookReadActivity extends AppCompatActivity {
 
         myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL,
             new SelectionShowPanelAction(this, myFBReaderApp));
+
+        myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK, new ProcessHyperlinkAction(this, myFBReaderApp));
+
     }
 
     @Override

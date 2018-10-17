@@ -21,6 +21,7 @@ package org.geometerplus.fbreader.fbreader;
 
 
 import android.util.Log;
+import java.util.Date;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.util.*;
 
@@ -51,15 +52,16 @@ public final class FBReaderApp extends ZLApplication {
 
         addAction(ActionCode.MOVE_CURSOR_UP, new MoveCursorAction(this, FBView.Direction.up));
         addAction(ActionCode.MOVE_CURSOR_DOWN, new MoveCursorAction(this, FBView.Direction.down));
-        addAction(ActionCode.MOVE_CURSOR_LEFT, new MoveCursorAction(this, FBView.Direction.rightToLeft));
-        addAction(ActionCode.MOVE_CURSOR_RIGHT, new MoveCursorAction(this, FBView.Direction.leftToRight));
+        addAction(ActionCode.MOVE_CURSOR_LEFT,
+            new MoveCursorAction(this, FBView.Direction.rightToLeft));
+        addAction(ActionCode.MOVE_CURSOR_RIGHT,
+            new MoveCursorAction(this, FBView.Direction.leftToRight));
 
         //clean选择部分
         addAction(ActionCode.SELECTION_CLEAR, new SelectionClearAction(this));
 
 //        addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
 //        addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
-
 
         BookTextView = new FBView(this);
         setView(BookTextView);
@@ -68,10 +70,9 @@ public final class FBReaderApp extends ZLApplication {
 
     public void openBook(Book book, final Bookmark bookmark, Runnable postAction) {
 
+        if (null != Model && Model.Book.equals(book)) {
 
-        if(null != Model && Model.Book.equals(book)){
-
-            Log.i(TAG, "not open Current Book: "+book);
+            Log.i(TAG, "not open Current Book: " + book);
             return;
         }
 
@@ -98,7 +99,6 @@ public final class FBReaderApp extends ZLApplication {
     }
 
 
-
     private synchronized void openBookInternal(final Book book, Bookmark bookmark, boolean force) {
 //
         BookTextView.setModel(null);
@@ -120,8 +120,8 @@ public final class FBReaderApp extends ZLApplication {
             BookTextView.setModel(Model.getTextModel());
 
             //TODO 跳书签
-            if(null == bookmark) {
-                BookTextView.gotoPosition(new ZLTextFixedPosition(3,0,0));
+            if (null == bookmark) {
+                BookTextView.gotoPosition(new ZLTextFixedPosition(3, 0, 0));
 
             }
             setView(BookTextView);
@@ -150,6 +150,20 @@ public final class FBReaderApp extends ZLApplication {
 //        storePosition();
     }
 
+    //链接跳转的
+    public void tryOpenFootnote(String id) {
+        if (Model != null) {
+            final BookModel.Label label = Model.getLabel(id);
+            if (label != null) {
+
+                BookTextView.gotoPosition(label.ParagraphIndex, 0, 0);
+                setView(BookTextView);
+
+                getViewWidget().repaint();
+//                storePosition();
+            }
+        }
+    }
 
 
 }
