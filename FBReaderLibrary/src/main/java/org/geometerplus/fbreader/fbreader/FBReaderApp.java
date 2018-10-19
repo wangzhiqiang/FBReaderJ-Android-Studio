@@ -20,8 +20,11 @@
 package org.geometerplus.fbreader.fbreader;
 
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import java.util.Date;
+import org.geometerplus.android.fbreader.config.Config;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.util.*;
 
@@ -31,6 +34,7 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.*;
+import org.json.JSONObject;
 
 public final class FBReaderApp extends ZLApplication {
 
@@ -115,10 +119,18 @@ public final class FBReaderApp extends ZLApplication {
             Model = BookModel.createModel(book, plugin);
             BookTextView.setModel(Model.getTextModel());
 
-            //TODO 跳书签
-            if (null == bookmark) {
-                BookTextView.gotoPosition(new ZLTextFixedPosition(3, 0, 0));
+            //  跳书签
+            if (null != bookmark) {
 
+                BookTextView.gotoPosition(bookmark);
+
+            }else {
+                //TODO   应该单独处理，不使用config
+                String p = Config.Instance().getConfig(book.getPath());
+                if(!TextUtils.isEmpty(p)){
+                    ZLTextFixedPosition pos = new ZLTextFixedPosition(Integer.valueOf(p),0,0);
+                    BookTextView.gotoPosition(pos);
+                }
             }
             setView(BookTextView);
 
@@ -135,7 +147,7 @@ public final class FBReaderApp extends ZLApplication {
 
     @Override
     public void onWindowClosing() {
-//        storePosition();
+        storePosition();
     }
 
     //链接跳转的
@@ -148,10 +160,26 @@ public final class FBReaderApp extends ZLApplication {
                 setView(BookTextView);
 
                 getViewWidget().repaint();
-//                storePosition();
+                storePosition();
             }
         }
     }
+
+    public void storePosition() {
+        final Book bk = Model != null ? Model.Book : null;
+        if (bk != null  && BookTextView != null) {
+            final ZLTextFixedPosition position = new ZLTextFixedPosition(BookTextView.getStartCursor());
+//            if (!myStoredPosition.equals(position)) {
+//                myStoredPosition = position;
+//                savePosition();
+//            }
+
+
+            Config.Instance().setConfig(bk.getPath(), ""+position.getParagraphIndex());
+        }
+    }
+
+
 
 
 }

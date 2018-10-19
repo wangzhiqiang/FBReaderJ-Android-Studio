@@ -512,7 +512,7 @@ public final class FBView extends ZLTextView {
 	@Override
 	public synchronized void onScrollingFinished(PageIndex pageIndex) {
 		super.onScrollingFinished(pageIndex);
-//		myReader.storePosition();
+		myReader.storePosition();
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package org.geometerplus.fbreader.config;
+package org.geometerplus.android.fbreader.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;

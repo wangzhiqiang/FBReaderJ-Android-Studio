@@ -53,7 +53,7 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 				}
 			});
 		} finally {
-			file.setCached(false);
+//			file.setCached(false);
 		}
 	}
 

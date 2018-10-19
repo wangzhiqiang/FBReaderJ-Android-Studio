@@ -20,7 +20,7 @@
 package org.geometerplus.zlibrary.core.options;
 
 
-import org.geometerplus.fbreader.config.Config;
+import org.geometerplus.android.fbreader.config.Config;
 
 public abstract class ZLOption {
 	protected final StringPair myId;
