@@ -23,6 +23,8 @@ import java.util.*;
 
 import org.fbreader.util.Boolean3;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents.Action;
+import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
@@ -78,17 +80,7 @@ public abstract class ZLApplication {
 		}
 	}
 
-	protected void showErrorMessage(String resourceKey) {
-		if (myWindow != null) {
-			myWindow.showErrorMessage(resourceKey);
-		}
-	}
 
-	protected void showErrorMessage(String resourceKey, String parameter) {
-		if (myWindow != null) {
-			myWindow.showErrorMessage(resourceKey, parameter);
-		}
-	}
 
 	public interface SynchronousExecutor {
 		void execute(Runnable action, Runnable uiPostAction);
@@ -115,13 +107,10 @@ public abstract class ZLApplication {
 //		}
 	}
 
-	protected void processException(Exception e) {
-		if (myWindow != null) {
-			myWindow.processException(e);
-		}
-	}
+
 
 	public final ZLViewWidget getViewWidget() {
+
 		return myWindow != null ? myWindow.getViewWidget() : null;
 	}
 
@@ -191,13 +180,7 @@ public abstract class ZLApplication {
 		return false;
 	}
 
-	public boolean closeWindow() {
-		onWindowClosing();
-		if (myWindow != null) {
-			myWindow.close();
-		}
-		return true;
-	}
+
 
 	public void onWindowClosing() {
 	}
@@ -253,9 +236,7 @@ public abstract class ZLApplication {
 		return myPopups.get(id);
 	}
 
-	public int getBatteryLevel() {
-		return (myWindow != null) ? myWindow.getBatteryLevel() : 0;
-	}
+
 
 	private volatile Timer myTimer;
 	private final HashMap<Runnable,Long> myTimerTaskPeriods = new HashMap<Runnable,Long>();

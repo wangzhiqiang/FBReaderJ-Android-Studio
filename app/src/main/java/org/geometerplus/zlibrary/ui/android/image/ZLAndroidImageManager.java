@@ -40,10 +40,10 @@ public final class ZLAndroidImageManager extends ZLImageManager {
 
 	private ZLAndroidImageLoader myLoader;
 
-//	public void startImageLoading(ZLImageProxy.Synchronizer syncronizer, ZLImageProxy image, Runnable postLoadingRunnable) {
-//		if (myLoader == null) {
-//			myLoader = new ZLAndroidImageLoader();
-//		}
-//		myLoader.startImageLoading(syncronizer, image, postLoadingRunnable);
-//	}
+	public void startImageLoading(ZLImageProxy.Synchronizer syncronizer, ZLImageProxy image, Runnable postLoadingRunnable) {
+		if (myLoader == null) {
+			myLoader = new ZLAndroidImageLoader();
+		}
+		myLoader.startImageLoading(syncronizer, image, postLoadingRunnable);
+	}
 }

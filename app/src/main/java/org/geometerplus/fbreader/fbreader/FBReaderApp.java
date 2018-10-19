@@ -50,13 +50,6 @@ public final class FBReaderApp extends ZLApplication {
     public FBReaderApp(SystemInfo systemInfo) {
         super(systemInfo);
 
-        addAction(ActionCode.MOVE_CURSOR_UP, new MoveCursorAction(this, FBView.Direction.up));
-        addAction(ActionCode.MOVE_CURSOR_DOWN, new MoveCursorAction(this, FBView.Direction.down));
-        addAction(ActionCode.MOVE_CURSOR_LEFT,
-            new MoveCursorAction(this, FBView.Direction.rightToLeft));
-        addAction(ActionCode.MOVE_CURSOR_RIGHT,
-            new MoveCursorAction(this, FBView.Direction.leftToRight));
-
         //clean选择部分
         addAction(ActionCode.SELECTION_CLEAR, new SelectionClearAction(this));
 
@@ -114,7 +107,7 @@ public final class FBReaderApp extends ZLApplication {
         try {
             plugin = BookUtil.getPlugin(pluginCollection, book);
         } catch (BookReadingException e) {
-            processException(e);
+            e.printStackTrace();
             return;
         }
 
@@ -130,23 +123,15 @@ public final class FBReaderApp extends ZLApplication {
             setView(BookTextView);
 
         } catch (BookReadingException e) {
-            processException(e);
+            e.printStackTrace();
         }
 
         getViewWidget().reset();
         getViewWidget().repaint();
 
-//        for (FileEncryptionInfo info : plugin.readEncryptionInfos(book)) {
-//            if (info != null && !EncryptionMethod.isSupported(info.Method)) {
-//                showErrorMessage("unsupportedEncryptionMethod", book.getPath());
-//                break;
-//            }
-//        }
     }
 
-    public void showBookTextView() {
-        setView(BookTextView);
-    }
+
 
     @Override
     public void onWindowClosing() {

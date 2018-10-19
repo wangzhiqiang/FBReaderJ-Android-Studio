@@ -27,6 +27,9 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.*;
 
+import org.geometerplus.android.fbreader.api.FBReaderIntents.Action;
+import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.util.SystemInfo;

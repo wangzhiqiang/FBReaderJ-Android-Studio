@@ -21,6 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/show_book_index"
+            android:text="Index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/font_to_small"

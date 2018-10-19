@@ -33,17 +33,14 @@ public class FileListActivity extends AppCompatActivity {
         mList.setAdapter(adapter);
 
 
-        mList.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mList.setOnItemClickListener((parent, view, position, id) -> {
 
-                FileListAdapter adapter = (FileListAdapter) parent.getAdapter();
-                File file = adapter.getItem(position);
-                Intent intent = new Intent(FileListActivity.this,BookReadActivity.class);
-                intent.putExtra(BookReadActivity.KEY_BOOK_PATH,file.getAbsolutePath());
-                startActivity(intent);
+            FileListAdapter adapter = (FileListAdapter) parent.getAdapter();
+            File file = adapter.getItem(position);
+            Intent intent = new Intent(FileListActivity.this,BookReadActivity.class);
+            intent.putExtra(BookReadActivity.KEY_BOOK_PATH,file.getAbsolutePath());
+            startActivity(intent);
 
-            }
         });
 
 //        TODO load data

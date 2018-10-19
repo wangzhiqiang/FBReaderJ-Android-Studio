@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 public class Config {
 
 
-    SharedPreferences sp;
+    private SharedPreferences sp;
 
     private static Config config = new Config();
 
@@ -18,7 +18,7 @@ public class Config {
 
     }
 
-    public static Config instance() {
+    public static Config Instance() {
         return config;
     }
 

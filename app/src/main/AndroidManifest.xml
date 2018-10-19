@@ -15,7 +15,7 @@
         android:logo="@drawable/fbreader_bw"
         android:name="org.geometerplus.android.fbreader.FBReaderApplication"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon">
+        >
 
 
         <activity android:name="co.anybooks.ui.FileListActivity">
@@ -32,6 +32,7 @@
             android:name="co.anybooks.ui.BookReadActivity"
             android:theme="@style/AppTheme.FULL_SCREEN"
             />
+        <activity android:name="co.anybooks.ui.BookIndexActivity" />
 
 
     </application>
