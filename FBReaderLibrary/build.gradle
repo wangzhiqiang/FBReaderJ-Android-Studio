@@ -1,14 +1,17 @@
+
+apply plugin: 'maven'
+apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
-//    buildToolsVersion "23.0.2"
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+//        ndk{
+//            abiFilters 'x86','armeabi-v7a'
+//        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -20,15 +23,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
-    }
+
 }
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
-
-
 }
+tasks.withType(Javadoc) {
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+}
+
+
+apply from: 'publish.gradle'
