@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import co.anybooks.R;
 import java.util.List;
 import org.geometerplus.android.fbreader.ProcessHyperlinkAction;
@@ -74,57 +75,55 @@ public class BookReadActivity extends AppCompatActivity {
 
         myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK,
             new ProcessHyperlinkAction(this, myFBReaderApp));
-        myFBReaderApp.addAction(ActionCode.SWITCH_TO_DAY_PROFILE, new SwitchProfileAction(  myFBReaderApp, ColorProfile.DAY));
-        myFBReaderApp.addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE, new SwitchProfileAction( myFBReaderApp, ColorProfile.NIGHT));
-
+        myFBReaderApp.addAction(ActionCode.SWITCH_TO_DAY_PROFILE,
+            new SwitchProfileAction(myFBReaderApp, ColorProfile.DAY));
+        myFBReaderApp.addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE,
+            new SwitchProfileAction(myFBReaderApp, ColorProfile.NIGHT));
 
         findViewById(R.id.font_to_small).setOnClickListener(
             v -> myFBReaderApp.runAction(ActionCode.DECREASE_FONT));
 
         findViewById(R.id.font_to_big).setOnClickListener(
-            v-> myFBReaderApp.runAction(ActionCode.INCREASE_FONT));
+            v -> myFBReaderApp.runAction(ActionCode.INCREASE_FONT));
 
-
-        findViewById(R.id.change_day_night).setOnClickListener(v->{
+        findViewById(R.id.change_day_night).setOnClickListener(v -> {
 
             //  切换 白天/夜间 模式
             String vla = myFBReaderApp.ViewOptions.ColorProfileName.getValue();
 
-            if(ColorProfile.NIGHT.equals(vla)){
+            if (ColorProfile.NIGHT.equals(vla)) {
                 myFBReaderApp.runAction(ActionCode.SWITCH_TO_DAY_PROFILE);
-            }else {
+            } else {
                 myFBReaderApp.runAction(ActionCode.SWITCH_TO_NIGHT_PROFILE);
             }
 
         });
 
-        findViewById(R.id.show_book_index).setOnClickListener(v ->{
+        findViewById(R.id.show_book_index).setOnClickListener(v -> {
             //TODO 显示目录
-
-
 
             TOCTree tree = myFBReaderApp.Model.TOCTree;
 
-             printTOC(tree);
+            printTOC(tree);
         });
     }
 
 
-    private void  printTOC(TOCTree tocTree){
+    private void printTOC(TOCTree tocTree) {
 
         Reference reference = tocTree.getReference();
 
-        Log.i(TAG, "printTOC: "+tocTree.getText() +" PageIndex:"+ (reference!=null?reference.ParagraphIndex:""));
+        Log.i(TAG, "printTOC: " + tocTree.getText() + " PageIndex:" + (reference != null
+            ? reference.ParagraphIndex : ""));
         List<TOCTree> sub = tocTree.subtrees();
-        if (sub != null && !sub.isEmpty()){
+        if (sub != null && !sub.isEmpty()) {
 
-            for (TOCTree t :sub){
+            for (TOCTree t : sub) {
                 printTOC(t);
             }
 
         }
     }
-
 
 
     @Override
@@ -154,4 +153,18 @@ public class BookReadActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                myFBReaderApp.runAction(ActionCode.TURN_PAGE_FORWARD);
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                myFBReaderApp.runAction(ActionCode.TURN_PAGE_BACK);
+                return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
 }

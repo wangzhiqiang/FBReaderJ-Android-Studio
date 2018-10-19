@@ -57,8 +57,8 @@ public final class FBReaderApp extends ZLApplication {
         //clean选择部分
         addAction(ActionCode.SELECTION_CLEAR, new SelectionClearAction(this));
 
-//        addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
-//        addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
+        addAction(ActionCode.TURN_PAGE_FORWARD, new TurnPageAction(this, true));
+        addAction(ActionCode.TURN_PAGE_BACK, new TurnPageAction(this, false));
 
 
         addAction(ActionCode.INCREASE_FONT, new ChangeFontSizeAction(this, +2));
