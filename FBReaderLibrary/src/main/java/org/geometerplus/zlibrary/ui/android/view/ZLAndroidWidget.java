@@ -96,6 +96,8 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 //		final int w = getWidth();
 //		final int h = getMainAreaHeight();
 
+		if(getWidth() <=0 || getHeight() <=0 ) return;
+
 		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		if (getAnimationProvider().inProgress()) {
 			onDrawInScrolling(canvas);
@@ -123,10 +125,10 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 //					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
 //					break;
 //				case slideOldStyle:
-//					myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
+					myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
 //					break;
 //				case shift:
-					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
+//					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
 //					break;
 //			}
 		}

@@ -498,6 +498,8 @@ public final class FBView extends ZLTextView {
 
 	@Override
 	protected ZLPaintContext.ColorAdjustingMode getAdjustingModeForImages() {
+
+		//TODO 这里决定是否处理图片背景
 		if (myReader.ImageOptions.MatchBackground.getValue()) {
 			if (ColorProfile.DAY.equals(myViewOptions.getColorProfile().Name)) {
 				return ZLPaintContext.ColorAdjustingMode.DARKEN_TO_BACKGROUND;

@@ -32,6 +32,7 @@ public class ImageOptions {
 		doNothing, selectImage, openImageView
 	}
 	public final ZLEnumOption<TapActionEnum> TapAction;
+	//是否对图片背景处理
 	public final ZLBooleanOption MatchBackground;
 
 	public ImageOptions() {
@@ -42,6 +43,6 @@ public class ImageOptions {
 		TapAction =
 			new ZLEnumOption<TapActionEnum>("Options", "ImageTappingAction", TapActionEnum.openImageView);
 		MatchBackground =
-			new ZLBooleanOption("Colors", "ImageMatchBackground", true);
+			new ZLBooleanOption("Colors", "ImageMatchBackground", false);
 	}
 }
