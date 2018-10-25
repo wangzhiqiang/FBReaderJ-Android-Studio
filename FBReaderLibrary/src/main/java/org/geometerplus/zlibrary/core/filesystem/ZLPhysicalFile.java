@@ -105,7 +105,8 @@ public final class ZLPhysicalFile extends ZLFile {
 		return new FileInputStream(myFile);
 	}
 
-	protected List<ZLFile> directoryEntries() {
+	@Override
+    protected List<ZLFile> directoryEntries() {
 		File[] subFiles = myFile.listFiles();
 		if (subFiles == null || subFiles.length == 0) {
 			return Collections.emptyList();

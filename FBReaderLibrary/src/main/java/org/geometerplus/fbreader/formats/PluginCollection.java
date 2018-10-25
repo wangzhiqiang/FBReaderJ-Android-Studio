@@ -36,8 +36,8 @@ public class PluginCollection implements IFormatPluginCollection {
 
 	private final List<BuiltinFormatPlugin> myBuiltinPlugins =
 		new LinkedList<BuiltinFormatPlugin>();
-	private final List<ExternalFormatPlugin> myExternalPlugins =
-		new LinkedList<ExternalFormatPlugin>();
+//	private final List<ExternalFormatPlugin> myExternalPlugins =
+//		new LinkedList<ExternalFormatPlugin>();
 
 	public static PluginCollection Instance(SystemInfo systemInfo) {
 		if (ourInstance == null) {
@@ -54,7 +54,7 @@ public class PluginCollection implements IFormatPluginCollection {
 			// because nativePlugins() is a native method
 			for (NativeFormatPlugin p : ourInstance.nativePlugins(systemInfo)) {
 				ourInstance.myBuiltinPlugins.add(p);
-				System.err.println("native plugin: " + p);
+//				System.err.println("native plugin: " + p);
 			}
 		}
 	}
@@ -93,26 +93,24 @@ public class PluginCollection implements IFormatPluginCollection {
 				return p;
 			}
 		}
-		for (FormatPlugin p : myExternalPlugins) {
-			if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
-				return p;
-			}
-		}
+//		for (FormatPlugin p : myExternalPlugins) {
+//			if (fileType.Id.equalsIgnoreCase(p.supportedFileType())) {
+//				return p;
+//			}
+//		}
 		return null;
 	}
 
 	public List<FormatPlugin> plugins() {
 		final ArrayList<FormatPlugin> all = new ArrayList<FormatPlugin>();
 		all.addAll(myBuiltinPlugins);
-		all.addAll(myExternalPlugins);
-		Collections.sort(all, new Comparator<FormatPlugin>() {
-			public int compare(FormatPlugin p0, FormatPlugin p1) {
-				final int diff = p0.priority() - p1.priority();
-				if (diff != 0) {
-					return diff;
-				}
-				return p0.supportedFileType().compareTo(p1.supportedFileType());
+//		all.addAll(myExternalPlugins);
+		Collections.sort(all, (p0, p1) -> {
+			final int diff = p0.priority() - p1.priority();
+			if (diff != 0) {
+				return diff;
 			}
+			return p0.supportedFileType().compareTo(p1.supportedFileType());
 		});
 		return all;
 	}

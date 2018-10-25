@@ -49,24 +49,7 @@ public class BookReadActivity extends AppCompatActivity {
             myFBReaderApp = new FBReaderApp(Paths.systemInfo(this));
         }
 
-        myFBReaderApp.setWindow(new ZLApplicationWindow() {
-            @Override
-            public void setWindowTitle(String title) {
-
-            }
-
-            @Override
-            public void refresh() {
-
-            }
-
-            @Override
-            public ZLViewWidget getViewWidget() {
-                return mContentView;
-            }
-
-
-        });
+        myFBReaderApp.setWindow(() -> mContentView);
 
         myFBReaderApp.initWindow();
 

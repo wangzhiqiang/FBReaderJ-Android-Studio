@@ -96,7 +96,9 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 //		final int w = getWidth();
 //		final int h = getMainAreaHeight();
 
-		if(getWidth() <=0 || getHeight() <=0 ) return;
+		if(getWidth() <=0 || getHeight() <=0 ) {
+			return;
+		}
 
 		myBitmapManager.setSize(getWidth(), getMainAreaHeight());
 		if (getAnimationProvider().inProgress()) {

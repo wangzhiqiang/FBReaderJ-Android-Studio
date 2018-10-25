@@ -178,7 +178,8 @@ public final class FBView extends ZLTextView {
 		myReader.getViewWidget().startManualScrolling(x, y, direction);
 
 		//这里可以记录上次打开的位置
-		Log.w(TAG, "startManualScrolling: X:"+x+" Y:"+y+"   POS:  "+ getStartCursor());
+//		Log.w(TAG, "startManualScrolling: X:"+x+" Y:"+y+"   POS:  "+ getStartCursor());
+
 	}
 
 	@Override

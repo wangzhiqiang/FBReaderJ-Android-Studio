@@ -48,7 +48,7 @@ public abstract class ZLApplication {
 		ourInstance = this;
 	}
 
-	protected final void setView(ZLView view) {
+	public final void setView(ZLView view) {
 		if (view != null) {
 			myView = view;
 			final ZLViewWidget widget = getViewWidget();
@@ -74,7 +74,7 @@ public abstract class ZLApplication {
 
 	protected void setTitle(String title) {
 		if (myWindow != null) {
-			myWindow.setWindowTitle(title);
+//			myWindow.setWindowTitle(title);
 		}
 	}
 
@@ -114,7 +114,7 @@ public abstract class ZLApplication {
 
 	public final void onRepaintFinished() {
 		if (myWindow != null) {
-			myWindow.refresh();
+//			myWindow.refresh();
 		}
 		for (PopupPanel popup : popupPanels()) {
 			popup.update();

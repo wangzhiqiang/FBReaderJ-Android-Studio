@@ -20,10 +20,8 @@
 package org.geometerplus.fbreader.fbreader;
 
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
-import java.util.Date;
 import org.geometerplus.android.fbreader.config.Config;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.util.*;
@@ -34,7 +32,6 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.*;
-import org.json.JSONObject;
 
 public final class FBReaderApp extends ZLApplication {
 
@@ -86,6 +83,7 @@ public final class FBReaderApp extends ZLApplication {
 
     @Override
     public ZLKeyBindings keyBindings() {
+        //可以设置拦截Key
         return myBindings;
     }
 
@@ -128,8 +126,7 @@ public final class FBReaderApp extends ZLApplication {
                 //TODO   应该单独处理，不使用config
                 String p = Config.Instance().getConfig(book.getPath());
                 if(!TextUtils.isEmpty(p)){
-                    ZLTextFixedPosition pos = new ZLTextFixedPosition(Integer.valueOf(p),0,0);
-                    BookTextView.gotoPosition(pos);
+                    BookTextView.gotoPosition(Integer.valueOf(p),0,0);
                 }
             }
             setView(BookTextView);
@@ -177,6 +174,30 @@ public final class FBReaderApp extends ZLApplication {
 
             Config.Instance().setConfig(bk.getPath(), ""+position.getParagraphIndex());
         }
+    }
+
+    public TOCTree getCurrentTOCElement() {
+        final ZLTextWordCursor cursor = BookTextView.getStartCursor();
+        if (Model == null || cursor == null) {
+            return null;
+        }
+
+        int index = cursor.getParagraphIndex();
+        if (cursor.isEndOfParagraph()) {
+            ++index;
+        }
+        TOCTree treeToSelect = null;
+        for (TOCTree tree : Model.TOCTree) {
+            final TOCTree.Reference reference = tree.getReference();
+            if (reference == null) {
+                continue;
+            }
+            if (reference.ParagraphIndex > index) {
+                break;
+            }
+            treeToSelect = tree;
+        }
+        return treeToSelect;
     }
 
 

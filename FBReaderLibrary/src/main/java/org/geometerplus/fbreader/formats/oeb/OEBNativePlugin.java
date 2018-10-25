@@ -44,13 +44,11 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 		file.setCached(true);
 		try {
 			super.readModel(model);
-			model.setLabelResolver(new BookModel.LabelResolver() {
-				public List<String> getCandidates(String id) {
-					final int index = id.indexOf("#");
-					return index > 0
-						? Collections.<String>singletonList(id.substring(0, index))
-						: Collections.<String>emptyList();
-				}
+			model.setLabelResolver(id -> {
+				final int index = id.indexOf("#");
+				return index > 0
+					? Collections.singletonList(id.substring(0, index))
+					: Collections.emptyList();
 			});
 		} finally {
 //			file.setCached(false);
@@ -74,8 +72,8 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 			return new OEBAnnotationReader().readAnnotation(getOpfFile(file));
 		} catch (BookReadingException e) {
 			return null;
-		} finally {
-			file.setCached(false);
+//		} finally {
+//			file.setCached(false);
 		}
 	}
 

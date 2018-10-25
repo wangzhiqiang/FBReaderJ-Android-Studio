@@ -19,10 +19,12 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import android.util.Log;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.SelectionCursor;
 
 class ZLTextSelection extends ZLTextHighlighting {
+
 	static class Point {
 		int X;
 		int Y;
@@ -319,6 +321,7 @@ class ZLTextSelection extends ZLTextHighlighting {
 			myY = y;
 		}
 
+		@Override
 		public void run() {
 			myView.turnPage(myScrollForward, ZLTextView.ScrollingMode.SCROLL_LINES, 1);
 			myView.preparePaintInfo();

@@ -1725,6 +1725,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	}
 
 	public void clearSelection() {
+
 		if (mySelection.clear()) {
 			Application.getViewWidget().reset();
 			Application.getViewWidget().repaint();

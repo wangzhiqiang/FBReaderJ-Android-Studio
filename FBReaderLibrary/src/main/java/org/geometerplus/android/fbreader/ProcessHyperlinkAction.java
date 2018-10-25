@@ -19,12 +19,11 @@
 
 package org.geometerplus.android.fbreader;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import java.util.Arrays;
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.zlibrary.text.view.*;
 
@@ -34,11 +33,11 @@ import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
 public class ProcessHyperlinkAction extends FBAction {
 
 
-    Activity BaseActivity;
+    private Context mContext;
 
-    public ProcessHyperlinkAction(Activity baseActivity, FBReaderApp fbreader) {
+    public ProcessHyperlinkAction(Context context, FBReaderApp fbreader) {
         super(fbreader);
-        BaseActivity = baseActivity;
+        mContext = context.getApplicationContext();
     }
 
     @Override
@@ -64,11 +63,11 @@ public class ProcessHyperlinkAction extends FBAction {
                     openInBrowser(hyperlink.Id);
                     break;
                 case FBHyperlinkType.INTERNAL:
-                case FBHyperlinkType.FOOTNOTE: {
+                case FBHyperlinkType.FOOTNOTE:
                     Reader.tryOpenFootnote(hyperlink.Id);
-
                     break;
-                }
+                default:
+                    break;
             }
         } else if (soul instanceof ZLTextImageRegionSoul) {
             Reader.getTextView().hideOutline();
@@ -77,18 +76,18 @@ public class ProcessHyperlinkAction extends FBAction {
 
         } else if (soul instanceof ZLTextWordRegionSoul) {
 
-
         }
     }
 
-    private void openInBrowser(  String url) {
+    private void openInBrowser(String url) {
 
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
-            BaseActivity.startActivity(intent);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
         } catch (Exception e) {
-            Log.i(TAG, "openInBrowser: error" +url);
+            Log.i(TAG, "openInBrowser: error" + url);
         }
 
     }

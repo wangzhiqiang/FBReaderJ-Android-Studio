@@ -26,8 +26,8 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public class ColorProfile {
-	public static final String DAY = "defaultLight";
-	public static final String NIGHT = "defaultDark";
+	public static final String DAY = "Light";
+	public static final String NIGHT = "Dark";
 
 	private static final ArrayList<String> ourNames = new ArrayList<String>();
 	private static final HashMap<String,ColorProfile> ourProfiles = new HashMap<String,ColorProfile>();
@@ -132,7 +132,7 @@ public class ColorProfile {
 				createOption(name, "FooterNGForegroundUnreadOption", 119, 119, 119);
 		} else {
 			WallpaperOption =
-				new ZLStringOption("Colors", name + ":Wallpaper", "wallpapers/sepia.jpg");
+				new ZLStringOption("Colors", name + ":Wallpaper", "");//wallpapers/sepia.jpg
 			FillModeOption =
 				new ZLEnumOption<ZLPaintContext.FillMode>("Colors", name + ":FillMode", ZLPaintContext.FillMode.tile);
 			BackgroundOption =

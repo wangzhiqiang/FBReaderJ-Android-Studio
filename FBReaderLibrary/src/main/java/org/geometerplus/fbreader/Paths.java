@@ -208,6 +208,7 @@ public abstract class Paths {
 	public static SystemInfo systemInfo(Context context) {
 		final Context appContext = context.getApplicationContext();
 		return new SystemInfo() {
+			@Override
 			public String tempDirectory() {
 				final String value = ourTempDirectoryOption.getValue();
 				if (!"".equals(value)) {
@@ -216,6 +217,7 @@ public abstract class Paths {
 				return internalTempDirectoryValue(appContext);
 			}
 
+			@Override
 			public String networkCacheDirectory() {
 				return tempDirectory() + "/cache";
 			}

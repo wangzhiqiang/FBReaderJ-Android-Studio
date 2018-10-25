@@ -23,9 +23,9 @@ import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
 //早晚要去掉的。放这里不合适
 public interface ZLApplicationWindow {
-	void setWindowTitle(String title);
+//	void setWindowTitle(String title);
 
-	void refresh();
+//	void refresh();
 
 	ZLViewWidget getViewWidget();
 

@@ -30,10 +30,12 @@ import org.geometerplus.zlibrary.core.util.ZLColor;
 final class DummyPaintContext extends ZLPaintContext {
 	DummyPaintContext() {
 		super(new SystemInfo() {
-			public String tempDirectory() {
+			@Override
+            public String tempDirectory() {
 				return "";
 			}
 
+			@Override
 			public String networkCacheDirectory() {
 				return "";
 			}
