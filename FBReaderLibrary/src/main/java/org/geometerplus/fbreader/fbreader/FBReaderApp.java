@@ -20,10 +20,8 @@
 package org.geometerplus.fbreader.fbreader;
 
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
-import java.util.Date;
 import org.geometerplus.android.fbreader.config.Config;
 import org.geometerplus.zlibrary.core.application.*;
 import org.geometerplus.zlibrary.core.util.*;
@@ -34,7 +32,6 @@ import org.geometerplus.fbreader.book.*;
 import org.geometerplus.fbreader.bookmodel.*;
 import org.geometerplus.fbreader.fbreader.options.*;
 import org.geometerplus.fbreader.formats.*;
-import org.json.JSONObject;
 
 public final class FBReaderApp extends ZLApplication {
 
@@ -73,6 +70,7 @@ public final class FBReaderApp extends ZLApplication {
         if (null != Model && Model.Book.equals(book)) {
 
             Log.i(TAG, "not open Current Book: " + book);
+            runAction(ActionCode.SHOW_OPENED_STATUS);
             return;
         }
 
@@ -139,7 +137,7 @@ public final class FBReaderApp extends ZLApplication {
             getViewWidget().reset();
             getViewWidget().repaint();
 
-            runAction(ActionCode.SHOW_OPENEN_STATUS);
+            runAction(ActionCode.SHOW_OPENED_STATUS);
 
         } catch (BookReadingException e) {
            runAction(ActionCode.SHOW_OPEN_ERROR_STATUS,e.getMessage());

@@ -579,20 +579,29 @@ public final class FBView extends ZLTextView {
                 return;
             }
 
-            final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
+//            final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
 
-            //200<<24
-            int c = (-939524096) | (fgColor.Red << 16) | (fgColor.Green << 8) | fgColor.Blue;
+            //200<<24 = -939524096
+//            int c = ((int)(255*0.6)<< 24) | (fgColor.Red << 16) | (fgColor.Green << 8) | fgColor.Blue;
+
+
+            ZLColor fgColor =  new ZLColor(173,173,173);
+
+            int fontH = 12* ZLibrary.Instance().getWidthInPixels()/360;
 
             final int right = context.getWidth() - getRightMargin();
             final int height = getHeight();
-            setFont(context,  height /3*2, false);
+            setFont(context,  fontH, false);
 
             final PagePosition pagePosition = FBView.this.pagePosition();
             final String infoString = buildInfoString(pagePosition, " ");
             final int infoWidth = context.getStringWidth(infoString);
-            context.setTextColor(new ZLColor(c));
-            context.drawString(right - infoWidth, height/3*2, infoString);
+            context.setTextColor(fgColor);
+
+            context.drawString(right - infoWidth, (height+fontH)/2, infoString);
+
+//            context.drawLine(0,0,getContextWidth(),0);
+//            context.drawLine(0,height/2,getContextWidth(),height/2);
 
 
         }

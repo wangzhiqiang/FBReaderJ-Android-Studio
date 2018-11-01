@@ -36,13 +36,13 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 	private static final String OPTIONS = "Options";
 
 	public final ZLBooleanOption UseCSSTextAlignmentOption =
-		new ZLBooleanOption("Style", "css:textAlignment", true);
+		new ZLBooleanOption("Style", "css:textAlignment", false);
 	public final ZLBooleanOption UseCSSMarginsOption =
-		new ZLBooleanOption("Style", "css:margins", true);
+		new ZLBooleanOption("Style", "css:margins", false);
 	public final ZLBooleanOption UseCSSFontSizeOption =
-		new ZLBooleanOption("Style", "css:fontSize", true);
+		new ZLBooleanOption("Style", "css:fontSize", false);
 	public final ZLBooleanOption UseCSSFontFamilyOption =
-		new ZLBooleanOption("Style", "css:fontFamily", true);
+		new ZLBooleanOption("Style", "css:fontFamily", false);
 
 	public final ZLBooleanOption AutoHyphenationOption =
 		new ZLBooleanOption(OPTIONS, "AutoHyphenation", true);
@@ -66,7 +66,7 @@ public class ZLTextBaseStyle extends ZLTextStyle {
 		ItalicOption = new ZLBooleanOption(GROUP, prefix + ":italic", false);
 		UnderlineOption = new ZLBooleanOption(GROUP, prefix + ":underline", false);
 		StrikeThroughOption = new ZLBooleanOption(GROUP, prefix + ":strikeThrough", false);
-		AlignmentOption = new ZLIntegerRangeOption(GROUP, prefix + ":alignment", 1, 4, ZLTextAlignmentType.ALIGN_JUSTIFY);
+		AlignmentOption = new ZLIntegerRangeOption(GROUP, prefix + ":alignment", 1, 4, ZLTextAlignmentType.ALIGN_LEFT);
 		LineSpaceOption = new ZLIntegerRangeOption(GROUP, prefix + ":lineSpacing", 5, 20, 12);
 	}
 

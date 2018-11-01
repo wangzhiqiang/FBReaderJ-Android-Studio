@@ -32,7 +32,9 @@ class FileTypeEpub extends FileType {
 	@Override
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension();
+		String path = file.getPath();
 		return
+			path.contains("co.anybooks/files/books")||
 			"epub".equalsIgnoreCase(extension) ||
 			"oebzip".equalsIgnoreCase(extension) ||
 			("opf".equalsIgnoreCase(extension) && file != file.getPhysicalFile());

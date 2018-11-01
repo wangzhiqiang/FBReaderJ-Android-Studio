@@ -64,7 +64,7 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 
 	@Override
 	protected void startAnimatedScrollingInternal(int speed) {
-		mySpeedFactor = (float)Math.pow(1.5, 0.25 * speed);
+		mySpeedFactor = (float)Math.pow(1.5, 0.15 * speed);
 		doStep();
 	}
 

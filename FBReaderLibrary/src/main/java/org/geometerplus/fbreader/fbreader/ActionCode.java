@@ -86,7 +86,7 @@ public interface ActionCode {
 	String INSTALL_PLUGINS = "plugins";
 
 	String SHOW_OPEN_STATUS = "showOpenStatus";
-	String SHOW_OPENEN_STATUS = "showOpenedStatus";
+	String SHOW_OPENED_STATUS = "showOpenedStatus";
 	String SHOW_OPEN_ERROR_STATUS = "showOpenErrorStatus";
 
 }

@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.fbreader.options;
 
+import android.util.Log;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
@@ -47,16 +48,21 @@ public class ViewOptions {
         final int dpi = zlibrary.getDisplayDPI();
         final int x = zlibrary.getWidthInPixels();
         final int y = zlibrary.getHeightInPixels();
-        final int horMargin = Math.min(dpi / 5, Math.min(x, y) / 30);
+        final int horMargin =  24 * zlibrary.getWidthInPixels()/360;//Math.min(dpi / 5, Math.min(x, y) / 30);
 
+        final  int top = 28 * zlibrary.getWidthInPixels()/360;
+
+        final int fh = 60* zlibrary.getHeightInPixels()/640;
+
+        Log.i("DPI", "ViewOptions dpi: "+dpi);
         TwoColumnView =
             new ZLBooleanOption("Options", "TwoColumnView", x * x + y * y >= 42 * dpi * dpi);
         LeftMargin =
-            new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100, horMargin);
+            new ZLIntegerRangeOption("Options", "LeftMargin", 0, 100,  horMargin);
         RightMargin =
-            new ZLIntegerRangeOption("Options", "RightMargin", 0, 100, horMargin);
+            new ZLIntegerRangeOption("Options", "RightMargin", 0, 100,  horMargin);
         TopMargin =
-            new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, 0);
+            new ZLIntegerRangeOption("Options", "TopMargin", 0, 100, top);
         BottomMargin =
             new ZLIntegerRangeOption("Options", "BottomMargin", 0, 100, 4);
         SpaceBetweenColumns =
@@ -65,7 +71,7 @@ public class ViewOptions {
             new ZLIntegerRangeOption("Options", "ScrollbarType", 0, 4,
                 FBView.SCROLLBAR_SHOW_AS_FOOTER);
         FooterHeight =
-            new ZLIntegerRangeOption("Options", "FooterHeight", 8, dpi / 8, dpi / 10);
+            new ZLIntegerRangeOption("Options", "FooterHeight", 8, fh, fh);
         ColorProfileName =
             new ZLStringOption("Options", "ColorProfile", ColorProfile.DAY);
         ColorProfileName.setSpecialName("colorProfile");
