@@ -51,7 +51,7 @@ public class OEBNativePlugin extends NativeFormatPlugin {
 					: Collections.emptyList();
 			});
 		} finally {
-//			file.setCached(false);
+			file.setCached(false);
 		}
 	}
 

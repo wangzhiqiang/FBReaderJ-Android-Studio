@@ -84,4 +84,9 @@ public interface ActionCode {
 	String OPEN_START_SCREEN = "openStartScreen";
 	String OPEN_WEB_HELP = "help";
 	String INSTALL_PLUGINS = "plugins";
+
+	String SHOW_OPEN_STATUS = "showOpenStatus";
+	String SHOW_OPENEN_STATUS = "showOpenedStatus";
+	String SHOW_OPEN_ERROR_STATUS = "showOpenErrorStatus";
+
 }

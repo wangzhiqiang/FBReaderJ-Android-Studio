@@ -6,7 +6,7 @@ android {
 
 
     defaultConfig {
-        applicationId "co.anybooks"
+        applicationId "co.anybooks.demo"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1

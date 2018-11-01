@@ -47,11 +47,10 @@ final class BitmapManagerImpl implements BitmapManager {
 				myIndexes[i] = null;
 			}
 			System.gc();
-			System.gc();
-			System.gc();
 		}
 	}
 
+	@Override
 	public Bitmap getBitmap(ZLView.PageIndex index) {
 		for (int i = 0; i < SIZE; ++i) {
 			if (index == myIndexes[i]) {
@@ -73,6 +72,7 @@ final class BitmapManagerImpl implements BitmapManager {
 		return myBitmaps[iIndex];
 	}
 
+	@Override
 	public void drawBitmap(Canvas canvas, int x, int y, ZLView.PageIndex index, Paint paint) {
 		canvas.drawBitmap(getBitmap(index), x, y, paint);
 	}
