@@ -164,13 +164,13 @@ public final class FBView extends ZLTextView {
             return;
         }
 
-        if (myReader.MiscOptions.AllowScreenBrightnessAdjustment.getValue()
-            && x < getContextWidth() / 10) {
-            myIsBrightnessAdjustmentInProgress = true;
-            myStartY = y;
-            myStartBrightness = myReader.getViewWidget().getScreenBrightness();
-            return;
-        }
+//        if (myReader.MiscOptions.AllowScreenBrightnessAdjustment.getValue()
+//            && x < getContextWidth() / 10) {
+//            myIsBrightnessAdjustmentInProgress = true;
+//            myStartY = y;
+//            myStartBrightness = myReader.getViewWidget().getScreenBrightness();
+//            return;
+//        }
 
         startManualScrolling(x, y);
         myReader.runAction(ActionCode.SELECTION_CLEAR);
@@ -208,17 +208,17 @@ public final class FBView extends ZLTextView {
         }
 
         synchronized (this) {
-            if (myIsBrightnessAdjustmentInProgress) {
-                if (x >= getContextWidth() / 5) {
-                    myIsBrightnessAdjustmentInProgress = false;
-                    startManualScrolling(x, y);
-                } else {
-                    final int delta =
-                        (myStartBrightness + 30) * (myStartY - y) / getContextHeight();
-                    myReader.getViewWidget().setScreenBrightness(myStartBrightness + delta);
-                    return;
-                }
-            }
+//            if (myIsBrightnessAdjustmentInProgress) {
+//                if (x >= getContextWidth() / 5) {
+//                    myIsBrightnessAdjustmentInProgress = false;
+//                    startManualScrolling(x, y);
+//                } else {
+//                    final int delta =
+//                        (myStartBrightness + 30) * (myStartY - y) / getContextHeight();
+//                    myReader.getViewWidget().setScreenBrightness(myStartBrightness + delta);
+//                    return;
+//                }
+//            }
 
             if (isFlickScrollingEnabled()) {
                 myReader.getViewWidget().scrollManuallyTo(x, y);
@@ -238,6 +238,7 @@ public final class FBView extends ZLTextView {
                 x, y, myReader.PageTurningOptions.AnimationSpeed.getValue()
             );
         }
+
 
     }
 

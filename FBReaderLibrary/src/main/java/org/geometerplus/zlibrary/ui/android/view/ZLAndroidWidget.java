@@ -20,6 +20,8 @@
 package org.geometerplus.zlibrary.ui.android.view;
 
 import android.graphics.Bitmap.Config;
+import android.util.Log;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
@@ -28,6 +30,8 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.*;
 
+import org.geometerplus.fbreader.fbreader.ActionCode;
+import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
@@ -133,7 +137,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 //            myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
 //					break;
 //				case shift:
-					myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
+            myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
 //					break;
 //			}
         }
@@ -151,7 +155,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
             if (animator.getMode().Auto) {
                 postInvalidate();
             }
-			drawFooter(canvas, animator);
+            drawFooter(canvas, animator);
         } else {
             switch (oldMode) {
                 case AnimatedScrollingForward: {
@@ -279,7 +283,8 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
             myFooterBitmap = null;
         }
         if (myFooterBitmap == null) {
-            myFooterBitmap = Bitmap.createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
+            myFooterBitmap = Bitmap
+                .createBitmap(getWidth(), footer.getHeight(), Bitmap.Config.RGB_565);
         }
         final ZLAndroidPaintContext context = new ZLAndroidPaintContext(
             mySystemInfo,
@@ -377,12 +382,16 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
     private int myPressedX, myPressedY;
     private boolean myScreenIsTouched;
 
+    long lastTouchDown = 0;
+    long lastTouchUp = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
 
         final ZLView view = ZLApplication.Instance().getCurrentView();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_CANCEL:
                 myPendingDoubleTap = false;
@@ -426,8 +435,29 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                 myPendingDoubleTap = false;
                 myPendingPress = false;
                 myScreenIsTouched = false;
+
+
+                lastTouchUp  = System.currentTimeMillis();
+
+                long diffTime = Math.abs(lastTouchDown-lastTouchUp);
+                if(myPressedX >0 && diffTime > 0) {
+                    double sp = (myPressedX-x)*1000 / diffTime;
+
+                    if(Math.abs(sp) > 200){
+//                        view.onFingerRelease(x,y);
+
+//                        if(sp>0){
+//                            FBReaderApp.Instance().runAction(ActionCode.TURN_PAGE_FORWARD);
+//                        }else {
+//                            FBReaderApp.Instance().runAction(ActionCode.TURN_PAGE_BACK);
+//                        }
+                        Log.i("Reader", "onTouchEvent: speed: "+sp);
+
+                    }
+                }
                 break;
             case MotionEvent.ACTION_DOWN:
+                lastTouchDown = System.currentTimeMillis();
                 if (myPendingShortClickRunnable != null) {
                     removeCallbacks(myPendingShortClickRunnable);
                     myPendingShortClickRunnable = null;

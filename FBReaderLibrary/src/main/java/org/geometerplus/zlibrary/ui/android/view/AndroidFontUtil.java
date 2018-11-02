@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
 import java.io.*;
 import java.util.*;
 
@@ -42,9 +44,10 @@ public final class AndroidFontUtil {
 	private static volatile Set<File> ourFileSet;
 	private static volatile long ourTimeStamp;
 
+	//本地自带字体配置
 	private static Map<String,String[]> getFontAssetMap() {
 		if (ourFontAssetMap == null) {
-			ourFontAssetMap = new HashMap<String,String[]>();
+			ourFontAssetMap = new HashMap<>();
 			XmlUtil.parseQuietly(
 				ZLFile.createFileByPath("fonts/fonts.xml"),
 				new DefaultHandler() {
@@ -65,6 +68,7 @@ public final class AndroidFontUtil {
 		return ourFontAssetMap;
 	}
 
+	//外置字体设置
 	private static synchronized Map<String,File[]> getFontFileMap(boolean forceReload) {
 		final long timeStamp = System.currentTimeMillis();
 		if (forceReload && timeStamp < ourTimeStamp + 1000) {
@@ -72,15 +76,13 @@ public final class AndroidFontUtil {
 		}
 		ourTimeStamp = timeStamp;
 		if (ourFileSet == null || forceReload) {
-			final HashSet<File> fileSet = new HashSet<File>();
-			final FilenameFilter filter = new FilenameFilter() {
-				public boolean accept(File dir, String name) {
-					if (name.startsWith(".")) {
-						return false;
-					}
-					final String lcName = name.toLowerCase();
-					return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
+			final HashSet<File> fileSet = new HashSet<>();
+			final FilenameFilter filter = (dir, name) -> {
+				if (name.startsWith(".")) {
+					return false;
 				}
+				final String lcName = name.toLowerCase();
+				return lcName.endsWith(".ttf") || lcName.endsWith(".otf");
 			};
 			for (String dir : Paths.FontPathOption.getValue()) {
 				final File[] fileList = new File(dir).listFiles(filter);
@@ -176,6 +178,8 @@ public final class AndroidFontUtil {
 
 	public static Typeface systemTypeface(String family, boolean bold, boolean italic) {
 		family = realFontFamilyName(family);
+
+		@SuppressLint("WrongConstant")
 		final int style = (bold ? Typeface.BOLD : 0) | (italic ? Typeface.ITALIC : 0);
 		Typeface[] typefaces = ourTypefaces.get(family);
 		if (typefaces == null) {
