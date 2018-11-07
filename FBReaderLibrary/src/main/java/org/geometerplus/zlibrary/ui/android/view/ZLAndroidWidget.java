@@ -219,12 +219,6 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                     app = new FBReaderApp(Paths.systemInfo(getContext()));
                 }
                 app.runAction(ActionCode.ACTION_PAGE_SCROLL);
-
-                ZLTextView v = app.getTextView();
-                ZLTextView.PagePosition pagePosition = v.pagePosition();
-
-                Log.i("Reader", "onDrawInScrolling: "+pagePosition.Current+"/"+pagePosition.Total);
-
             } catch (Exception e) {
                  //TODO 不发出消息
             }
@@ -418,7 +412,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         if (myPendingLongClickRunnable == null) {
             myPendingLongClickRunnable = new LongClickRunnable();
         }
-        postDelayed(myPendingLongClickRunnable, 2 * ViewConfiguration.getLongPressTimeout());
+        postDelayed(myPendingLongClickRunnable,  ViewConfiguration.getLongPressTimeout());
     }
 
     private class ShortClickRunnable implements Runnable {
