@@ -51,6 +51,7 @@ public interface ActionCode {
 	String VOLUME_KEY_SCROLL_FORWARD = "volumeKeyScrollForward";
 	String VOLUME_KEY_SCROLL_BACK = "volumeKeyScrollBackward";
 	String SHOW_MENU = "menu";
+	String HIDE_MENU = "menu_hide";
 	String SHOW_NAVIGATION = "navigate";
 
 	String GO_BACK = "goBack";
@@ -89,4 +90,5 @@ public interface ActionCode {
 	String SHOW_OPENED_STATUS = "showOpenedStatus";
 	String SHOW_OPEN_ERROR_STATUS = "showOpenErrorStatus";
 
+	String ACTION_PAGE_SCROLL = "actionPageScroll";
 }

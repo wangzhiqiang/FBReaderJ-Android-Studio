@@ -711,14 +711,14 @@ public abstract class ZLTextView extends ZLTextViewBase {
 	public final synchronized PagePosition pagePosition() {
 		int current = computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
 		int total = computeTextPageNumber(sizeOfFullText());
-
+//
 		if (total > 3) {
 			return new PagePosition(current, total);
 		}
 
 		preparePaintInfo(myCurrentPage);
 		ZLTextWordCursor cursor = myCurrentPage.StartCursor;
-		if (cursor == null || cursor.isNull()) {
+		if (cursor.isNull()) {
 			return new PagePosition(current, total);
 		}
 
@@ -726,29 +726,27 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			current = 1;
 		} else {
 			ZLTextWordCursor prevCursor = myPreviousPage.StartCursor;
-			if (prevCursor == null || prevCursor.isNull()) {
+			if (prevCursor.isNull()) {
 				preparePaintInfo(myPreviousPage);
 				prevCursor = myPreviousPage.StartCursor;
 			}
-			if (prevCursor != null && !prevCursor.isNull()) {
+			if (!prevCursor.isNull()) {
 				current = prevCursor.isStartOfText() ? 2 : 3;
 			}
 		}
 
 		total = current;
 		cursor = myCurrentPage.EndCursor;
-		if (cursor == null || cursor.isNull()) {
+		if (cursor.isNull()) {
 			return new PagePosition(current, total);
 		}
 		if (!cursor.isEndOfText()) {
 			ZLTextWordCursor nextCursor = myNextPage.EndCursor;
-			if (nextCursor == null || nextCursor.isNull()) {
+			if (nextCursor.isNull()) {
 				preparePaintInfo(myNextPage);
 				nextCursor = myNextPage.EndCursor;
 			}
-			if (nextCursor != null) {
-				total += nextCursor.isEndOfText() ? 1 : 2;
-			}
+			total += nextCursor.isEndOfText() ? 1 : 2;
 		}
 
 		return new PagePosition(current, total);

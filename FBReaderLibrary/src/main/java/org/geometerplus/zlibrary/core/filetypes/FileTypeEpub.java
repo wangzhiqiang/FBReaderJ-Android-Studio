@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.core.filetypes;
 
+import android.util.Log;
 import java.util.List;
 
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
@@ -32,9 +33,7 @@ class FileTypeEpub extends FileType {
 	@Override
 	public boolean acceptsFile(ZLFile file) {
 		final String extension = file.getExtension();
-		String path = file.getPath();
 		return
-			path.contains("co.anybooks/files/books")||
 			"epub".equalsIgnoreCase(extension) ||
 			"oebzip".equalsIgnoreCase(extension) ||
 			("opf".equalsIgnoreCase(extension) && file != file.getPhysicalFile());

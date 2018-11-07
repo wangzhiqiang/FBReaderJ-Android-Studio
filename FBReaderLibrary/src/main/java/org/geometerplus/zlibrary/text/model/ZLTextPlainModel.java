@@ -90,53 +90,67 @@ public final class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Fea
 			myDataOffset = myStartEntryOffsets[index];
 		}
 
+		@Override
 		public byte getType() {
 			return myType;
 		}
 
+		@Override
 		public char[] getTextData() {
 			return myTextData;
 		}
+		@Override
 		public int getTextOffset() {
 			return myTextOffset;
 		}
+		@Override
 		public int getTextLength() {
 			return myTextLength;
 		}
 
+		@Override
 		public byte getControlKind() {
 			return myControlKind;
 		}
+		@Override
 		public boolean getControlIsStart() {
 			return myControlIsStart;
 		}
+		@Override
 		public byte getHyperlinkType() {
 			return myHyperlinkType;
 		}
+		@Override
 		public String getHyperlinkId() {
 			return myHyperlinkId;
 		}
 
+		@Override
 		public ZLImageEntry getImageEntry() {
 			return myImageEntry;
 		}
 
+		@Override
 		public ZLVideoEntry getVideoEntry() {
 			return myVideoEntry;
 		}
 
+		@Override
 		public ExtensionEntry getExtensionEntry() {
 			return myExtensionEntry;
 		}
 
+		@Override
 		public ZLTextStyleEntry getStyleEntry() {
 			return myStyleEntry;
 		}
 
+		@Override
 		public short getFixedHSpaceLength() {
 			return myFixedHSpaceLength;
 		}
 
+		@Override
 		public boolean next() {
 			if (myCounter >= myLength) {
 				return false;
@@ -291,6 +305,7 @@ public final class ZLTextPlainModel implements ZLTextModel, ZLTextStyleEntry.Fea
 					myExtensionEntry = new ExtensionEntry(kind, map);
 					break;
 				}
+				default:break;
 			}
 			++myCounter;
 			myDataOffset = dataOffset;

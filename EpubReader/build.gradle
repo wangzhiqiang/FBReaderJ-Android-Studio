@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
 
     implementation project(':FBReaderLibrary')
+    implementation 'com.github.dfqin:grantor:2.1.0'
 //    implementation "co.anybooks:fbreader-library:1.0.0"
 
 }

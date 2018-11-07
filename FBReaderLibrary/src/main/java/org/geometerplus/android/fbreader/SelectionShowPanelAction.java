@@ -77,6 +77,8 @@ public class SelectionShowPanelAction extends FBAction {
 
                         TextSnippet snippet = view.getSelectedSnippet();
 
+                    Log.i(TAG, "showSelectionPanel: "+snippet.getText());
+
                         ClipboardManager cmb = (ClipboardManager) context
                             .getSystemService(Context.CLIPBOARD_SERVICE);
                         cmb.setText(snippet.getText());

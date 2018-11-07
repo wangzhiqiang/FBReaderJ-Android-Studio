@@ -19,9 +19,8 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import android.graphics.Bitmap.Config;
 import android.util.Log;
-import java.util.Map;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
@@ -30,19 +29,26 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.*;
 
+import org.fbreader.util.Boolean3;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
+import org.geometerplus.fbreader.fbreader.FBView;
+import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
+import org.geometerplus.zlibrary.core.application.ZLApplication.ZLAction;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
 import org.geometerplus.fbreader.Paths;
 
-public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLongClickListener {
+public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLongClickListener
+
+{
 
     public final ExecutorService PrepareService = Executors.newSingleThreadExecutor();
 
@@ -70,12 +76,44 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         init();
     }
 
+    private GestureDetector mGestureDetector;
+
     private void init() {
         // next line prevent ignoring first onKeyDown DPad event
         // after any dialog was closed
         setFocusableInTouchMode(true);
         setDrawingCacheEnabled(false);
         setOnLongClickListener(this);
+
+        mGestureDetector = new GestureDetector(getContext(), new SimpleOnGestureListener() {
+
+            PageTurningOptions options = new PageTurningOptions();
+            float fling = 600;
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                float velocityY) {
+
+                Boolean3 b = Boolean3.UNDEFINED;
+                if (velocityX < -fling) {
+                    b = Boolean3.TRUE;
+                }
+                if (velocityX > fling) {
+                    b = Boolean3.FALSE;
+                }
+                if (b != Boolean3.UNDEFINED) {
+                    startAnimatedScrolling(
+                        b == Boolean3.TRUE ? FBView.PageIndex.next : FBView.PageIndex.previous,
+                        options.Horizontal.getValue()
+                            ? FBView.Direction.rightToLeft : FBView.Direction.up,
+                        options.AnimationSpeed.getValue()
+                    );
+
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -123,23 +161,23 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         if (myAnimationProvider == null || myAnimationType != type) {
             myAnimationType = type;
             //这里是切换翻页动画的地方
-//			switch (type) {
-//				case none:
-//					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
-//					break;
-//				case curl:
-//					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
-//					break;
-//				case slide:
-//					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
-//					break;
-//				case slideOldStyle:
-//            myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
-//					break;
-//				case shift:
+			switch (type) {
+				case none:
+					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
+					break;
+				case curl:
+					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
+					break;
+				case slide:
+					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
+					break;
+				case slideOldStyle:
+            myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
+					break;
+				case shift:
             myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
-//					break;
-//			}
+					break;
+			}
         }
         return myAnimationProvider;
     }
@@ -171,7 +209,26 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                 default:
                     break;
             }
+//            Log.i("Reader", "onDrawInScrolling: "+oldMode);
+
             onDrawStatic(canvas);
+            //通知翻页了
+            try {
+                FBReaderApp app = (FBReaderApp) FBReaderApp.Instance();
+                if(null == app){
+                    app = new FBReaderApp(Paths.systemInfo(getContext()));
+                }
+                app.runAction(ActionCode.ACTION_PAGE_SCROLL);
+
+                ZLTextView v = app.getTextView();
+                ZLTextView.PagePosition pagePosition = v.pagePosition();
+
+                Log.i("Reader", "onDrawInScrolling: "+pagePosition.Current+"/"+pagePosition.Total);
+
+            } catch (Exception e) {
+                 //TODO 不发出消息
+            }
+
         }
     }
 
@@ -382,14 +439,12 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
     private int myPressedX, myPressedY;
     private boolean myScreenIsTouched;
 
-    long lastTouchDown = 0;
-    long lastTouchUp = 0;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
-
+        mGestureDetector.onTouchEvent(event);
         final ZLView view = ZLApplication.Instance().getCurrentView();
 
         switch (event.getAction()) {
@@ -436,28 +491,9 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                 myPendingPress = false;
                 myScreenIsTouched = false;
 
-
-                lastTouchUp  = System.currentTimeMillis();
-
-                long diffTime = Math.abs(lastTouchDown-lastTouchUp);
-                if(myPressedX >0 && diffTime > 0) {
-                    double sp = (myPressedX-x)*1000 / diffTime;
-
-                    if(Math.abs(sp) > 200){
-//                        view.onFingerRelease(x,y);
-
-//                        if(sp>0){
-//                            FBReaderApp.Instance().runAction(ActionCode.TURN_PAGE_FORWARD);
-//                        }else {
-//                            FBReaderApp.Instance().runAction(ActionCode.TURN_PAGE_BACK);
-//                        }
-                        Log.i("Reader", "onTouchEvent: speed: "+sp);
-
-                    }
-                }
                 break;
             case MotionEvent.ACTION_DOWN:
-                lastTouchDown = System.currentTimeMillis();
+
                 if (myPendingShortClickRunnable != null) {
                     removeCallbacks(myPendingShortClickRunnable);
                     myPendingShortClickRunnable = null;

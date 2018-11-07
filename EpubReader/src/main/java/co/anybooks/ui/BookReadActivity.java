@@ -56,8 +56,8 @@ public class BookReadActivity extends AppCompatActivity {
         myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL,
             new SelectionShowPanelAction(this, myFBReaderApp));
 
-        myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK,
-            new ProcessHyperlinkAction(this, myFBReaderApp));
+//        myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK,
+//            new ProcessHyperlinkAction(this, myFBReaderApp));
         myFBReaderApp.addAction(ActionCode.SWITCH_TO_DAY_PROFILE,
             new SwitchProfileAction(myFBReaderApp, ColorProfile.DAY));
         myFBReaderApp.addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE,

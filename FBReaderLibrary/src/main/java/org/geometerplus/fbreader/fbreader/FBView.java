@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.filesystem.ZLResourceFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
+import org.geometerplus.zlibrary.core.options.ZLColorOption;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.view.SelectionCursor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
@@ -130,9 +131,10 @@ public final class FBView extends ZLTextView {
         int w = getContextWidth();
 
         if (x >= w / 3 && x <= w - w / 3) {
-            myReader.runAction(ActionCode.SHOW_MENU);
-
+            myReader.runAction(ActionCode.SHOW_MENU ,true);
             return;
+        }else {
+            myReader.runAction(ActionCode.SHOW_MENU,false);
         }
         onFingerSingleTapLastResort(x, y);
 
@@ -155,6 +157,7 @@ public final class FBView extends ZLTextView {
     @Override
     public void onFingerPress(int x, int y) {
         myReader.runAction(ActionCode.HIDE_TOAST);
+        //其他区域隐藏
 
         final float maxDist = ZLibrary.Instance().getDisplayDPI() / 4;
         final SelectionCursor.Which cursor = findSelectionCursor(x, y, maxDist * maxDist);
@@ -174,6 +177,7 @@ public final class FBView extends ZLTextView {
 
         startManualScrolling(x, y);
         myReader.runAction(ActionCode.SELECTION_CLEAR);
+        myReader.runAction(ActionCode.SHOW_MENU,false);
 
     }
 
@@ -508,6 +512,7 @@ public final class FBView extends ZLTextView {
     private abstract class Footer implements FooterArea {
 
 
+        @Override
         public int getHeight() {
             return myViewOptions.FooterHeight.getValue();
         }
@@ -567,6 +572,7 @@ public final class FBView extends ZLTextView {
 
     private class FooterOldStyle extends Footer {
 
+        @Override
         public synchronized void paint(ZLPaintContext context) {
             final ZLFile wallpaper = getWallpaperFile();
             if (wallpaper != null) {
@@ -580,13 +586,13 @@ public final class FBView extends ZLTextView {
                 return;
             }
 
-//            final ZLColor fgColor = getTextColor(ZLTextHyperlink.NO_LINK);
 
-            //200<<24 = -939524096
-//            int c = ((int)(255*0.6)<< 24) | (fgColor.Red << 16) | (fgColor.Green << 8) | fgColor.Blue;
+            ZLColorOption colorOption = myViewOptions.getColorProfile().FooterNGForegroundOption;
 
+            //73 73 77
+            //173 173 173
 
-            ZLColor fgColor =  new ZLColor(173,173,173);
+            ZLColor fgColor =   colorOption.getValue();
 
             int fontH = 12* ZLibrary.Instance().getWidthInPixels()/360;
 

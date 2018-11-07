@@ -27,7 +27,8 @@ class ZLTextSpecialParagraphImpl extends ZLTextParagraphImpl {
 		myKind = kind;
 	}
 
-	public byte getKind() {
+	@Override
+    public byte getKind() {
 		return myKind;
 	}
 }

@@ -1,11 +1,16 @@
 package co.anybooks.ui;
 
+import android.Manifest;
+import android.Manifest.permission;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 import co.anybooks.R;
+import com.github.dfqin.grantor.PermissionListener;
+import com.github.dfqin.grantor.PermissionsUtil;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
@@ -40,16 +45,39 @@ public class FileListActivity extends AppCompatActivity {
 
         });
 
-//        TODO load data
 
+        if (PermissionsUtil.hasPermission(this, permission.WRITE_EXTERNAL_STORAGE)) {
+            //有访问权限
+            updateList();
+        } else {
+            PermissionsUtil.requestPermission(this, new PermissionListener() {
+                @Override
+                public void permissionGranted(@NonNull String[] permissions) {
+                    //用户授予了访问权限
+
+                    updateList();
+                }
+
+
+                @Override
+                public void permissionDenied(@NonNull String[] permissions) {
+                    //用户拒绝了访问的申请
+                }
+            }, permission.WRITE_EXTERNAL_STORAGE);
+        }
+
+
+    }
+
+
+    private void updateList(){
         File file = new File("/sdcard/aaa");
 
         if(file.isDirectory()){
-            File[] files = file.listFiles(new BookFileFilter());
+            File[] files = file.listFiles();
             adapter.updateAll(Arrays.asList(files));
 
         }
-
 
     }
 

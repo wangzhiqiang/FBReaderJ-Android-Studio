@@ -59,23 +59,33 @@ public class ColorProfile {
 	public final String Name;
 
 	public final ZLStringOption WallpaperOption;
+
 	public final ZLEnumOption<ZLPaintContext.FillMode> FillModeOption;
+	//阅读器背景色
 	public final ZLColorOption BackgroundOption;
+	//选中的颜色
 	public final ZLColorOption SelectionBackgroundOption;
 	public final ZLColorOption SelectionForegroundOption;
+	//标记的颜色
 	public final ZLColorOption HighlightingForegroundOption;
 	public final ZLColorOption HighlightingBackgroundOption;
+	//阅读器文字
+	// 0 0 0  - 148 148 153
 	public final ZLColorOption RegularTextOption;
+	//链接的颜色
 	public final ZLColorOption HyperlinkTextOption;
+
 	public final ZLColorOption VisitedHyperlinkTextOption;
 	public final ZLColorOption FooterFillOption;
 	public final ZLColorOption FooterNGBackgroundOption;
+	//页脚文字颜色
 	public final ZLColorOption FooterNGForegroundOption;
 	public final ZLColorOption FooterNGForegroundUnreadOption;
 
 	private ColorProfile(String name, ColorProfile base) {
 		this(name);
 		WallpaperOption.setValue(base.WallpaperOption.getValue());
+
 		FillModeOption.setValue(base.FillModeOption.getValue());
 		BackgroundOption.setValue(base.BackgroundOption.getValue());
 		SelectionBackgroundOption.setValue(base.SelectionBackgroundOption.getValue());
@@ -105,9 +115,9 @@ public class ColorProfile {
 			WallpaperOption =
 				new ZLStringOption("Colors", name + ":Wallpaper", "");
 			FillModeOption =
-				new ZLEnumOption<ZLPaintContext.FillMode>("Colors", name + ":FillMode", ZLPaintContext.FillMode.tile);
+				new ZLEnumOption<>("Colors", name + ":FillMode", ZLPaintContext.FillMode.tile);
 			BackgroundOption =
-				createOption(name, "Background", 0, 0, 0);
+				createOption(name, "Background", 35, 35, 38);
 			SelectionBackgroundOption =
 				createOption(name, "SelectionBackground", 82, 131, 194);
 			SelectionForegroundOption =
@@ -117,7 +127,7 @@ public class ColorProfile {
 			HighlightingForegroundOption =
 				createNullOption(name, "HighlightingForeground");
 			RegularTextOption =
-				createOption(name, "Text", 192, 192, 192);
+				createOption(name, "Text", 148, 148, 153);
 			HyperlinkTextOption =
 				createOption(name, "Hyperlink", 60, 142, 224);
 			VisitedHyperlinkTextOption =
@@ -127,7 +137,7 @@ public class ColorProfile {
 			FooterNGBackgroundOption =
 				createOption(name, "FooterNGBackgroundOption", 68, 68, 68);
 			FooterNGForegroundOption =
-				createOption(name, "FooterNGForegroundOption", 187, 187, 187);
+				createOption(name, "FooterNGForegroundOption", 73, 73, 77);
 			FooterNGForegroundUnreadOption =
 				createOption(name, "FooterNGForegroundUnreadOption", 119, 119, 119);
 		} else {
@@ -157,7 +167,7 @@ public class ColorProfile {
 			FooterNGBackgroundOption =
 				createOption(name, "FooterNGBackgroundOption", 68, 68, 68);
 			FooterNGForegroundOption =
-				createOption(name, "FooterNGForegroundOption", 187, 187, 187);
+				createOption(name, "FooterNGForegroundOption", 173, 173, 173);
 			FooterNGForegroundUnreadOption =
 				createOption(name, "FooterNGForegroundUnreadOption", 119, 119, 119);
 		}
