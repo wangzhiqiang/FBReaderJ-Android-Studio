@@ -26,8 +26,8 @@ import org.geometerplus.zlibrary.core.options.*;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 public class ColorProfile {
-	public static final String DAY = "Light";
-	public static final String NIGHT = "Dark";
+	public static final String DAY = "light";
+	public static final String NIGHT = "night";
 
 	private static final ArrayList<String> ourNames = new ArrayList<String>();
 	private static final HashMap<String,ColorProfile> ourProfiles = new HashMap<String,ColorProfile>();

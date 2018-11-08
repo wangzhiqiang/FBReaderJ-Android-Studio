@@ -111,12 +111,7 @@ public final class FBReaderApp extends ZLApplication {
         final FormatPlugin plugin;
         try {
             plugin = BookUtil.getPlugin(pluginCollection, book);
-        } catch (BookReadingException e) {
-            e.printStackTrace();
-            return;
-        }
 
-        try {
             Model = BookModel.createModel(book, plugin);
             BookTextView.setModel(Model.getTextModel());
 

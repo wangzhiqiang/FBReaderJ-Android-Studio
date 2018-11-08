@@ -19,6 +19,9 @@
 
 package org.geometerplus.zlibrary.ui.android.view.animation;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 
 abstract class SimpleAnimationProvider extends AnimationProvider {
@@ -61,6 +64,8 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 		myEndX = myStartX = x;
 		myEndY = myStartY = y;
 	}
+	private Set<Float> xSpeed = new HashSet<>();
+
 
 	@Override
 	protected void startAnimatedScrollingInternal(int speed) {

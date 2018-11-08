@@ -31,5 +31,9 @@ public class Config {
         return sp.getString(k,null);
     }
 
+    public  void remove(String k){
+          sp.edit().remove(k).apply();
+
+    }
 
 }

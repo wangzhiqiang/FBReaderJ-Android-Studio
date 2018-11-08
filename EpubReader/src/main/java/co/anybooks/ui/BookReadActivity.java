@@ -1,10 +1,13 @@
 package co.anybooks.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import co.anybooks.R;
 import java.util.List;
 import org.geometerplus.android.fbreader.ProcessHyperlinkAction;
@@ -35,6 +38,7 @@ public class BookReadActivity extends AppCompatActivity {
 
     private ZLAndroidWidget mContentView;
 
+    private SeekBar seekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,29 @@ public class BookReadActivity extends AppCompatActivity {
 
         });
 
+        seekBar = findViewById(R.id.seekbar);
+        seekBar.setOnSeekBarChangeListener(
+            new OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+
+                    saveLocalData(progress);
+
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+
         findViewById(R.id.show_book_index).setOnClickListener(v -> {
             //TODO 显示目录
 
@@ -116,11 +143,61 @@ public class BookReadActivity extends AppCompatActivity {
     }
 
 
+    private boolean isLocalBrightness() {
+
+
+        return getLocalData() > 0;
+    }
+
+    private int getLocalData() {
+        SharedPreferences sp = getSharedPreferences("bbb", MODE_PRIVATE);
+        return sp.getInt("b", -1);
+    }
+
+    private void saveLocalData(int d) {
+        SharedPreferences sp = getSharedPreferences("bbb", MODE_PRIVATE);
+        sp.edit().putInt("b", d).apply();
+        BrightnessUtils.changeAppBrightness(BookReadActivity.this,d);
+    }
+
+    private int b = 0;
+    private boolean isAutoModel = false;
+
+
     @Override
     protected void onResume() {
         super.onResume();
 
+        //读取本地配置 没有就不管
+
+        if (isLocalBrightness()) {
+
+            isAutoModel = BrightnessUtils.isAutoBrightness(this);
+
+            int p = getLocalData();
+            b = BrightnessUtils.getSystemBrightness(this);
+
+            BrightnessUtils.changeAppBrightness(this, p);
+
+            Log.i(TAG, "onResume: "+b);
+
+            seekBar.setProgress(p);
+        }
         openBook();
+
+    }
+
+
+    @Override
+    protected void onPause() {
+
+        if (isLocalBrightness()) {
+            //还原设置
+
+            BrightnessUtils.changeAppBrightness(this,b);
+
+        }
+        super.onPause();
 
     }
 
@@ -131,6 +208,8 @@ public class BookReadActivity extends AppCompatActivity {
         String bookPath = intent.getStringExtra(KEY_BOOK_PATH);
 
         book = new Book(0, bookPath, "xx", "utf-8", "en");
+
+
 
         myFBReaderApp.openBook(book, null, null);
 
@@ -150,4 +229,6 @@ public class BookReadActivity extends AppCompatActivity {
 
         return super.onKeyDown(keyCode, event);
     }
+
+
 }

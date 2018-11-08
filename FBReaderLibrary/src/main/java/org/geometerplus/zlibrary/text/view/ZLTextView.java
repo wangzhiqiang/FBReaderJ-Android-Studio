@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import android.util.Log;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.application.ZLApplication;
@@ -706,9 +707,16 @@ public abstract class ZLTextView extends ZLTextViewBase {
 			Current = current;
 			Total = total;
 		}
+
+		@Override
+		public String toString() {
+			return  Current+" / "+Total;
+		}
 	}
 
+	int count  =3;
 	public final synchronized PagePosition pagePosition() {
+
 		int current = computeTextPageNumber(getCurrentCharNumber(PageIndex.current, false));
 		int total = computeTextPageNumber(sizeOfFullText());
 //
