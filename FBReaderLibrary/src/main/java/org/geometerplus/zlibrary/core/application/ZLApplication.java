@@ -160,10 +160,14 @@ public abstract class ZLApplication {
 	}
 
 	public final void runAction(String actionId, Object ... params) {
-		final ZLAction action = myIdToActionMap.get(actionId);
+		final ZLAction action = getAction(actionId);
 		if (action != null) {
 			action.checkAndRun(params);
 		}
+	}
+
+	public ZLAction getAction(String actionId){
+		return myIdToActionMap.get(actionId);
 	}
 
 	//may be protected

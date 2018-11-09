@@ -436,6 +436,10 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if(isPopupWindowStatus()){
+            FBReaderApp.Instance().runAction(ActionCode.SHOW_MENU,false);
+            return true;
+        }
         int x = (int) event.getX();
         int y = (int) event.getY();
         mGestureDetector.onTouchEvent(event);
@@ -641,5 +645,17 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
     @Override
     protected void updateColorLevel() {
         ViewUtil.setColorLevel(myPaint, myColorLevel);
+    }
+
+    private  boolean popupWindowStatus = false;
+
+
+    public boolean isPopupWindowStatus() {
+        return popupWindowStatus;
+    }
+
+    @Override
+    public void setPopupWindowStatus(boolean popupWindowStatus) {
+        this.popupWindowStatus = popupWindowStatus;
     }
 }

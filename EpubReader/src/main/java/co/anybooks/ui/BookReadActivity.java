@@ -2,13 +2,17 @@ package co.anybooks.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import co.anybooks.R;
+import co.anybooks.ui.action.ShowMenuAction;
+import co.anybooks.ui.action.ShowMenuAction.MenuShow;
 import java.util.List;
 import org.geometerplus.android.fbreader.ProcessHyperlinkAction;
 import org.geometerplus.android.fbreader.SelectionShowPanelAction;
@@ -20,8 +24,7 @@ import org.geometerplus.fbreader.bookmodel.TOCTree.Reference;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.options.ColorProfile;
-import org.geometerplus.zlibrary.core.application.ZLApplicationWindow;
-import org.geometerplus.zlibrary.core.view.ZLViewWidget;
+import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.view.ZLAndroidWidget;
 
 public class BookReadActivity extends AppCompatActivity {
@@ -40,6 +43,8 @@ public class BookReadActivity extends AppCompatActivity {
 
     private SeekBar seekBar;
 
+    private View v;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +53,7 @@ public class BookReadActivity extends AppCompatActivity {
 
         mContentView = findViewById(R.id.book_read_content);
 
+        v = findViewById(R.id.menu);
         myFBReaderApp = (FBReaderApp) FBReaderApp.Instance();
         if (myFBReaderApp == null) {
             myFBReaderApp = new FBReaderApp(Paths.systemInfo(this));
@@ -57,11 +63,22 @@ public class BookReadActivity extends AppCompatActivity {
 
         myFBReaderApp.initWindow();
 
+        myFBReaderApp.addAction(ActionCode.SHOW_MENU,new ShowMenuAction(show -> {
+            myFBReaderApp.getViewWidget().setPopupWindowStatus(show);
+           ShowMenuAction action = (ShowMenuAction) myFBReaderApp.getAction(ActionCode.SHOW_MENU);
+           action.setShow(show);
+            if (show){
+                v.setVisibility(View.VISIBLE);
+            }else {
+                v.setVisibility(View.INVISIBLE);
+            }
+
+        },myFBReaderApp));
         myFBReaderApp.addAction(ActionCode.SELECTION_SHOW_PANEL,
             new SelectionShowPanelAction(this, myFBReaderApp));
 
-//        myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK,
-//            new ProcessHyperlinkAction(this, myFBReaderApp));
+        myFBReaderApp.addAction(ActionCode.PROCESS_HYPERLINK,
+            new ProcessHyperlinkAction(this, myFBReaderApp));
         myFBReaderApp.addAction(ActionCode.SWITCH_TO_DAY_PROFILE,
             new SwitchProfileAction(myFBReaderApp, ColorProfile.DAY));
         myFBReaderApp.addAction(ActionCode.SWITCH_TO_NIGHT_PROFILE,
@@ -212,6 +229,33 @@ public class BookReadActivity extends AppCompatActivity {
 
 
         myFBReaderApp.openBook(book, null, null);
+        Log.i(TAG, "openBook: -----");
+      getPagePosition(()->{
+          Log.i(TAG, "openBook: "+myFBReaderApp.getTextView().pagePosition());
+      });
+
+
+    }
+
+    int count =10;
+    public void getPagePosition(Runnable promise) {
+
+        try {
+            ZLTextView view = myFBReaderApp.getTextView();
+            ZLTextView.PagePosition pagePosition = view.pagePosition();
+
+            //处理page第一次获取为3的问题
+            if (pagePosition.Total <= 3 && --count >= 0) {
+                new Handler().postDelayed(() -> getPagePosition(promise), 50);
+                return;
+            }
+
+            promise.run();
+
+        } catch (Exception e) {
+
+        }
+        count = 10;
 
     }
 
