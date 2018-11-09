@@ -420,7 +420,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         @Override
         public void run() {
             final ZLView view = ZLApplication.Instance().getCurrentView();
-            view.onFingerSingleTap(myPressedX, myPressedY);
+//            view.onFingerSingleTap(myPressedX, myPressedY);
             myPendingPress = false;
             myPendingShortClickRunnable = null;
         }
@@ -442,7 +442,9 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         }
         int x = (int) event.getX();
         int y = (int) event.getY();
-        mGestureDetector.onTouchEvent(event);
+        if(mGestureDetector.onTouchEvent(event)){
+            return true;
+        }
         final ZLView view = ZLApplication.Instance().getCurrentView();
 
         switch (event.getAction()) {

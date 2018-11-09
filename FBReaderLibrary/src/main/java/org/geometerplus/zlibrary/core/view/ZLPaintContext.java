@@ -201,6 +201,12 @@ abstract public class ZLPaintContext {
 		LIGHTEN_TO_BACKGROUND
 	}
 
+	public enum SelectionCurosrType{
+		TOP_LEFT,
+		TOP_RIGHT,
+		BOTTOM_LEFT,
+		BOTTOM_RIGHT
+	}
 	abstract public Size imageSize(ZLImageData image, Size maxSize, ScalingType scaling);
 	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode);
 
@@ -212,4 +218,5 @@ abstract public class ZLPaintContext {
 	abstract public void drawOutline(int[] xs, int[] ys);
 
 	abstract public void fillCircle(int x, int y, int radius);
+	abstract public void fillCursor(int x,int y ,int radius,SelectionCurosrType type);
 }

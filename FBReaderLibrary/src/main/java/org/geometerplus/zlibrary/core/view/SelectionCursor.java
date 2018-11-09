@@ -21,24 +21,30 @@ package org.geometerplus.zlibrary.core.view;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.ZLPaintContext.SelectionCurosrType;
 
 public abstract class SelectionCursor {
-	public enum Which {
-		Left,
-		Right
-	}
 
-	public static void draw(ZLPaintContext context, Which which, int x, int y, ZLColor color) {
-		context.setFillColor(color);
-		final int dpi = ZLibrary.Instance().getDisplayDPI();
-		final int unit = dpi / 120;
-		final int xCenter = which == Which.Left ? x - unit - 1 : x + unit + 1;
-		//这里可以处理绘制选择的区域和样式，实际由ZLPaintContext执行
+    public enum Which {
+        Left,
+        Right
+    }
+
+    public static void draw(ZLPaintContext context, Which which, int x, int y, ZLColor color) {
+        context.setFillColor(color);
+        final int dpi = ZLibrary.Instance().getDisplayDPI();
+        final int unit = dpi / 120;
+        final int radius = unit * 8;
+        final int xCenter = which == Which.Left ? x - radius -1 : x + radius+1;
+        final int yCenter = which == Which.Left ? y - radius*2 -1  : y + radius*2+1;
+        //这里可以处理绘制选择的区域和样式，实际由ZLPaintContext执行
 //		context.fillRectangle(xCenter - unit, y + dpi / 8, xCenter + unit, y - dpi / 8);
-		if (which == Which.Left) {
-			context.fillCircle(xCenter, y - dpi / 8, unit * 6);
-		} else {
-			context.fillCircle(xCenter, y + dpi / 8, unit * 6);
-		}
-	}
+
+        if (which == Which.Left) {
+//			context.fillCircle(xCenter, y - dpi / 8, unit * 6);
+            context.fillCursor(xCenter, yCenter, radius, SelectionCurosrType.TOP_RIGHT);
+        } else {
+            context.fillCursor(xCenter, yCenter, radius,SelectionCurosrType.TOP_LEFT);
+        }
+    }
 }
