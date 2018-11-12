@@ -31,6 +31,7 @@ import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.options.ZLBooleanOption;
 import org.geometerplus.zlibrary.core.util.ZLColor;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
+import org.geometerplus.zlibrary.core.view.SelectionCursor.Which;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
@@ -468,24 +469,21 @@ public final class ZLAndroidPaintContext extends ZLPaintContext {
     }
 
     @Override
-    public void fillCursor(int x, int y, int radius, SelectionCurosrType type) {
-//        Log.i("Reader", "fillCursor: x:"+x+" y:"+y+" radius:"+radius+" "+type);
+    public void fillCursor(int x, int y, int radius, Which type) {
         myCanvas.drawCircle(x, y, radius, myFillPaint);
         Rect rect = new Rect();
         switch (type) {
-            case TOP_LEFT:
+            case Left:
+                rect = new Rect(x,y-radius,x+radius,y);
+                break;
+            case Right:
+
                 rect = new Rect(x-radius,y-radius,x,y);
-                break;
-            case TOP_RIGHT:
-                rect = new Rect(x,y,x+radius,y+radius);
-                break;
-            case BOTTOM_LEFT:
-                rect = new Rect(x-radius,y,x,y+radius);
-                break;
-            case BOTTOM_RIGHT:
-                rect = new Rect(x,y,x+radius,y+radius);
                 break;
         }
         myCanvas.drawRect(rect, myFillPaint);
+
+//        myFillPaint.setColor(Color.RED);
+//        myCanvas.drawCircle(x,y,3,myFillPaint);
     }
 }

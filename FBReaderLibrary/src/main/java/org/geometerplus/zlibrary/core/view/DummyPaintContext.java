@@ -33,6 +33,7 @@ import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.SelectionCursor.Which;
 import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 final class DummyPaintContext extends ZLPaintContext {
@@ -201,7 +202,7 @@ final class DummyPaintContext extends ZLPaintContext {
     }
 
     @Override
-    public void fillCursor(int x, int y, int radius, SelectionCurosrType type) {
+    public void fillCursor(int x, int y, int radius, Which type) {
 
     }
 }

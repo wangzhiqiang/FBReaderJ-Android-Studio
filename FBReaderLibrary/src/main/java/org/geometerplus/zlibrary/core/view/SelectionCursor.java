@@ -21,7 +21,6 @@ package org.geometerplus.zlibrary.core.view;
 
 import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.ZLColor;
-import org.geometerplus.zlibrary.core.view.ZLPaintContext.SelectionCurosrType;
 
 public abstract class SelectionCursor {
 
@@ -35,16 +34,16 @@ public abstract class SelectionCursor {
         final int dpi = ZLibrary.Instance().getDisplayDPI();
         final int unit = dpi / 120;
         final int radius = unit * 8;
-        final int xCenter = which == Which.Left ? x - radius -1 : x + radius+1;
-        final int yCenter = which == Which.Left ? y - radius*2 -1  : y + radius*2+1;
+        final int xCenter =  which ==  Which.Left ? x - radius -1 : x + radius+1;
+        final int yCenter =   y + radius*2+unit*2;
         //这里可以处理绘制选择的区域和样式，实际由ZLPaintContext执行
 //		context.fillRectangle(xCenter - unit, y + dpi / 8, xCenter + unit, y - dpi / 8);
 
         if (which == Which.Left) {
 //			context.fillCircle(xCenter, y - dpi / 8, unit * 6);
-            context.fillCursor(xCenter, yCenter, radius, SelectionCurosrType.TOP_RIGHT);
+            context.fillCursor(xCenter , yCenter, radius, Which.Left);
         } else {
-            context.fillCursor(xCenter, yCenter, radius,SelectionCurosrType.TOP_LEFT);
+            context.fillCursor(xCenter, yCenter, radius,Which.Right);
         }
     }
 }

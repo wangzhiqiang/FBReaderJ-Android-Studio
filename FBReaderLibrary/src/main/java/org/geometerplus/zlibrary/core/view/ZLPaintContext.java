@@ -26,6 +26,7 @@ import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.core.view.SelectionCursor.Which;
 
 abstract public class ZLPaintContext {
 	private final SystemInfo mySystemInfo;
@@ -201,12 +202,8 @@ abstract public class ZLPaintContext {
 		LIGHTEN_TO_BACKGROUND
 	}
 
-	public enum SelectionCurosrType{
-		TOP_LEFT,
-		TOP_RIGHT,
-		BOTTOM_LEFT,
-		BOTTOM_RIGHT
-	}
+ 
+
 	abstract public Size imageSize(ZLImageData image, Size maxSize, ScalingType scaling);
 	abstract public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode);
 
@@ -218,5 +215,5 @@ abstract public class ZLPaintContext {
 	abstract public void drawOutline(int[] xs, int[] ys);
 
 	abstract public void fillCircle(int x, int y, int radius);
-	abstract public void fillCursor(int x,int y ,int radius,SelectionCurosrType type);
+	abstract public void fillCursor(int x,int y ,int radius,Which type);
 }
