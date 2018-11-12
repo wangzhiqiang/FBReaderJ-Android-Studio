@@ -131,6 +131,17 @@ public final class ZLAndroidLibrary extends ZLibrary {
 	}
 
 	@Override
+	public  int getStatusBarHeight(){
+		int height = 0;
+		int resourceId = myApplication.getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			height = myApplication.getResources().getDimensionPixelSize(resourceId);
+		}
+
+		return height;
+	}
+
+	@Override
 	public List<String> defaultLanguageCodes() {
 		final TreeSet<String> set = new TreeSet<String>();
 		set.add(Locale.getDefault().getLanguage());

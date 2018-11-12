@@ -19,128 +19,189 @@
 
 package org.geometerplus.zlibrary.core.view;
 
+import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.util.Log;
 import java.util.List;
 
+import org.geometerplus.fbreader.fbreader.options.ViewOptions;
+import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.fonts.FontEntry;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
+import org.geometerplus.zlibrary.core.library.ZLibrary;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.util.ZLColor;
+import org.geometerplus.zlibrary.ui.android.image.ZLAndroidImageData;
 
 final class DummyPaintContext extends ZLPaintContext {
-	DummyPaintContext() {
-		super(new SystemInfo() {
-			@Override
+
+    Paint paint = new Paint();
+
+    DummyPaintContext() {
+        super(new SystemInfo() {
+            @Override
             public String tempDirectory() {
-				return "";
-			}
+                return "";
+            }
 
-			@Override
-			public String networkCacheDirectory() {
-				return "";
-			}
-		});
-	}
+            @Override
+            public String networkCacheDirectory() {
+                return "";
+            }
+        });
+        ViewOptions options = new ViewOptions();
+        paint
+            .setTextSize(options.getTextStyleCollection().getBaseStyle().FontSizeOption.getValue());
+    }
 
-	@Override
-	public void clear(ZLFile wallpaperFile, FillMode mode) {
-	}
 
-	@Override
-	public void clear(ZLColor color) {
-	}
+    @Override
+    public void clear(ZLFile wallpaperFile, FillMode mode) {
+    }
 
-	@Override
-	public ZLColor getBackgroundColor() {
-		return new ZLColor(0, 0, 0);
-	}
+    @Override
+    public void clear(ZLColor color) {
+    }
 
-	@Override
-	protected void setFontInternal(List<FontEntry> entries, int size, boolean bold, boolean italic, boolean underline, boolean strikeThrought) {
-	}
+    @Override
+    public ZLColor getBackgroundColor() {
+        return new ZLColor(0, 0, 0);
+    }
 
-	@Override
-	public void setTextColor(ZLColor color) {
-	}
+    @Override
+    protected void setFontInternal(List<FontEntry> entries, int size, boolean bold, boolean italic,
+        boolean underline, boolean strikeThrought) {
+    }
 
-	@Override
-	public void setLineColor(ZLColor color) {
-	}
-	@Override
-	public void setLineWidth(int width) {
-	}
+    @Override
+    public void setTextColor(ZLColor color) {
+    }
 
-	@Override
-	public void setFillColor(ZLColor color, int alpha) {
-	}
+    @Override
+    public void setLineColor(ZLColor color) {
+    }
 
-	@Override
-	public int getWidth() {
-		return 1;
-	}
-	@Override
-	public int getHeight() {
-		return 1;
-	}
-	@Override
-	protected int getCharHeightInternal(char chr) {
-		return 1;
-	}
-	@Override
-	public int getStringWidth(char[] string, int offset, int length) {
-		return 1;
-	}
+    @Override
+    public void setLineWidth(int width) {
+    }
 
-	@Override
-	protected int getSpaceWidthInternal() {
-		return 1;
-	}
+    @Override
+    public void setFillColor(ZLColor color, int alpha) {
+    }
 
-	@Override
-	protected int getStringHeightInternal() {
-		return 1;
-	}
+    @Override
+    public int getWidth() {
+        return ZLibrary.Instance().getWidthInPixels();
+    }
 
-	@Override
-	protected int getDescentInternal() {
-		return 1;
-	}
+    @Override
+    public int getHeight() {
+        //这个就是计算页码的坑，第一次的时候由于没有获取到view宽高导致
+        int h = ZLibrary.Instance().getHeightInPixels();
+        final ZLView.FooterArea footer = ZLApplication.Instance().getCurrentView().getFooterArea();
+        // 减去 footer区域
+        h = footer != null ? h - footer.getHeight() : h;
+        //  减去  (状态栏)
+         h = h- ZLibrary.Instance().getStatusBarHeight();
+        return h;
 
-	@Override
-	public void drawString(int x, int y, char[] string, int offset, int length) {
-	}
+    }
 
-	@Override
-	public Size imageSize(ZLImageData image, Size maxSize, ScalingType scaling) {
-		return null;
-	}
-	@Override
-	public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling, ColorAdjustingMode adjustingMode) {
-	}
 
-	@Override
-	public void drawLine(int x0, int y0, int x1, int y1) {
-	}
-	@Override
-	public void fillRectangle(int x0, int y0, int x1, int y1) {
-	}
 
-	@Override
-	public void fillPolygon(int[] xs, int[] ys) {
-	}
-	@Override
-	public void drawPolygonalLine(int[] xs, int[] ys) {
-	}
-	@Override
-	public void drawOutline(int[] xs, int[] ys) {
-	}
+    @Override
+    public int getStringWidth(char[] string, int offset, int length) {
+        boolean containsSoftHyphen = false;
+        for (int i = offset; i < offset + length; ++i) {
+            if (string[i] == (char) 0xAD) {
+                containsSoftHyphen = true;
+                break;
+            }
+        }
+        if (!containsSoftHyphen) {
+            return (int) (paint.measureText(new String(string, offset, length)) + 0.5f);
+        } else {
+            final char[] corrected = new char[length];
+            int len = 0;
+            for (int o = offset; o < offset + length; ++o) {
+                final char chr = string[o];
+                if (chr != (char) 0xAD) {
+                    corrected[len++] = chr;
+                }
+            }
+            return (int) (paint.measureText(corrected, 0, len) + 0.5f);
+        }
+    }
 
-	@Override
-	public void fillCircle(int x, int y, int radius) {
-	}
 
-	@Override
-	public void fillCursor(int x, int y, int radius, SelectionCurosrType type) {
+    @Override
+    protected int getSpaceWidthInternal() {
+        return (int) (paint.measureText(" ", 0, 1) + 0.5f);
+    }
 
-	}
+    @Override
+    protected int getCharHeightInternal(char chr) {
+        final Rect r = new Rect();
+        final char[] txt = new char[]{chr};
+        paint.getTextBounds(txt, 0, 1, r);
+        return r.bottom - r.top;
+    }
+
+    @Override
+    protected int getStringHeightInternal() {
+        return (int) (paint.getTextSize() + 0.5f);
+    }
+
+    @Override
+    protected int getDescentInternal() {
+        return (int) (paint.descent() + 0.5f);
+    }
+
+
+    @Override
+    public void drawString(int x, int y, char[] string, int offset, int length) {
+    }
+
+    @Override
+    public Size imageSize(ZLImageData image, Size maxSize, ScalingType scaling) {
+        final Bitmap bitmap = ((ZLAndroidImageData) image).getBitmap(maxSize, scaling);
+        return (bitmap != null && !bitmap.isRecycled())
+            ? new Size(bitmap.getWidth(), bitmap.getHeight()) : null;
+    }
+
+    @Override
+    public void drawImage(int x, int y, ZLImageData image, Size maxSize, ScalingType scaling,
+        ColorAdjustingMode adjustingMode) {
+    }
+
+    @Override
+    public void drawLine(int x0, int y0, int x1, int y1) {
+    }
+
+    @Override
+    public void fillRectangle(int x0, int y0, int x1, int y1) {
+    }
+
+    @Override
+    public void fillPolygon(int[] xs, int[] ys) {
+    }
+
+    @Override
+    public void drawPolygonalLine(int[] xs, int[] ys) {
+    }
+
+    @Override
+    public void drawOutline(int[] xs, int[] ys) {
+    }
+
+    @Override
+    public void fillCircle(int x, int y, int radius) {
+    }
+
+    @Override
+    public void fillCursor(int x, int y, int radius, SelectionCurosrType type) {
+
+    }
 }

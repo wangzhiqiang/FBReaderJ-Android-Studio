@@ -30,4 +30,7 @@ public interface ZLApplicationWindow {
 	ZLViewWidget getViewWidget();
 
 
+
+
+
 }

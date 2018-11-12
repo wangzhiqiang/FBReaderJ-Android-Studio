@@ -197,6 +197,6 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
                 mySpeed = Math.min(-MIN_STEP, mySpeed);
             }
         }
-        Log.i(TAG, "doStep: " + mySpeed);
+//        Log.i(TAG, "doStep: " + mySpeed);
     }
 }

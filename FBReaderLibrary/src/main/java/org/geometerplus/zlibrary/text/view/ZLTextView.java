@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import android.util.Log;
 import java.util.*;
 
 import org.geometerplus.fbreader.fbreader.options.ViewOptions;
@@ -620,6 +621,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int textWidth = getTextColumnWidth();
 		final int textHeight = getTextAreaHeight();
 
+
 		final int num = myModel.getParagraphsNumber();
 		final int totalTextSize = myModel.getTextLength(num - 1);
 		final float charsPerParagraph = ((float)totalTextSize) / num;
@@ -703,7 +705,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		public final int Current;
 		public final int Total;
 
-		PagePosition(int current, int total) {
+		public PagePosition(int current, int total) {
 			Current = current;
 			Total = total;
 		}
