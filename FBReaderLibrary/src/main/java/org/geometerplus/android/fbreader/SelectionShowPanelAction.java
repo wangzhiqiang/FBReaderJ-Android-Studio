@@ -62,6 +62,9 @@ public class SelectionShowPanelAction extends FBAction {
         int x = view.getSelectionStartX();
         int y = view.getSelectionStartY();
 
+        int endY= view.getSelectionEndY();
+        int endX = view.getSelectionEndX();
+
         if (null == popupWindow) {
 
             popupWindow = new PopupWindow(context);
@@ -99,7 +102,7 @@ public class SelectionShowPanelAction extends FBAction {
 
         }
 
-        Log.i(TAG, "showSelectionPanel: x:" + x + " y:" + y);
+        Log.i(TAG, "showSelectionPanel: x:" + x + " y:" + y +" endX:"+endX+" endY:"+endY);
 
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
