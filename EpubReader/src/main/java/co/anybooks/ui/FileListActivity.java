@@ -74,7 +74,7 @@ public class FileListActivity extends AppCompatActivity {
         File file = new File("/sdcard/aaa");
 
         if(file.isDirectory()){
-            File[] files = file.listFiles();
+            File[] files = file.listFiles(new BookFileFilter());
             adapter.updateAll(Arrays.asList(files));
 
         }

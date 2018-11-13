@@ -19,11 +19,8 @@
 
 package org.geometerplus.zlibrary.ui.android.view.animation;
 
-import android.util.Log;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Stack;
+import static java.lang.Math.pow;
+
 import org.geometerplus.zlibrary.core.view.ZLViewEnums;
 
 abstract class SimpleAnimationProvider extends AnimationProvider {
@@ -72,75 +69,17 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
 
     @Override
     protected void startAnimatedScrollingInternal(int speed) {
-        mySpeedFactor = (float) Math.pow(1.5, 0.12 * speed);
-        preDoStep(speed);
+        mySpeedFactor = (float) pow(1.5, 0.12 * speed);
+
+        mySpeed = (float) (mySpeed*pow(mySpeedFactor,7));
         doStep();
     }
-
-
-    private Stack<Float> xSpeed = new Stack<>();
-    private Stack<Float> xSpeedAfterHalf = new Stack<>();
-
-    private int halfPercent = 50;
-
-    private void preDoStep(int speed) {
-
-        //当前距离和最后距离差为所有的距离。
-
-        float bound;
-        if (getMode() == Mode.AnimatedScrollingForward) {
-            bound = myDirection.IsHorizontal ? myWidth : myHeight;
-        } else {
-            bound = 0;
-        }
-        int startPercent = getScrolledPercent();
-        halfPercent = (100 - startPercent) / 2;
-
-        int length = (int) (bound - startPercent * bound / 100);
-
-        xSpeed.clear();
-        xSpeedAfterHalf.clear();
-        float half = length / 2;
-        while (half >= speed) {
-            half = half / mySpeedFactor;
-            xSpeed.push(half);
-        }
-    }
-
-    private float lastSp = MIN_STEP;
-    private float getSpeed() {
-
-        float sp = lastSp;
-
-        if (isNotScrollerHalf()) {
-            if (!xSpeed.isEmpty()) {
-                sp = xSpeed.pop();
-            }
-            xSpeedAfterHalf.push(sp );
-
-        } else {
-            if (!xSpeedAfterHalf.isEmpty()) {
-                sp = xSpeedAfterHalf.pop();
-            }
-        }
-
-        lastSp = sp;
-        return sp <= MIN_STEP ? MIN_STEP : sp;
-    }
-
-
-    private boolean isNotScrollerHalf() {
-        return getScrolledPercent() < halfPercent;
-    }
-
-    private static final int MIN_STEP = 5;
 
     @Override
     public final void doStep() {
         if (!getMode().Auto) {
             return;
         }
-
         switch (myDirection) {
             case leftToRight:
                 myEndX -= (int) mySpeed;
@@ -185,18 +124,5 @@ abstract class SimpleAnimationProvider extends AnimationProvider {
                 return;
             }
         }
-
-        if (halfPercent <= 40) {
-            mySpeed *= mySpeedFactor;
-        } else {
-            if (mySpeed > 0) {
-                mySpeed += isNotScrollerHalf() ? getSpeed() : -getSpeed();
-                mySpeed = Math.max(MIN_STEP, mySpeed);
-            } else {
-                mySpeed -= isNotScrollerHalf() ? getSpeed() : -getSpeed();
-                mySpeed = Math.min(-MIN_STEP, mySpeed);
-            }
-        }
-//        Log.i(TAG, "doStep: " + mySpeed);
     }
 }

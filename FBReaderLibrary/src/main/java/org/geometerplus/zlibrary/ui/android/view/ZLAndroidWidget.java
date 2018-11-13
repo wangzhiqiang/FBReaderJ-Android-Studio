@@ -19,7 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import android.util.Log;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -35,13 +34,11 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.FBView;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.application.ZLApplication.ZLAction;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
-import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
 import org.geometerplus.fbreader.Paths;
@@ -181,6 +178,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                 case slideOldStyle:
                     myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
                     break;
+                    //默认
                 case shift:
                     myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
                     break;
@@ -426,7 +424,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 
         @Override
         public void run() {
-            final ZLView view = ZLApplication.Instance().getCurrentView();
+//            final ZLView view = ZLApplication.Instance().getCurrentView();
 //            view.onFingerSingleTap(myPressedX, myPressedY);
             myPendingPress = false;
             myPendingShortClickRunnable = null;
@@ -444,13 +442,16 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (isPopupWindowStatus()) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                FBReaderApp.Instance().runAction(ActionCode.SHOW_MENU, false);
+            FBReaderApp app = (FBReaderApp) FBReaderApp.Instance();
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN  && app.getTextView().getSelectedSnippet() == null){
+                app.runAction(ActionCode.SHOW_MENU, false);
+                return true;
             }
-            return true;
+
         }
-        int x = (int) event.getX();
-        int y = (int) event.getY();
+        int x = (int) event.getRawX();
+        int y = (int) event.getRawY();
         if (mGestureDetector.onTouchEvent(event)) {
             return true;
         }
@@ -534,12 +535,16 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                             if (myPendingLongClickRunnable != null) {
                                 removeCallbacks(myPendingLongClickRunnable);
                             }
+                            //TODO 处理抖动
                             view.onFingerPress(myPressedX, myPressedY);
                             myPendingPress = false;
                         }
                     }
+                    //TODO 处理抖动
                     if (!myPendingPress) {
-                        view.onFingerMove(x, y);
+                        if(isAMove) {
+                            view.onFingerMove(x, y);
+                        }
                     }
                 }
                 break;

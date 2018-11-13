@@ -55,6 +55,7 @@
     </LinearLayout>
 
     <SeekBar
+        android:visibility="gone"
         android:background="#90ffffff"
         android:progress="128"
         android:max="255"

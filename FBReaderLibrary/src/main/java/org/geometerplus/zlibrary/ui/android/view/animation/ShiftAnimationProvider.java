@@ -19,6 +19,8 @@
 
 package org.geometerplus.zlibrary.ui.android.view.animation;
 
+import static java.lang.Math.pow;
+
 import android.graphics.*;
 
 import org.geometerplus.zlibrary.ui.android.view.ViewUtil;
@@ -33,10 +35,28 @@ public final class ShiftAnimationProvider extends SimpleAnimationProvider {
 		super(bitmapManager);
 	}
 
+	private double easeInOutQuart(double x) {
+		return x < 0.5 ?
+			8 * x * x * x * x :
+			1 - pow( -2 * x + 2, 4 ) / 2;
+	}
 	@Override
 	protected void drawInternal(Canvas canvas) {
 		if (myDirection.IsHorizontal) {
-			final int dX = myEndX - myStartX;
+			int dX = myEndX - myStartX;
+//
+			double e =  easeInOutQuart( getScrolledPercent()/100D) ;
+			int currentX = (int) ((myWidth) * e);
+
+//			dx <0 <--- |  dx >0 --->
+
+			if(dX <0){
+				dX = -currentX;
+			}else {
+				dX = currentX;
+			}
+
+//			Log.i("Reader", "drawInternal: " +dX);
 			drawBitmapTo(canvas, dX > 0 ? dX - myWidth : dX + myWidth, 0, myPaint);
 			drawBitmapFrom(canvas, dX, 0, myPaint);
 //			if (dX > 0 && dX < myWidth) {

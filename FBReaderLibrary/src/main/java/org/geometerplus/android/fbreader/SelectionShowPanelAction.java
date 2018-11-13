@@ -108,7 +108,7 @@ public class SelectionShowPanelAction extends FBAction {
             popupWindow.dismiss();
         }
 
-        popupWindow.setOutsideTouchable(true);
+        popupWindow.setOutsideTouchable(false);
         View contentView = context.findViewById(android.R.id.content);
 
         popupWindow.showAtLocation(contentView, Gravity.NO_GRAVITY, x, y - dip2px(context, 45));

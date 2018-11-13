@@ -605,7 +605,7 @@ public final class FBView extends ZLTextView {
             final int infoWidth = context.getStringWidth(infoString);
             context.setTextColor(fgColor);
 
-            context.drawString(right - infoWidth, (height+fontH)/2, infoString);
+            context.drawString(right - infoWidth, fontH, infoString);
 
 //            context.drawLine(0,0,getContextWidth(),0);
 //            context.drawLine(0,height/2,getContextWidth(),height/2);
