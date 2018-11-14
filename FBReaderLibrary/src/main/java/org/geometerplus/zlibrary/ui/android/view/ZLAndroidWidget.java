@@ -450,8 +450,8 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
             }
 
         }
-        int x = (int) event.getRawX();
-        int y = (int) event.getRawY();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
         if (mGestureDetector.onTouchEvent(event)) {
             return true;
         }
@@ -542,9 +542,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                     }
                     //TODO 处理抖动
                     if (!myPendingPress) {
-                        if(isAMove) {
-                            view.onFingerMove(x, y);
-                        }
+                        view.onFingerMove(x, y);
                     }
                 }
                 break;

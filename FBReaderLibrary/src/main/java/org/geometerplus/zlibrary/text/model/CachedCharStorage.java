@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.model;
 
+import android.util.Log;
 import java.lang.ref.WeakReference;
 import java.io.*;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public final class CachedCharStorage {
 	private final String myFileExtension;
 
 	public CachedCharStorage(String directoryName, String fileExtension, int blocksNumber) {
+		Log.i("Reader", "CachedCharStorage: "+directoryName+" "+fileExtension+" "+blocksNumber);
 		myDirectoryName = directoryName + '/';
 		myFileExtension = '.' + fileExtension;
 		myArray.addAll(Collections.nCopies(blocksNumber, new WeakReference<char[]>(null)));

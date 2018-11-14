@@ -9,9 +9,9 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-//        ndk{
-//            abiFilters 'x86','armeabi-v7a'
-//        }
+        ndk{
+            abiFilters 'x86','armeabi-v7a'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -21,6 +21,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+
+    sourceSets.main {
+        jni.srcDirs = ["src/main/jni"]
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path "src/main/jni/Android.mk"
         }
     }
 

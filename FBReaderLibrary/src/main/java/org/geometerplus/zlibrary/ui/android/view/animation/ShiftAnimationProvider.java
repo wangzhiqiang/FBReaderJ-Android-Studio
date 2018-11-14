@@ -48,15 +48,13 @@ public final class ShiftAnimationProvider extends SimpleAnimationProvider {
 			double e =  easeInOutQuart( getScrolledPercent()/100D) ;
 			int currentX = (int) ((myWidth) * e);
 
-//			dx <0 <--- |  dx >0 --->
-
-			if(dX <0){
-				dX = -currentX;
-			}else {
-				dX = currentX;
+			if(getMode().Auto) {
+				if (dX < 0) {
+					dX = -currentX;
+				} else {
+					dX = currentX;
+				}
 			}
-
-//			Log.i("Reader", "drawInternal: " +dX);
 			drawBitmapTo(canvas, dX > 0 ? dX - myWidth : dX + myWidth, 0, myPaint);
 			drawBitmapFrom(canvas, dX, 0, myPaint);
 //			if (dX > 0 && dX < myWidth) {

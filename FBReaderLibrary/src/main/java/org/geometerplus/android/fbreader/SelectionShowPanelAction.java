@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import org.geometerplus.fbreader.fbreader.ActionCode;
 import org.geometerplus.fbreader.fbreader.FBAction;
 import org.geometerplus.fbreader.fbreader.FBReaderApp;
@@ -51,6 +52,7 @@ public class SelectionShowPanelAction extends FBAction {
 
     @Override
     protected void run(Object... params) {
+
         showSelectionPanel();
     }
 
@@ -86,6 +88,8 @@ public class SelectionShowPanelAction extends FBAction {
 
                         Reader.runAction(ActionCode.SELECTION_CLEAR);
 
+                    Log.i(TAG, "showSelectionPanel: "+snippet.getText());
+
 
                     }
                 );
@@ -102,17 +106,17 @@ public class SelectionShowPanelAction extends FBAction {
 
         }
 
-        Log.i(TAG, "showSelectionPanel: x:" + x + " y:" + y +" endX:"+endX+" endY:"+endY);
 
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
+        popupWindow.setOnDismissListener(() -> Reader.getViewWidget().setPopupWindowStatus(false));
 
-        popupWindow.setOutsideTouchable(false);
+        popupWindow.setOutsideTouchable(true);
         View contentView = context.findViewById(android.R.id.content);
 
         popupWindow.showAtLocation(contentView, Gravity.NO_GRAVITY, x, y - dip2px(context, 45));
-
+        Reader.getViewWidget().setPopupWindowStatus(true);
     }
 
 

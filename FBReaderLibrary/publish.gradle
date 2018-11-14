@@ -1,7 +1,7 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-version '1.0.3'
+version '1.0.4'
 group 'co.anybooks'
 archivesBaseName="fbreader-library"
 publishing {
@@ -59,15 +59,15 @@ bintrayUpload.dependsOn {
 }
 
 
-apply plugin: 'maven'
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            pom.groupId = this.group
-            pom.artifactId = this.archivesBaseName
-            pom.version = this.version
-            repository(url: uri('/Users/wzq/.m2/repository'))
-        }
-
-    }
-}
+//apply plugin: 'maven'
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            pom.groupId = this.group
+//            pom.artifactId = this.archivesBaseName
+//            pom.version = this.version
+//            repository(url: uri('/Users/wzq/.m2/repository'))
+//        }
+//
+//    }
+//}
