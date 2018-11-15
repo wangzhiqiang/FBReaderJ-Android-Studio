@@ -19,6 +19,7 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import android.util.Log;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.library.ZLibrary;
@@ -63,9 +64,9 @@ abstract class ZLTextViewBase extends ZLView {
 			m = new ZLTextMetrics(
 				ZLibrary.Instance().getDisplayDPI(),
 				// TODO: screen area width
-				100,
+				ZLibrary.Instance().getWidthInPixels(),
 				// TODO: screen area height
-				100,
+				ZLibrary.Instance().getHeightInPixels(),
 				getTextStyleCollection().getBaseStyle().getFontSize()
 			);
 			myMetrics = m;

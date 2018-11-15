@@ -19,8 +19,10 @@
 
 package org.geometerplus.zlibrary.text.view;
 
+import android.util.Log;
 import java.util.*;
 
+import org.geometerplus.fbreader.fbreader.options.ViewOptions;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
 import org.geometerplus.zlibrary.core.filesystem.ZLFile;
 import org.geometerplus.zlibrary.core.image.ZLImageData;
@@ -482,26 +484,12 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 
 		final List<ZLTextHighlighting> hilites = findHilites(page);
-
-		x = getLeftMargin();
-		y = getTopMargin();
-		index = 0;
-		for (ZLTextLineInfo info : lineInfos) {
-			drawTextLine(page, hilites, info, labels[index], labels[index + 1]);
-			y += info.Height + info.Descent + info.VSpaceAfter;
-			++index;
-			if (index == page.Column0Height) {
-				y = getTopMargin();
-				x += page.getTextWidth() + getSpaceBetweenColumns();
-			}
-		}
-
 		for (ZLTextHighlighting h : hilites) {
 			int mode = Hull.DrawMode.None;
 
 			final ZLColor bgColor = h.getBackgroundColor();
 			if (bgColor != null) {
-				context.setFillColor(bgColor, 128);
+				context.setFillColor(bgColor, 77);
 				mode |= Hull.DrawMode.Fill;
 			}
 
@@ -515,6 +503,20 @@ public abstract class ZLTextView extends ZLTextViewBase {
 				h.hull(page).draw(getContext(), mode);
 			}
 		}
+		x = getLeftMargin();
+		y = getTopMargin();
+		index = 0;
+		for (ZLTextLineInfo info : lineInfos) {
+			drawTextLine(page, hilites, info, labels[index], labels[index + 1]);
+			y += info.Height + info.Descent + info.VSpaceAfter;
+			++index;
+			if (index == page.Column0Height) {
+				y = getTopMargin();
+				x += page.getTextWidth() + getSpaceBetweenColumns();
+			}
+		}
+
+
 
 		final ZLTextRegion outlinedElementRegion = getOutlinedRegion(page);
 		if (outlinedElementRegion != null && myShowOutline) {
@@ -619,6 +621,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		final int textWidth = getTextColumnWidth();
 		final int textHeight = getTextAreaHeight();
 
+
 		final int num = myModel.getParagraphsNumber();
 		final int totalTextSize = myModel.getTextLength(num - 1);
 		final float charsPerParagraph = ((float)totalTextSize) / num;
@@ -702,7 +705,7 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		public final int Current;
 		public final int Total;
 
-		PagePosition(int current, int total) {
+		public PagePosition(int current, int total) {
 			Current = current;
 			Total = total;
 		}
@@ -1773,6 +1776,22 @@ public abstract class ZLTextView extends ZLTextViewBase {
 		}
 	}
 
+	public int getSelectionEndX() {
+		if (mySelection.isEmpty()) {
+			return 0;
+		}
+		final ZLTextElementArea selectionEndArea = mySelection.getEndArea(myCurrentPage);
+		if (selectionEndArea != null) {
+			return selectionEndArea.XEnd;
+		}
+		if (mySelection.hasPartAfterPage(myCurrentPage)) {
+			final ZLTextElementArea lastArea = myCurrentPage.TextElementMap.getLastArea();
+			return lastArea != null ? lastArea.XEnd : 0;
+		} else {
+			final ZLTextElementArea firstArea = myCurrentPage.TextElementMap.getFirstArea();
+			return firstArea != null ? firstArea.XStart : 0;
+		}
+	}
 	public int getSelectionEndY() {
 		if (mySelection.isEmpty()) {
 			return 0;

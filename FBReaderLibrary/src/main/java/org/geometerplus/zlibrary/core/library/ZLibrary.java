@@ -59,6 +59,7 @@ public abstract class ZLibrary {
 	abstract public int getDisplayDPI();
 	abstract public int getWidthInPixels();
 	abstract public int getHeightInPixels();
+	abstract public int getStatusBarHeight();
 	abstract public List<String> defaultLanguageCodes();
 
 	abstract public boolean supportsAllOrientations();

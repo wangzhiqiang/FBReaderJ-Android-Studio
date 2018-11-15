@@ -134,7 +134,7 @@ public final class FBReaderApp extends ZLApplication {
 
             runAction(ActionCode.SHOW_OPENED_STATUS);
 
-        } catch (BookReadingException e) {
+        } catch (Exception e) {
            runAction(ActionCode.SHOW_OPEN_ERROR_STATUS,e.getMessage());
         }
 

@@ -2,12 +2,14 @@ package co.anybooks.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import co.anybooks.R;
@@ -201,6 +203,9 @@ public class BookReadActivity extends AppCompatActivity {
             seekBar.setProgress(p);
         }
         openBook();
+        Window window = getWindow();
+        Rect rect= new Rect();
+        window.getDecorView().getWindowVisibleDisplayFrame(rect);
 
     }
 
@@ -229,10 +234,10 @@ public class BookReadActivity extends AppCompatActivity {
 
 
         myFBReaderApp.openBook(book, null, null);
-        Log.i(TAG, "openBook: -----");
-      getPagePosition(()->{
-          Log.i(TAG, "openBook: "+myFBReaderApp.getTextView().pagePosition());
-      });
+//        Log.i(TAG, "openBook: -----");
+//      getPagePosition(()->{
+          Log.i(TAG, "Reader pos: "+myFBReaderApp.getTextView().pagePosition());
+//      });
 
 
     }

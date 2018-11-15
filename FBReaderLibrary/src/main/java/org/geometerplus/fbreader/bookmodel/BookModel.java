@@ -19,6 +19,7 @@
 
 package org.geometerplus.fbreader.bookmodel;
 
+import android.util.Log;
 import java.util.*;
 
 import org.geometerplus.zlibrary.core.fonts.*;
@@ -100,6 +101,7 @@ public final class BookModel {
 		registerFontEntry(family, new FontEntry(family, normal, bold, italic, boldItalic));
 	}
 
+	//native call
 	public ZLTextModel createTextModel(
 		String id, String language, int paragraphsNumber,
 		int[] entryIndices, int[] entryOffsets,
@@ -140,6 +142,7 @@ public final class BookModel {
 
 	private TOCTree myCurrentTree = TOCTree;
 
+	//native call
 	public void addTOCItem(String text, int reference) {
 		myCurrentTree = new TOCTree(myCurrentTree);
 		myCurrentTree.setText(text);

@@ -19,7 +19,6 @@
 
 package org.geometerplus.zlibrary.ui.android.view;
 
-import android.util.Log;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -35,13 +34,11 @@ import org.geometerplus.fbreader.fbreader.FBReaderApp;
 import org.geometerplus.fbreader.fbreader.FBView;
 import org.geometerplus.fbreader.fbreader.options.PageTurningOptions;
 import org.geometerplus.zlibrary.core.application.ZLApplication;
-import org.geometerplus.zlibrary.core.application.ZLApplication.ZLAction;
 import org.geometerplus.zlibrary.core.application.ZLKeyBindings;
 import org.geometerplus.zlibrary.core.util.SystemInfo;
 import org.geometerplus.zlibrary.core.view.ZLView;
 import org.geometerplus.zlibrary.core.view.ZLViewWidget;
 
-import org.geometerplus.zlibrary.text.view.ZLTextView;
 import org.geometerplus.zlibrary.ui.android.view.animation.*;
 
 import org.geometerplus.fbreader.Paths;
@@ -102,12 +99,19 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                     b = Boolean3.FALSE;
                 }
                 if (b != Boolean3.UNDEFINED) {
+
                     startAnimatedScrolling(
                         b == Boolean3.TRUE ? FBView.PageIndex.next : FBView.PageIndex.previous,
                         options.Horizontal.getValue()
                             ? FBView.Direction.rightToLeft : FBView.Direction.up,
                         options.AnimationSpeed.getValue()
                     );
+
+                    myPendingPress = false;
+                    if (null != myPendingShortClickRunnable) {
+                        removeCallbacks(myPendingShortClickRunnable);
+                    }
+                    myPendingShortClickRunnable = null;
 
                     return true;
                 }
@@ -161,23 +165,24 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         if (myAnimationProvider == null || myAnimationType != type) {
             myAnimationType = type;
             //这里是切换翻页动画的地方
-			switch (type) {
-				case none:
-					myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
-					break;
-				case curl:
-					myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
-					break;
-				case slide:
-					myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
-					break;
-				case slideOldStyle:
-            myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
-					break;
-				case shift:
-            myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
-					break;
-			}
+            switch (type) {
+                case none:
+                    myAnimationProvider = new NoneAnimationProvider(myBitmapManager);
+                    break;
+                case curl:
+                    myAnimationProvider = new CurlAnimationProvider(myBitmapManager);
+                    break;
+                case slide:
+                    myAnimationProvider = new SlideAnimationProvider(myBitmapManager);
+                    break;
+                case slideOldStyle:
+                    myAnimationProvider = new SlideOldStyleAnimationProvider(myBitmapManager);
+                    break;
+                    //默认
+                case shift:
+                    myAnimationProvider = new ShiftAnimationProvider(myBitmapManager);
+                    break;
+            }
         }
         return myAnimationProvider;
     }
@@ -215,12 +220,12 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
             //通知翻页了
             try {
                 FBReaderApp app = (FBReaderApp) FBReaderApp.Instance();
-                if(null == app){
+                if (null == app) {
                     app = new FBReaderApp(Paths.systemInfo(getContext()));
                 }
                 app.runAction(ActionCode.ACTION_PAGE_SCROLL);
             } catch (Exception e) {
-                 //TODO 不发出消息
+                //TODO 不发出消息
             }
 
         }
@@ -412,15 +417,15 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         if (myPendingLongClickRunnable == null) {
             myPendingLongClickRunnable = new LongClickRunnable();
         }
-        postDelayed(myPendingLongClickRunnable,  ViewConfiguration.getLongPressTimeout());
+        postDelayed(myPendingLongClickRunnable, ViewConfiguration.getLongPressTimeout());
     }
 
     private class ShortClickRunnable implements Runnable {
 
         @Override
         public void run() {
-            final ZLView view = ZLApplication.Instance().getCurrentView();
-            view.onFingerSingleTap(myPressedX, myPressedY);
+//            final ZLView view = ZLApplication.Instance().getCurrentView();
+//            view.onFingerSingleTap(myPressedX, myPressedY);
             myPendingPress = false;
             myPendingShortClickRunnable = null;
         }
@@ -436,13 +441,20 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(isPopupWindowStatus()){
-            FBReaderApp.Instance().runAction(ActionCode.SHOW_MENU,false);
-            return true;
+        if (isPopupWindowStatus()) {
+            FBReaderApp app = (FBReaderApp) FBReaderApp.Instance();
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN  && app.getTextView().getSelectedSnippet() == null){
+                app.runAction(ActionCode.SHOW_MENU, false);
+                return true;
+            }
+
         }
         int x = (int) event.getX();
         int y = (int) event.getY();
-        mGestureDetector.onTouchEvent(event);
+        if (mGestureDetector.onTouchEvent(event)) {
+            return true;
+        }
         final ZLView view = ZLApplication.Instance().getCurrentView();
 
         switch (event.getAction()) {
@@ -523,10 +535,12 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
                             if (myPendingLongClickRunnable != null) {
                                 removeCallbacks(myPendingLongClickRunnable);
                             }
+                            //TODO 处理抖动
                             view.onFingerPress(myPressedX, myPressedY);
                             myPendingPress = false;
                         }
                     }
+                    //TODO 处理抖动
                     if (!myPendingPress) {
                         view.onFingerMove(x, y);
                     }
@@ -647,7 +661,7 @@ public class ZLAndroidWidget extends MainView implements ZLViewWidget, View.OnLo
         ViewUtil.setColorLevel(myPaint, myColorLevel);
     }
 
-    private  boolean popupWindowStatus = false;
+    private boolean popupWindowStatus = false;
 
 
     public boolean isPopupWindowStatus() {

@@ -37,6 +37,7 @@ import org.geometerplus.zlibrary.core.view.SelectionCursor;
 import org.geometerplus.zlibrary.core.view.ZLPaintContext;
 
 import org.geometerplus.zlibrary.text.view.*;
+import org.geometerplus.zlibrary.text.view.ZLTextRegion.Filter;
 import org.geometerplus.zlibrary.text.view.style.ZLTextStyleCollection;
 
 import org.geometerplus.fbreader.bookmodel.FBHyperlinkType;
@@ -109,6 +110,12 @@ public final class FBView extends ZLTextView {
             myReader
                 .runAction(ActionCode.OPEN_VIDEO, (ZLTextVideoRegionSoul) videoRegion.getSoul());
             return;
+        }
+
+        //TODO 这里可以处理点击大图
+        final  ZLTextRegion im = findRegion(x, y, 0, region -> region.getSoul() instanceof ZLTextImageRegionSoul);
+        if(null != im){
+            ZLTextImageRegionSoul imgSoul = (ZLTextImageRegionSoul) im.getSoul();
         }
 
 //        final ZLTextHighlighting highlighting = findHighlighting(x, y, maxSelectionDistance());
@@ -605,7 +612,7 @@ public final class FBView extends ZLTextView {
             final int infoWidth = context.getStringWidth(infoString);
             context.setTextColor(fgColor);
 
-            context.drawString(right - infoWidth, (height+fontH)/2, infoString);
+            context.drawString(right - infoWidth, fontH, infoString);
 
 //            context.drawLine(0,0,getContextWidth(),0);
 //            context.drawLine(0,height/2,getContextWidth(),height/2);
