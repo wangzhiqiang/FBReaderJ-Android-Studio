@@ -59,13 +59,16 @@ bool OleStorage::init(shared_ptr<ZLInputStream> stream, std::size_t streamSize) 
 		clear();
 		return false;
 	}
-	static const char OLE_SIGN[] = {0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1, 0};
+	static const char OLE_SIGN[] = {static_cast<const char>(0xD0), static_cast<const char>(0xCF), 0x11,
+                                    static_cast<const char>(0xE0), static_cast<const char>(0xA1),
+                                    static_cast<const char>(0xB1), 0x1A,
+                                    static_cast<const char>(0xE1), 0};
 	if (std::strncmp(oleBuf, OLE_SIGN, 8) != 0) {
 		clear();
 		return false;
 	}
-	mySectorSize = 1 << OleUtil::getU2Bytes(oleBuf, 0x1e); //offset for value of big sector size
-	myShortSectorSize = 1 << OleUtil::getU2Bytes(oleBuf, 0x20); //offset for value of small sector size
+	mySectorSize = static_cast<unsigned int>(1 << OleUtil::getU2Bytes(oleBuf, 0x1e)); //offset for value of big sector size
+	myShortSectorSize = static_cast<unsigned int>(1 << OleUtil::getU2Bytes(oleBuf, 0x20)); //offset for value of small sector size
 
 	if (readDIFAT(oleBuf) && readBBD(oleBuf) && readSBD(oleBuf) && readProperties(oleBuf) && readAllEntries()) {
 		return true;
