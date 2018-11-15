@@ -210,11 +210,17 @@ public abstract class Paths {
 		return new SystemInfo() {
 			@Override
 			public String tempDirectory() {
-				final String value = ourTempDirectoryOption.getValue();
-				if (!"".equals(value)) {
-					return value;
+//				final String value = ourTempDirectoryOption.getValue();
+//				if (!"".equals(value)) {
+//					return value;
+//				}
+//				return internalTempDirectoryValue(appContext);
+				//CHANGED 修改返回的地址永远是内部cache目录
+				File cacheDir = appContext.getCacheDir();
+				if(!cacheDir.exists()){
+					cacheDir.mkdirs();
 				}
-				return internalTempDirectoryValue(appContext);
+				return cacheDir.getPath();
 			}
 
 			@Override
